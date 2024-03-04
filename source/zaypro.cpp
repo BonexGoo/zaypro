@@ -2,6 +2,7 @@
 #include "zaypro.hpp"
 
 #include <resource.hpp>
+#include <format/boss_bmp.hpp>
 
 ZAY_DECLARE_VIEW_CLASS("zayproView", zayproData)
 
@@ -365,14 +366,17 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                     (*CurBox)->Render(panel);
                 }
 
-                // DOM
-                m->RenderDOM(panel);
+                // Dom탭
+                m->RenderDomTab(panel);
+
+                // 아틀라스탭
+                m->RenderAtlasTab(panel);
 
                 // 미니맵
                 m->RenderMiniMap(panel);
 
-                // 로그리스트
-                m->RenderLogList(panel);
+                // 로그탭
+                m->RenderLogTab(panel);
 
                 // 간단세이브 효과
                 if(const sint32 EasySaveAni = (sint32) (100 * m->mEasySaveEffect.value()))
@@ -749,8 +753,10 @@ ZEWidgetPipe::ZEWidgetPipe()
     mPipe = nullptr;
     mJsonPathUpdated = false;
     mConnected = false;
-    mDOMCount = 0;
-    mExpandedDOM = true;
+    mExpandedDom = true;
+    mDomCount = 0;
+    mExpandedAtlas = true;
+    mAtlasCount = 0;
     mExpandedLog = true;
     mLogTitleTurn = false;
 }
@@ -825,7 +831,10 @@ bool ZEWidgetPipe::TickOnce()
     {
         if(mConnected)
         {
-            mDOM.Reset();
+            mDom.Reset();
+            mAtlas.Reset();
+            mLogTitleTop.RemoveAll();
+            mLogDetailTop.RemoveAll();
             NeedUpdate = true;
         }
     }
@@ -835,15 +844,15 @@ bool ZEWidgetPipe::TickOnce()
         if(!String::Compare(Type, "dom_updated"))
         {
             const String CurVariable = (*NewJson)("variable").GetText();
-            auto& CurDOM = mDOM(CurVariable);
-            CurDOM.mResult = (*NewJson)("result").GetText();
-            CurDOM.mFormula = (*NewJson)("formula").GetText();
-            CurDOM.mUpdateMsec = Platform::Utility::CurrentTimeMsec();
+            auto& CurDom = mDom(CurVariable);
+            CurDom.mResult = (*NewJson)("result").GetText();
+            CurDom.mFormula = (*NewJson)("formula").GetText();
+            CurDom.mUpdateMsec = Platform::Utility::CurrentTimeMsec();
         }
         else if(!String::Compare(Type, "dom_removed"))
         {
             const String OldVariable = (*NewJson)("variable").GetText();
-            mDOM.Remove(OldVariable);
+            mDom.Remove(OldVariable);
         }
         else if(!String::Compare(Type, "comp_focused"))
         {
@@ -858,6 +867,48 @@ bool ZEWidgetPipe::TickOnce()
                     m->mWorkViewDrag.x = m->mWorkViewSize.w / 2 - TargetPos.x;
                     m->mWorkViewDrag.y = m->mWorkViewSize.h / 2 - TargetPos.y;
                     break;
+                }
+            }
+        }
+        else if(!String::Compare(Type, "atlas_updated"))
+        {
+            for(sint32 i = 0, iend = (*NewJson)("atlas").LengthOfIndexable(); i < iend; ++i)
+            {
+                const String CurFolder = (*NewJson)("atlas")[i]("folder").GetText();
+                if(0 < CurFolder.Length())
+                {
+                    // 업데이트된 아틀라스폴더와 같은 이미지들을 제거
+                    for(sint32 j = mAtlas.Count() - 1; 0 <= j; --j)
+                    {
+                        chararray GetImageName;
+                        if(auto CurAtlas = mAtlas.AccessByOrder(j, &GetImageName))
+                        if(!CurAtlas->mAtlasPath.Compare(CurFolder))
+                            mAtlas.Remove(&GetImageName[0]);
+                    }
+
+                    // 아틀라스폴더내 이미지들을 수집
+                    void* Params[2] = {(void*) this, (void*) &CurFolder};
+                    Platform::File::Search(CurFolder,
+                        [](chars itemname, payload data)->void
+                        {
+                            auto& Self = *((ZEWidgetPipe*) ((void**) data)[0]);
+                            auto& CurFolder = *((const String*) ((void**) data)[1]);
+                            const String FullPath = CurFolder + '/' + itemname;
+                            if(Platform::File::Exist(FullPath))
+                            if(!FullPath.Right(5).CompareNoCase(".json"))
+                            {
+                                const String IamgeJson = String::FromFile(FullPath);
+                                const Context ImageInfo(ST_Json, SO_OnlyReference, IamgeJson);
+                                const String ImageName = String(itemname).SubTail(5);
+                                auto& NewAtlasImage = Self.mAtlas(ImageName);
+                                NewAtlasImage.mAtlasPath = CurFolder;
+                                NewAtlasImage.mValidRect.l = ImageInfo("valid_rect")("l").GetInt();
+                                NewAtlasImage.mValidRect.t = ImageInfo("valid_rect")("t").GetInt();
+                                NewAtlasImage.mValidRect.r = ImageInfo("valid_rect")("r").GetInt();
+                                NewAtlasImage.mValidRect.b = ImageInfo("valid_rect")("b").GetInt();
+                                NewAtlasImage.mUpdateMsec = Platform::Utility::CurrentTimeMsec();
+                            }
+                        }, Params, false);
                 }
             }
         }
@@ -891,9 +942,14 @@ void ZEWidgetPipe::SendToClient(chars json)
     Platform::Pipe::SendJson(mPipe, json);
 }
 
-void ZEWidgetPipe::SetExpandDOM(bool expand)
+void ZEWidgetPipe::SetExpandDom(bool expand)
 {
-    mExpandedDOM = expand;
+    mExpandedDom = expand;
+}
+
+void ZEWidgetPipe::SetExpandAtlas(bool expand)
+{
+    mExpandedAtlas = expand;
 }
 
 void ZEWidgetPipe::SetExpandLog(bool expand)
@@ -1002,7 +1058,7 @@ private:
         {
             // 배경색
             if(index & 1)
-            ZAY_RGBA(panel, 0, 0, 0, 16)
+            ZAY_RGBA(panel, 0, 0, 0, 32)
                 panel.fill();
             // 포커싱효과
             if(panel.state(UIName) & PS_Focused)
@@ -1019,6 +1075,26 @@ private:
         return (!unfocusmap().Access(mGroupID));
     }
 };
+
+void ZEWidgetPipe::SetDomFilter(chars text)
+{
+    mDomFilter = text;
+}
+
+void ZEWidgetPipe::SetDomCount(sint32 count)
+{
+    mDomCount = count;
+}
+
+void ZEWidgetPipe::SetAtlasFilter(chars text)
+{
+    mAtlasFilter = text;
+}
+
+void ZEWidgetPipe::SetAtlasCount(sint32 count)
+{
+    mAtlasCount = count;
+}
 
 void ZEWidgetPipe::AddLog(chars type, chars title, chars detail)
 {
@@ -1074,16 +1150,6 @@ ZEWidgetPipe::LogElement* ZEWidgetPipe::NextLogElement(LogElement* element)
     while(Result && !Result->valid())
         Result = Result->next();
     return Result;
-}
-
-void ZEWidgetPipe::SetDOMSearch(chars text)
-{
-    mDOMSearch = text;
-}
-
-void ZEWidgetPipe::SetDOMCount(sint32 count)
-{
-    mDOMCount = count;
 }
 
 zayproData::zayproData() : mEasySaveEffect(updater())
@@ -1338,16 +1404,18 @@ void zayproData::RenderComponent(ZayPanel& panel, sint32 i, bool enable, bool bl
     }
 }
 
-void zayproData::RenderDOM(ZayPanel& panel)
+void zayproData::RenderDomTab(ZayPanel& panel)
 {
-    auto& DOM = mPipe.dom();
-    if(0 < DOM.Count())
+    auto& Dom = mPipe.dom();
+    if(0 < Dom.Count())
     {
         static const sint32 TitleHeight = 22;
         static const sint32 ElementHeight = 22;
         static const sint32 ViewWidth = 500;
         const sint32 ViewHeight = (mPipe.expanddom())? mPipe.domcount() * ElementHeight : 0;
-        ZAY_LTRB(panel, 10, 10, 10 + ViewWidth, Math::Min(10 + TitleHeight + ViewHeight, panel.h() - 10))
+        const sint32 ViewLimit = (mPipe.atlas().Count() == 0)? panel.h() - 10 :
+            ((mPipe.expandatlas())? (panel.h() - 10) / 2 : panel.h() - 10 - TitleHeight - 10);
+        ZAY_LTRB(panel, 10, 10, 10 + ViewWidth, Math::Min(10 + TitleHeight + ViewHeight, ViewLimit))
         {
             // 타이틀
             ZAY_LTRB_UI_SCISSOR(panel, 0, 0, panel.w(), TitleHeight, "dom-title")
@@ -1358,40 +1426,40 @@ void zayproData::RenderDOM(ZayPanel& panel)
                     panel.text(5, panel.h() / 2 - 1, "dom", UIFA_LeftMiddle);
 
                 // 검색기능
-                ZAY_XYWH_UI(panel, panel.w() - 50 - 200, 2, 200, panel.h() - 5, "dom-search",
+                ZAY_XYWH_UI(panel, panel.w() - 50 - 200, 2, 200, panel.h() - 5, "dom-filter",
                     ZAY_GESTURE_VNT(v, n, t, this)
                     {
                         if(t == GT_Pressed)
                         {
                             auto CurRect = v->rect(n);
-                            String CurText = mPipe.domsearch();
+                            String CurText = mPipe.domfilter();
                             if(Platform::Popup::OpenEditTracker(CurText, UIET_String, CurRect.l, CurRect.t, CurRect.r, CurRect.b))
                             {
-                                mPipe.SetDOMSearch(CurText);
+                                mPipe.SetDomFilter(CurText);
                                 v->invalidate();
                             }
                         }
                     })
                 {
-                    const bool IsFocused = !!(panel.state("dom-search") & PS_Focused);
+                    const bool IsFocused = !!(panel.state("dom-filter") & PS_Focused);
                     ZAY_RGBA(panel, 255, 255, 255, (IsFocused)? 192 : 128)
                         panel.fill();
                     ZAY_LTRB(panel, 3, 0, panel.w(), panel.h())
                     ZAY_RGB(panel, 0, 0, 0)
-                        panel.text(mPipe.domsearch(), UIFA_LeftMiddle, UIFE_Right);
+                        panel.text(mPipe.domfilter(), UIFA_LeftMiddle, UIFE_Right);
                 }
 
                 // 검색어제거
-                ZAY_XYWH_UI(panel, panel.w() - 50 + 1, 0, 25, panel.h(), "dom-search-x",
+                ZAY_XYWH_UI(panel, panel.w() - 50 + 1, 0, 25, panel.h(), "dom-filter-x",
                     ZAY_GESTURE_T(t, this)
                     {
                         if(t == GT_InReleased)
-                            mPipe.SetDOMSearch("");
+                            mPipe.SetDomFilter("");
                     })
                 ZAY_LTRB(panel, 3, 3, panel.w() - 3, panel.h() - 4)
                 {
-                    const bool IsFocused = !!(panel.state("dom-search-x") & PS_Focused);
-                    const bool IsDragging = !!(panel.state("dom-search-x") & PS_Dragging);
+                    const bool IsFocused = !!(panel.state("dom-filter-x") & PS_Focused);
+                    const bool IsDragging = !!(panel.state("dom-filter-x") & PS_Dragging);
                     ZAY_MOVE_IF(panel, 0, 1, IsDragging)
                     {
                         ZAY_RGBA(panel, 255, 255, 255, (IsFocused)? 96 : 64)
@@ -1409,7 +1477,7 @@ void zayproData::RenderDOM(ZayPanel& panel)
                     ZAY_GESTURE_T(t, this)
                     {
                         if(t == GT_InReleased)
-                            mPipe.SetExpandDOM(!mPipe.expanddom());
+                            mPipe.SetExpandDom(!mPipe.expanddom());
                     })
                 ZAY_LTRB(panel, 3, 3, panel.w() - 3, panel.h() - 4)
                 {
@@ -1431,7 +1499,7 @@ void zayproData::RenderDOM(ZayPanel& panel)
 
             // 바디
             if(mPipe.expanddom())
-            ZAY_XYWH_SCISSOR(panel, 0, TitleHeight, panel.w(), Math::Max(ElementHeight, panel.h() - TitleHeight))
+            ZAY_LTRB_SCISSOR(panel, 0, TitleHeight, panel.w(), Math::Max(TitleHeight + 40, panel.h()))
             {
                 ZAY_RGBA(panel, 0, 0, 0, 160)
                     panel.fill();
@@ -1456,13 +1524,13 @@ void zayproData::RenderDOM(ZayPanel& panel)
                         }
                         else if(t == GT_WheelUp)
                         {
-                            auto PosY = v->scrollpos("dom-body-scroll").y;
-                            v->moveScroll("dom-body-scroll", 0, PosY, 0, PosY + 1000, 2.0, true);
+                            auto PosY = v->scrollpos(n).y;
+                            v->moveScroll(n, 0, PosY, 0, PosY + 1000, 2.0, true);
                         }
                         else if(t == GT_WheelDown)
                         {
-                            auto PosY = v->scrollpos("dom-body-scroll").y;
-                            v->moveScroll("dom-body-scroll", 0, PosY, 0, PosY - 1000, 2.0, true);
+                            auto PosY = v->scrollpos(n).y;
+                            v->moveScroll(n, 0, PosY, 0, PosY - 1000, 2.0, true);
                         }
                     }, {-1, 5}, 20)
                 {
@@ -1471,38 +1539,34 @@ void zayproData::RenderDOM(ZayPanel& panel)
                     {
                         zayproData* self {nullptr};
                         ZayPanel* panel {nullptr};
-                        sint32 i {0};
                         sint32 count {0};
                         const uint64 msec {Platform::Utility::CurrentTimeMsec()};
-                        const String* search {nullptr};
+                        const String* filter {nullptr};
                         bool needupdate {false};
                     } NewPayload;
                     NewPayload.self = this;
                     NewPayload.panel = &panel;
-                    if(0 < mPipe.domsearch().Length())
-                        NewPayload.search = &mPipe.domsearch();
+                    if(0 < mPipe.domfilter().Length())
+                        NewPayload.filter = &mPipe.domfilter();
 
-                    // DOM순회
-                    DOM.AccessByCallback(
+                    // Dom순회
+                    Dom.AccessByCallback(
                         [](const MapPath* path, ZEWidgetPipe::Document* doc, payload data)->void
                         {
                             // 검색어처리
                             auto& Data = *((Payload*) data);
                             chararray Variable;
-                            if(Data.search)
+                            if(Data.filter)
                             {
                                 Variable = path->GetPath();
-                                if(String(&Variable[0]).Find(0, *Data.search) == -1)
-                                {
-                                    Data.i++;
+                                if(String(&Variable[0]).Find(0, *Data.filter) == -1)
                                     return;
-                                }
                             }
 
                             // 한줄처리
                             ZAY_XYWH_SCISSOR(*Data.panel, 0, Data.count * ElementHeight, Data.panel->w(), ElementHeight)
                             {
-                                if(!Data.search)
+                                if(!Data.filter)
                                     Variable = path->GetPath();
 
                                 const String VariableText = &Variable[0];
@@ -1515,7 +1579,7 @@ void zayproData::RenderDOM(ZayPanel& panel)
                                 const sint32 FullTextFrontSize = Platform::Graphics::GetStringWidth(FullTextFront);
                                 const bool NeedToolTop = (Data.panel->w() < FullTextFrontSize + FormulaTextRearSize);
 
-                                const String UIName = String::Format("dom-body-scroll.%d", Data.i);
+                                const String UIName = String::Format("dom-body-scroll.%d", Data.count);
                                 ZAY_INNER_UI(*Data.panel, 0, UIName,
                                     ZAY_GESTURE_VNT(v, n, t, VariableText, FormulaText, NeedToolTop)
                                     {
@@ -1544,14 +1608,14 @@ void zayproData::RenderDOM(ZayPanel& panel)
                                     const sint32 CurAni = 255 * Math::Min(1000, Data.msec - doc->mUpdateMsec) / 1000;
                                     Data.needupdate |= (CurAni < 255);
                                     // 배경색
-                                    if(Data.i & 1)
-                                    ZAY_RGBA(*Data.panel, 0, 0, 0, 16)
+                                    if(Data.count & 1)
+                                    ZAY_RGBA(*Data.panel, 0, 0, 0, 32)
                                         Data.panel->fill();
                                     // 포커싱효과
                                     if(Data.panel->state(UIName) & PS_Focused)
                                         ZAY_RGBA(*Data.panel, 0, 0, 0, 64)
                                             Data.panel->fill();
-                                    // 스트링
+                                    // 내용
                                     ZAY_MOVE_IF(*Data.panel, 1, 1, Data.panel->state(UIName) & PS_Pressed)
                                     {
                                         // 계산결과
@@ -1567,14 +1631,304 @@ void zayproData::RenderDOM(ZayPanel& panel)
                                     }
                                 }
                             }
-                            Data.i++;
                             Data.count++;
                         }, &NewPayload);
 
-                    // DOM갱신
+                    // 필터링되어 결과가 없는 경우
+                    if(NewPayload.count == 0)
+                    {
+                        ZAY_RGB(panel, 255, 0, 0)
+                            panel.text("(No results for filtering)", UIFA_CenterMiddle, UIFE_Right);
+                    }
+
+                    // Dom갱신
                     if(mPipe.domcount() != NewPayload.count)
                     {
-                        mPipe.SetDOMCount(NewPayload.count);
+                        mPipe.SetDomCount(NewPayload.count);
+                        invalidate();
+                    }
+                    if(NewPayload.needupdate)
+                        invalidate();
+                }
+            }
+
+            ZAY_RGB(panel, 0, 0, 0)
+                panel.rect(1);
+        }
+    }
+}
+
+void zayproData::RenderAtlasTab(ZayPanel& panel)
+{
+    auto& Atlas = mPipe.atlas();
+    if(0 < Atlas.Count())
+    {
+        static const sint32 TitleHeight = 22;
+        static const sint32 ElementHeight = 100;
+        static const sint32 InnerGap = 22;
+        static const sint32 ViewWidth = 300;
+        const sint32 ViewHeight = (mPipe.expandatlas())? mPipe.atlascount() * ElementHeight : 0;
+        const sint32 ViewLimit = (mPipe.dom().Count() == 0)? 10 :
+            ((mPipe.expanddom())? (panel.h() + 10) / 2 : 10 + TitleHeight + 10);
+        ZAY_LTRB(panel, 10, Math::Max(ViewLimit, panel.h() - 10 - TitleHeight - ViewHeight), 10 + ViewWidth, panel.h() - 10)
+        {
+            // 타이틀
+            ZAY_LTRB_UI_SCISSOR(panel, 0, panel.h() - TitleHeight, panel.w(), panel.h(), "atlas-title")
+            {
+                ZAY_RGB(panel, 0, 0, 0)
+                    panel.fill();
+                ZAY_RGB(panel, 255, 255, 255)
+                    panel.text(5, panel.h() / 2 - 1, "atlas", UIFA_LeftMiddle);
+
+                // 검색기능
+                ZAY_XYWH_UI(panel, panel.w() - 50 - 200, 3, 200, panel.h() - 5, "atlas-filter",
+                    ZAY_GESTURE_VNT(v, n, t, this)
+                    {
+                        if(t == GT_Pressed)
+                        {
+                            auto CurRect = v->rect(n);
+                            String CurText = mPipe.atlasfilter();
+                            if(Platform::Popup::OpenEditTracker(CurText, UIET_String, CurRect.l, CurRect.t, CurRect.r, CurRect.b))
+                            {
+                                mPipe.SetAtlasFilter(CurText);
+                                v->invalidate();
+                            }
+                        }
+                    })
+                {
+                    const bool IsFocused = !!(panel.state("atlas-filter") & PS_Focused);
+                    ZAY_RGBA(panel, 255, 255, 255, (IsFocused)? 192 : 128)
+                        panel.fill();
+                    ZAY_LTRB(panel, 3, 0, panel.w(), panel.h())
+                    ZAY_RGB(panel, 0, 0, 0)
+                        panel.text(mPipe.atlasfilter(), UIFA_LeftMiddle, UIFE_Right);
+                }
+
+                // 검색어제거
+                ZAY_XYWH_UI(panel, panel.w() - 50 + 1, 0, 25, panel.h(), "atlas-filter-x",
+                    ZAY_GESTURE_T(t, this)
+                    {
+                        if(t == GT_InReleased)
+                            mPipe.SetAtlasFilter("");
+                    })
+                ZAY_LTRB(panel, 3, 4, panel.w() - 3, panel.h() - 3)
+                {
+                    const bool IsFocused = !!(panel.state("atlas-filter-x") & PS_Focused);
+                    const bool IsDragging = !!(panel.state("atlas-filter-x") & PS_Dragging);
+                    ZAY_MOVE_IF(panel, 0, 1, IsDragging)
+                    {
+                        ZAY_RGBA(panel, 255, 255, 255, (IsFocused)? 96 : 64)
+                            panel.fill();
+                        ZAY_RGBA(panel, 255, 255, 255, (IsFocused)? 192 : 128)
+                        {
+                            panel.text(panel.w() / 2 + 1, panel.h() / 2 - 1, "×");
+                            panel.rect(1);
+                        }
+                    }
+                }
+
+                // 열기/닫기
+                ZAY_LTRB_UI(panel, panel.w() - 25, 0, panel.w(), panel.h(), "atlas-expand",
+                    ZAY_GESTURE_T(t, this)
+                    {
+                        if(t == GT_InReleased)
+                            mPipe.SetExpandAtlas(!mPipe.expandatlas());
+                    })
+                ZAY_LTRB(panel, 3, 4, panel.w() - 3, panel.h() - 3)
+                {
+                    const bool IsFocused = !!(panel.state("atlas-expand") & PS_Focused);
+                    const bool IsDragging = !!(panel.state("atlas-expand") & PS_Dragging);
+                    ZAY_MOVE_IF(panel, 0, 1, IsDragging)
+                    {
+                        ZAY_RGBA(panel, 255, 255, 255, (IsFocused)? 96 : 64)
+                            panel.fill();
+                        ZAY_RGBA(panel, 255, 255, 255, (IsFocused)? 192 : 128)
+                        {
+                            ZAY_FONT(panel, 0.75)
+                                panel.text((mPipe.expandatlas())? "▼" : "▲");
+                            panel.rect(1);
+                        }
+                    }
+                }
+            }
+
+            // 바디
+            if(mPipe.expandatlas())
+            ZAY_LTRB_SCISSOR(panel, 0, Math::Min(0, panel.h() - TitleHeight - 40), panel.w(), panel.h() - TitleHeight)
+            {
+                ZAY_RGBA(panel, 0, 0, 0, 160)
+                    panel.fill();
+
+                ZAY_SCROLL_UI(panel, 0, ViewHeight, "atlas-body-scroll",
+                    ZAY_GESTURE_VNTXY(v, n, t, x, y)
+                    {
+                        static float OldPosY;
+                        static sint32 FirstY = 0;
+                        if(t == GT_Pressed)
+                        {
+                            OldPosY = y;
+                            FirstY = v->scrollpos(n).y - y;
+                        }
+                        else if(t == GT_InDragging || t == GT_OutDragging)
+                        {
+                            if(v->isScrollSensing(n))
+                                FirstY = v->scrollpos(n).y - y;
+                            const sint32 VectorY = (y - OldPosY) * 20;
+                            v->moveScroll(n, 0, FirstY + y, 0, FirstY + y + VectorY, 2.0, true);
+                            OldPosY = y;
+                        }
+                        else if(t == GT_WheelUp)
+                        {
+                            auto PosY = v->scrollpos(n).y;
+                            v->moveScroll(n, 0, PosY, 0, PosY + 1000, 2.0, true);
+                        }
+                        else if(t == GT_WheelDown)
+                        {
+                            auto PosY = v->scrollpos(n).y;
+                            v->moveScroll(n, 0, PosY, 0, PosY - 1000, 2.0, true);
+                        }
+                    }, {-1, 5}, 20)
+                {
+                    // 페이로드를 구성
+                    struct Payload
+                    {
+                        zayproData* self {nullptr};
+                        ZayPanel* panel {nullptr};
+                        sint32 xpos {0};
+                        sint32 count {0};
+                        const uint64 msec {Platform::Utility::CurrentTimeMsec()};
+                        const String* filter {nullptr};
+                        bool needupdate {false};
+                    } NewPayload;
+                    NewPayload.self = this;
+                    NewPayload.panel = &panel;
+                    if(0 < mPipe.atlasfilter().Length())
+                        NewPayload.filter = &mPipe.atlasfilter();
+
+                    // Atlas순회
+                    Atlas.AccessByCallback(
+                        [](const MapPath* path, ZEWidgetPipe::AtlasImage* img, payload data)->void
+                        {
+                            // 검색어처리
+                            auto& Data = *((Payload*) data);
+                            chararray Variable;
+                            if(Data.filter)
+                            {
+                                Variable = path->GetPath();
+                                if(String(&Variable[0]).Find(0, *Data.filter) == -1)
+                                    return;
+                            }
+
+                            // 한칸처리
+                            ZAY_XYWH_SCISSOR(*Data.panel, 0, Data.count * ElementHeight, Data.panel->w(), ElementHeight)
+                            {
+                                if(!Data.filter)
+                                    Variable = path->GetPath();
+
+                                const String VariableText = &Variable[0];
+                                const String FullText = " ● " + VariableText;
+                                const sint32 FullTextSize = Platform::Graphics::GetStringWidth(FullText);
+                                const bool NeedToolTop = (Data.panel->w() < FullTextSize);
+
+                                const String UIName = String::Format("atlas-body-scroll.%d", Data.count);
+                                ZAY_INNER_UI(*Data.panel, 0, UIName,
+                                    ZAY_GESTURE_VNT(v, n, t, VariableText, NeedToolTop)
+                                    {
+                                        if(t == GT_ToolTip)
+                                        {
+                                            if(NeedToolTop)
+                                                Platform::Popup::ShowToolTip(VariableText);
+                                        }
+                                        else if(t == GT_Pressed)
+                                        {
+                                            v->stopScroll("atlas-body-scroll", true);
+                                            Platform::Utility::SendToTextClipboard("r." + VariableText);
+                                        }
+                                        else if(t == GT_WheelUp)
+                                        {
+                                            auto PosY = v->scrollpos("atlas-body-scroll").y;
+                                            v->moveScroll("atlas-body-scroll", 0, PosY, 0, PosY + 1000, 2.0, true);
+                                        }
+                                        else if(t == GT_WheelDown)
+                                        {
+                                            auto PosY = v->scrollpos("atlas-body-scroll").y;
+                                            v->moveScroll("atlas-body-scroll", 0, PosY, 0, PosY - 1000, 2.0, true);
+                                        }
+                                    })
+                                {
+                                    const sint32 CurAni = 255 * Math::Min(1000, Data.msec - img->mUpdateMsec) / 1000;
+                                    Data.needupdate |= (CurAni < 255);
+                                    // 배경색
+                                    if(Data.count & 1)
+                                    ZAY_RGBA(*Data.panel, 0, 0, 0, 32)
+                                        Data.panel->fill();
+                                    // 내용
+                                    ZAY_MOVE_IF(*Data.panel, 1, 1, Data.panel->state(UIName) & PS_Pressed)
+                                    {
+                                        // 이미지준비
+                                        if(!img->mImage.HasBitmap())
+                                        if(id_bitmap NewBitmap = Bmp::FromFile(img->mAtlasPath + '/' + VariableText + ".bmp"))
+                                        {
+                                            id_bitmap OldBitmap = img->mImage.ChangeBitmap(NewBitmap, &img->mValidRect);
+                                            Bmp::Remove(OldBitmap);
+                                        }
+                                        if(img->mImage.HasBitmap())
+                                        {
+                                            const sint32 Width = img->mImage.GetWidth();
+                                            const sint32 Height = img->mImage.GetHeight();
+                                            const double RateX = (Data.panel->w() - InnerGap * 2) / (double) Width;
+                                            const double RateY = (Data.panel->h() - InnerGap * 2) / (double) Height;
+                                            const double Rate = (RateX < RateY) ? RateX : RateY;
+                                            const sint32 RateWidth = Width * Rate;
+                                            const sint32 RateHeight = Height * Rate;
+                                            const sint32 RateL = (Data.panel->w() - RateWidth) / 2;
+                                            const sint32 RateT = (Data.panel->h() - RateHeight) / 2;
+                                            const sint32 RateR = RateL + RateWidth;
+                                            const sint32 RateB = RateT + RateHeight;
+                                            // 이미지
+                                            ZAY_LTRB(*Data.panel, RateL, RateT, RateR, RateB)
+                                                Data.panel->stretch(img->mImage, Image::Build::Force);
+                                            // 외곽배경 및 포커싱효과
+                                            ZAY_RGBA(*Data.panel, 0, 0, 0, (Data.panel->state(UIName) & PS_Focused)? 128 : 80)
+                                            {
+                                                ZAY_LTRB(*Data.panel, 0, 0, Data.panel->w(), RateT) // T
+                                                    Data.panel->fill();
+                                                ZAY_LTRB(*Data.panel, 0, RateB, Data.panel->w(), Data.panel->h()) // B
+                                                    Data.panel->fill();
+                                                ZAY_LTRB(*Data.panel, 0, RateT, RateL, RateB) // L
+                                                    Data.panel->fill();
+                                                ZAY_LTRB(*Data.panel, RateR, RateT, Data.panel->w(), RateB) // R
+                                                    Data.panel->fill();
+                                            }
+                                            // 정보
+                                            ZAY_RGB(*Data.panel, 255, 255, CurAni)
+                                            {
+                                                // 이름
+                                                ZAY_LTRB(*Data.panel, 0, 0, Data.panel->w(), InnerGap)
+                                                    Data.panel->text(FullText, UIFA_LeftMiddle, UIFE_Right);
+                                                // 크기
+                                                ZAY_RGB(*Data.panel, 32, 32, 32)
+                                                ZAY_LTRB(*Data.panel, 0, Data.panel->h() - InnerGap, Data.panel->w(), Data.panel->h())
+                                                    Data.panel->text(String::Format("(%d x %d) ", Width, Height), UIFA_RightMiddle, UIFE_Left);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Data.count++;
+                        }, &NewPayload);
+
+                    // 필터링되어 결과가 없는 경우
+                    if(NewPayload.count == 0)
+                    {
+                        ZAY_RGB(panel, 255, 0, 0)
+                            panel.text("(No results for filtering)", UIFA_CenterMiddle, UIFE_Right);
+                    }
+
+                    // Atlas갱신
+                    if(mPipe.atlascount() != NewPayload.count)
+                    {
+                        mPipe.SetAtlasCount(NewPayload.count);
                         invalidate();
                     }
                     if(NewPayload.needupdate)
@@ -1730,7 +2084,7 @@ void zayproData::RenderMiniMap(ZayPanel& panel)
     }
 }
 
-void zayproData::RenderLogList(ZayPanel& panel)
+void zayproData::RenderLogTab(ZayPanel& panel)
 {
     auto CurElement = mPipe.GetLogElement();
     if(CurElement)
@@ -1749,6 +2103,7 @@ void zayproData::RenderLogList(ZayPanel& panel)
                     panel.fill();
                 ZAY_RGB(panel, 255, 255, 255)
                     panel.text(5, panel.h() / 2 - 1, "log", UIFA_LeftMiddle);
+
                 // 열기/닫기
                 ZAY_LTRB_UI(panel, panel.w() - 25, 0, panel.w(), panel.h(), "log-expand",
                     ZAY_GESTURE_T(t, this)

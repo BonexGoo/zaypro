@@ -69,19 +69,25 @@ public:
     void ResetJsonPath(chars jsonpath);
     bool IsConnected() const;
     void SendToClient(chars json);
-    void SetExpandDOM(bool expand);
+    void SetExpandDom(bool expand);
+    void SetExpandAtlas(bool expand);
     void SetExpandLog(bool expand);
 
 public:
     class Document
     {
     public:
-        Document() {mUpdateMsec = 0;}
-        ~Document() {}
-    public:
         String mResult;
         String mFormula;
-        uint64 mUpdateMsec;
+        uint64 mUpdateMsec {0};
+    };
+    class AtlasImage
+    {
+    public:
+        Image mImage;
+        String mAtlasPath; // C:/AllProjects/BossProjects/challengers/assets-rem/image/main_png
+        rect128 mValidRect {0, 0, 0, 0};
+        uint64 mUpdateMsec {0};
     };
     class LogElement
     {
@@ -148,6 +154,18 @@ public:
             if(unfocusmap().Access(mGroupID))
                 unfocusmap().Remove(mGroupID);
         }
+        void RemoveAll()
+        {
+            LogElement* CurElement = this;
+            while(CurElement->mNext)
+            {
+                LogElement* RemoveElement = CurElement->mNext;
+                CurElement->mNext = RemoveElement->mNext;
+                RemoveElement->mNext = nullptr;
+                delete RemoveElement;
+            }
+            unfocusmap().Reset();
+        }
         bool TickOnce()
         {
             bool NeedUpdate = false;
@@ -174,20 +192,32 @@ public:
     };
 
 public:
+    // Dom
+    void SetDomFilter(chars text);
+    void SetDomCount(sint32 count);
+    // Atlas
+    void SetAtlasFilter(chars text);
+    void SetAtlasCount(sint32 count);
+    // Log
     void AddLog(chars type, chars title, chars detail);
     void RemoveLog(sint32 groupid);
     sint32 GetCalcedLogCount();
     LogElement* GetLogElement();
     LogElement* NextLogElement(LogElement* element);
-    void SetDOMSearch(chars text);
-    void SetDOMCount(sint32 count);
 
 public:
     inline const String& jsonpath() const {return mLastJsonPath;}
-    inline const Map<Document>& dom() const {return mDOM;}
-    inline const String& domsearch() const {return mDOMSearch;}
-    inline sint32 domcount() const {return mDOMCount;}
-    inline bool expanddom() const {return mExpandedDOM;}
+    // Dom
+    inline bool expanddom() const {return mExpandedDom;}
+    inline const Map<Document>& dom() const {return mDom;}
+    inline const String& domfilter() const {return mDomFilter;}
+    inline sint32 domcount() const {return mDomCount;}
+    // Atlas
+    inline bool expandatlas() const {return mExpandedAtlas;}
+    inline const Map<AtlasImage>& atlas() const {return mAtlas;}
+    inline const String& atlasfilter() const {return mAtlasFilter;}
+    inline sint32 atlascount() const {return mAtlasCount;}
+    // Log
     inline bool expandlog() const {return mExpandedLog;}
 
 private:
@@ -195,10 +225,17 @@ private:
     String mLastJsonPath;
     bool mJsonPathUpdated;
     bool mConnected;
-    Map<Document> mDOM;
-    String mDOMSearch;
-    sint32 mDOMCount;
-    bool mExpandedDOM;
+    // Dom
+    bool mExpandedDom;
+    Map<Document> mDom; // [변수명]
+    String mDomFilter;
+    sint32 mDomCount;
+    // Atlas
+    bool mExpandedAtlas;
+    Map<AtlasImage> mAtlas; // [이미지명]
+    String mAtlasFilter;
+    sint32 mAtlasCount;
+    // Log
     bool mExpandedLog;
     LogElement mLogTitleTop;
     LogElement mLogDetailTop;
@@ -221,9 +258,10 @@ public:
 public:
     void RenderButton(ZayPanel& panel, chars name, Color color, ZayPanel::SubGestureCB cb);
     void RenderComponent(ZayPanel& panel, sint32 i, bool enable, bool blank);
-    void RenderDOM(ZayPanel& panel);
+    void RenderDomTab(ZayPanel& panel);
+    void RenderAtlasTab(ZayPanel& panel);
     void RenderMiniMap(ZayPanel& panel);
-    void RenderLogList(ZayPanel& panel);
+    void RenderLogTab(ZayPanel& panel);
     void RenderTitleBar(ZayPanel& panel);
     void RenderOutline(ZayPanel& panel);
 
