@@ -274,7 +274,7 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
         // 뷰
         ZAY_LTRB_SCISSOR(panel, 0, m->mTitleHeight, panel.w(), panel.h())
         {
-            ZAY_RGB(panel, 51, 61, 73)
+            ZAY_RGBA(panel, 51, 61, 73, 128)
                 panel.fill();
 
             // 작업뷰
