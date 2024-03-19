@@ -19,11 +19,11 @@
     <ROW Property="AiSkipExitDlg" Value="1"/>
     <ROW Property="AppLogoIcon" Value="applogoicon.bmp" MultiBuildValue="DefaultBuild:aether.jpg" Type="1" MsiKey="AppLogoIcon"/>
     <ROW Property="CTRLS" Value="3"/>
-    <ROW Property="Manufacturer" Value="AETHER ver.20240310b"/>
-    <ROW Property="ProductCode" Value="1033:{25164A6B-0F34-4118-979B-EFD0E6F5292D} 1041:{25164A6B-0F34-4118-979B-EFD0E6F5292D} 1042:{25164A6B-0F34-4118-979B-EFD0E6F5292D} " Type="16"/>
+    <ROW Property="Manufacturer" Value="AETHER ver.20240319"/>
+    <ROW Property="ProductCode" Value="1033:{848B8FA8-8453-48D9-BC81-533789394C84} 1041:{848B8FA8-8453-48D9-BC81-533789394C84} 1042:{848B8FA8-8453-48D9-BC81-533789394C84} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1042"/>
     <ROW Property="ProductName" Value="ZAYPRO"/>
-    <ROW Property="ProductVersion" Value="2024.03.10.1" Options="32"/>
+    <ROW Property="ProductVersion" Value="2024.03.19" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{C8B25A87-8550-4DB0-9113-961EC6633F68}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -92,13 +92,13 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AETHER" ComponentId="{F4A3A5F4-C3FA-4A91-A35E-260AFF24E5FB}" Directory_="AETHER_Dir" Attributes="0"/>
-    <ROW Component="AI_CustomARPName" ComponentId="{2AF940C2-3534-41DF-84A7-7450A0A05901}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
+    <ROW Component="AI_CustomARPName" ComponentId="{284DFBAD-FDB5-4D7E-BA0C-9E67EC48F6F4}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{72D60A55-B413-4EF0-8664-572AE39A7EDE}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
     <ROW Component="APPDIR" ComponentId="{E3763F94-EE93-44E1-B772-A00DE159FBE5}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="D3Dcompiler_47.dll" ComponentId="{53A20B04-639D-4AC5-BE45-37DCCBD3DD8F}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll"/>
     <ROW Component="D3Dcompiler_47.dll_1" ComponentId="{5A2CC829-C767-4542-B6F9-95F48A7826B9}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll_1"/>
     <ROW Component="Jalnan.ttf" ComponentId="{648C3EAD-77FD-42D7-AB36-0D9E595E352D}" Directory_="font_Dir" Attributes="0" Type="0"/>
-    <ROW Component="NotoSansKRBold.ttf" ComponentId="{0B7CEC6F-5B78-4D48-8993-312B5E9C66AB}" Directory_="font_1_Dir" Attributes="0" Type="0"/>
+    <ROW Component="NotoSansKRBold.ttf" ComponentId="{17B06040-BCE0-433B-A331-6B1318A59719}" Directory_="font_1_Dir" Attributes="0" Type="0"/>
     <ROW Component="ProductInformation" ComponentId="{A6F03292-0F5F-41A0-BA00-12018B168B7D}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="Qt5Bluetooth.dll" ComponentId="{316E6528-ED84-4C57-8525-DC41A2C9A237}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Bluetooth.dll"/>
     <ROW Component="Qt5Bluetooth.dll_1" ComponentId="{F4E38D1C-79A1-42B4-B294-3A891E0F1B4A}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Bluetooth.dll_1"/>
@@ -143,24 +143,24 @@
     <ROW Component="UINameTag.exe" ComponentId="{72DD7830-A2FE-4004-BC02-C2894ACF27CC}" Directory_="etc_Dir" Attributes="256" KeyPath="UINameTag.exe"/>
     <ROW Component="am.pak" ComponentId="{C86D0222-BED3-44B9-8CAE-BAE2A25BC0BB}" Directory_="qtwebengine_locales_Dir" Attributes="0" KeyPath="am.pak" Type="0"/>
     <ROW Component="am.pak_1" ComponentId="{E0CFA64C-EC22-4065-9F66-5428C302C016}" Directory_="qtwebengine_locales_1_Dir" Attributes="0" KeyPath="am.pak_1" Type="0"/>
-    <ROW Component="animation.json" ComponentId="{B767DAA6-767E-4637-9E89-B64A1D62BDBD}" Directory_="widget_Dir" Attributes="0" KeyPath="animation.json" Type="0"/>
-    <ROW Component="btn_atlas.png" ComponentId="{CCA68EF4-36B2-4166-8528-1C65423C3BB4}" Directory_="ui_component_Dir" Attributes="0" KeyPath="btn_atlas.png" Type="0"/>
+    <ROW Component="animation.json" ComponentId="{603BF152-014E-43A1-AEC2-699D5E68BE75}" Directory_="widget_Dir" Attributes="0" KeyPath="animation.json" Type="0"/>
+    <ROW Component="btn_atlas.png" ComponentId="{86238621-0E59-40E7-8039-E6C74614D313}" Directory_="ui_component_Dir" Attributes="0" KeyPath="btn_atlas.png" Type="0"/>
     <ROW Component="challengers.exe" ComponentId="{6BE9CA6B-B063-40D3-81CD-E292E4696C3C}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="challengers.exe"/>
     <ROW Component="concrt140.dll" ComponentId="{E80A162F-31CC-4FF2-912A-110C83CDCF4B}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="concrt140.dll"/>
     <ROW Component="concrt140.dll_1" ComponentId="{730070FC-FEE0-4439-B176-6068C4B94795}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="concrt140.dll_1"/>
     <ROW Component="dsengine.dll" ComponentId="{0C117B21-AD6E-4193-8565-681F2C571B7F}" Directory_="mediaservice_Dir" Attributes="256" KeyPath="dsengine.dll"/>
     <ROW Component="dsengine.dll_1" ComponentId="{C2DB0C40-76F5-4067-9E56-B7BC592E9902}" Directory_="mediaservice_1_Dir" Attributes="256" KeyPath="dsengine.dll_1"/>
-    <ROW Component="firebg.html" ComponentId="{1F62E9DD-D392-4669-8FA7-C99EAD915598}" Directory_="html_Dir" Attributes="0" KeyPath="firebg.html" Type="0"/>
+    <ROW Component="firebg.html" ComponentId="{04340FD0-35A2-4577-9E86-B2975DCD724A}" Directory_="html_Dir" Attributes="0" KeyPath="firebg.html" Type="0"/>
     <ROW Component="icon512.png" ComponentId="{ACFCB000-A20A-4660-9A79-CEC17865E05E}" Directory_="icon_Dir" Attributes="0" KeyPath="icon512.png" Type="0"/>
-    <ROW Component="icon_ui_action_atlas.png" ComponentId="{4C8D42AD-C69F-4376-B8BE-FC80F94073D1}" Directory_="icons_Dir" Attributes="0" KeyPath="icon_ui_action_atlas.png" Type="0"/>
+    <ROW Component="icon_ui_action_atlas.png" ComponentId="{EB362A11-D2E6-42B5-8DB2-90D818995B99}" Directory_="icons_Dir" Attributes="0" KeyPath="icon_ui_action_atlas.png" Type="0"/>
     <ROW Component="icudtl.dat" ComponentId="{9D4E9811-2412-486B-99B2-AAE41B4B2E04}" Directory_="resources_Dir" Attributes="0" KeyPath="icudtl.dat" Type="0"/>
     <ROW Component="icudtl.dat_1" ComponentId="{FF619D77-5F93-491F-B5B1-9EA87CD3D614}" Directory_="resources_1_Dir" Attributes="0" KeyPath="icudtl.dat_1" Type="0"/>
     <ROW Component="libEGL.dll" ComponentId="{2C41ACC3-C9E4-45D8-B764-CDDD45EDDFC5}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="libEGL.dll"/>
     <ROW Component="libEGL.dll_1" ComponentId="{5AAF32D6-506B-4B3C-9051-1457EFE50D39}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="libEGL.dll_1"/>
     <ROW Component="libGLESv2.dll" ComponentId="{22E9E22C-6ED8-4BFA-92A5-B6A19E527FF5}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="libGLESv2.dll"/>
     <ROW Component="libGLESv2.dll_1" ComponentId="{6239C1AF-72D1-4A65-A8B6-C7813A30CAFA}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="libGLESv2.dll_1"/>
-    <ROW Component="lovelee.mp3" ComponentId="{F5ED2D4B-CBE1-4FDE-B2BF-7BCF38086185}" Directory_="sound_Dir" Attributes="0" KeyPath="lovelee.mp3" Type="0"/>
-    <ROW Component="main.png" ComponentId="{F2F3335B-2E3A-49C8-8D49-CB0EB04B71DD}" Directory_="image_1_Dir" Attributes="0" KeyPath="main.png" Type="0"/>
+    <ROW Component="lovelee.mp3" ComponentId="{50D19787-3312-4E2F-B72D-A12A37CA86C5}" Directory_="sound_Dir" Attributes="0" KeyPath="lovelee.mp3" Type="0"/>
+    <ROW Component="main.png" ComponentId="{E32CFEF1-A800-42B4-8335-2FDF5406F85D}" Directory_="image_1_Dir" Attributes="0" KeyPath="main.png" Type="0"/>
     <ROW Component="msvcp140.dll" ComponentId="{CCFD2368-E551-409D-9B03-54B9342F31E3}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140.dll"/>
     <ROW Component="msvcp140.dll_1" ComponentId="{49FB98A4-FF66-4199-A022-52AE2D7FD43F}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="msvcp140.dll_1"/>
     <ROW Component="msvcp140_1.dll" ComponentId="{AEE1EF53-041B-4723-BE2A-870CF463D0C6}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_1.dll"/>
@@ -546,6 +546,7 @@
     <ROW File="flexible.json" Component_="animation.json" FileName="FLEXIB~1.JSO|flexible.json" Attributes="0" SourcePath="challengers\assets\widget\flexible.json" SelfReg="false"/>
     <ROW File="intro.json" Component_="animation.json" FileName="INTRO~1.JSO|intro.json" Attributes="0" SourcePath="challengers\assets\widget\intro.json" SelfReg="false"/>
     <ROW File="sample.json" Component_="animation.json" FileName="SAMPLE~1.JSO|sample.json" Attributes="0" SourcePath="challengers\assets\widget\sample.json" SelfReg="false"/>
+    <ROW File="todolist.json" Component_="animation.json" FileName="TODOLI~1.JSO|todolist.json" Attributes="0" SourcePath="challengers\assets\widget\todolist.json" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
