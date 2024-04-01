@@ -4,6 +4,9 @@
 
 #include <resource.hpp>
 
+sint32 gBgPercent = 100;
+sint32 gZoomPercent = 100;
+
 bool PlatformInit()
 {
     #if BOSS_WASM
@@ -18,12 +21,13 @@ bool PlatformInit()
 
     Platform::SetViewCreator(ZayView::Creator);
     Platform::SetWindowName("ZAYPRO");
-    Platform::SetWindowView("zayproView");
 
     // 윈도우 위치설정
     String WindowInfoString = String::FromAsset("windowinfo.json");
     Context WindowInfo(ST_Json, SO_OnlyReference, WindowInfoString, WindowInfoString.Length());
     const sint32 ScreenID = WindowInfo("screen").GetInt(0);
+    gBgPercent = WindowInfo("bgpercent").GetInt(100);
+    gZoomPercent = WindowInfo("zoompercent").GetInt(100);
     rect128 ScreenRect = {};
     Platform::Utility::GetScreenRect(ScreenRect, ScreenID);
     const sint32 ScreenWidth = ScreenRect.r - ScreenRect.l;
@@ -41,7 +45,6 @@ bool PlatformInit()
     R::AddAtlas("ui_atlaskey.png", "zaypro_atlas.png", AtlasInfo);
     if(R::IsAtlasUpdated())
         R::RebuildAll();
-
     Platform::AddProcedure(PE_100MSEC,
         [](payload data)->void
         {
@@ -51,6 +54,8 @@ bool PlatformInit()
                 Platform::UpdateAllViews();
             }
         });
+
+    Platform::SetWindowView("zayproView");
     return true;
 }
 
@@ -63,6 +68,8 @@ void PlatformQuit()
     Platform::Utility::GetScreenRect(ScreenRect, ScreenID);
     Context WindowInfo;
     WindowInfo.At("screen").Set(String::FromInteger(ScreenID));
+    WindowInfo.At("bgpercent").Set(String::FromInteger(gBgPercent));
+    WindowInfo.At("zoompercent").Set(String::FromInteger(gZoomPercent));
     WindowInfo.At("x").Set(String::FromInteger(WindowRect.l - ScreenRect.l));
     WindowInfo.At("y").Set(String::FromInteger(WindowRect.t - ScreenRect.t));
     WindowInfo.At("w").Set(String::FromInteger(WindowRect.r - WindowRect.l));

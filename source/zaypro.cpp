@@ -8,7 +8,8 @@ ZAY_DECLARE_VIEW_CLASS("zayproView", zayproData)
 
 String gTitleFont;
 String gBasicFont;
-sint32 gZoomPercent = 100;
+extern sint32 gBgPercent;
+extern sint32 gZoomPercent;
 
 ZAY_VIEW_API OnCommand(CommandType type, id_share in, id_cloned_share* out)
 {
@@ -266,6 +267,7 @@ ZAY_VIEW_API OnGesture(GestureType type, sint32 x, sint32 y)
 
 ZAY_VIEW_API OnRender(ZayPanel& panel)
 {
+    const sint32 BgOpacity = 32 + 223 * gBgPercent / 100;
     ZAY_FONT(panel, 1.0, gBasicFont)
     {
         // 타이틀바
@@ -274,7 +276,7 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
         // 뷰
         ZAY_LTRB_SCISSOR(panel, 0, m->mTitleHeight, panel.w(), panel.h())
         {
-            ZAY_RGBA(panel, 51, 61, 73, 160)
+            ZAY_RGBA(panel, 51, 61, 73, BgOpacity)
                 panel.fill();
 
             // 작업뷰
@@ -331,21 +333,15 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                     }
                 })
             {
-                ZAY_INNER(panel, 20)
+                ZAY_INNER(panel, 40)
                 ZAY_FONT(panel, 2.0)
+                ZAY_RGBA(panel, 31, 198, 253, 64)
                 {
-                    ZAY_RGBA(panel, 31, 198, 253, 32)
-                    {
-                        // 버전
-                        panel.text(m->mBuildTag, UIFA_LeftBottom, UIFE_Right);
-                        // 랜더카운트
-                        static sint32 RenderCount = 0;
-                        panel.text(String::Format("RENDER:%04d", RenderCount++ % 10000), UIFA_RightBottom, UIFE_Left);
-                    }
-                    // 배율정보(100%가 아닐때만)
-                    if(gZoomPercent != 100)
-                    ZAY_RGBA(panel, 31, 198, 253, 128)
-                        panel.text(String::Format("ZOOM:%03d%%", gZoomPercent), UIFA_CenterTop, UIFE_Right);
+                    // 버전
+                    panel.text(m->mBuildTag, UIFA_LeftBottom, UIFE_Right);
+                    // 랜더카운트
+                    static sint32 RenderCount = 0;
+                    panel.text(String::Format("RENDER_%04d", RenderCount++ % 10000), UIFA_RightBottom, UIFE_Left);
                 }
 
                 m->mWorkViewSize.w = panel.w() * 100 / gZoomPercent;
@@ -1203,7 +1199,6 @@ zayproData::zayproData() : mEasySaveEffect(updater())
     mNcRightBorder = false;
     mNcBottomBorder = false;
     mIsWindowDragging = false;
-    gZoomPercent = 100;
 }
 
 zayproData::~zayproData()
@@ -1969,7 +1964,29 @@ void zayproData::RenderMiniMap(ZayPanel& panel)
             ZAY_RGB(panel, 0, 0, 0)
                 panel.fill();
             ZAY_RGB(panel, 255, 255, 255)
-                panel.text(5, panel.h() / 2 - 1, "map", UIFA_LeftMiddle);
+            {
+                // 배율
+                panel.text(5, panel.h() / 2 - 1, (gZoomPercent == 100)? String("map")
+                    : String::Format("map_%d%%", gZoomPercent), UIFA_LeftMiddle);
+                // BG투명도
+                ZAY_RGBA_IF(panel, 128, 128, 128, 64, !(panel.state("map-opacity") & (PS_Focused | PS_Dragging)))
+                ZAY_LTRB_UI(panel, panel.w() - 5 - 60, 5, panel.w() - 5, panel.h() - 6, "map-opacity",
+                    ZAY_GESTURE_VNTXY(v, n, t, x, y)
+                    {
+                        if(t == GT_Pressed || t == GT_InDragging || t == GT_OutDragging)
+                        {
+                            const Rect MapRect(v->rect(n));
+                            gBgPercent = Math::Clamp(100 * (x - MapRect.l) / MapRect.Width(), 0, 100);
+                            v->invalidate();
+                        }
+                    })
+                {
+                    panel.rect(1);
+                    ZAY_INNER(panel, 1)
+                    ZAY_XYWH(panel, (panel.w() - 10) * gBgPercent / 100, 0, 10, panel.h())
+                        panel.fill();
+                }
+            }
         }
 
         // 바디
