@@ -45,13 +45,13 @@ ZAY_VIEW_API OnCommand(CommandType type, id_share in, id_cloned_share* out)
             const rect128 NewWindowRect = Platform::GetWindowRect();
             sint32 NewWindowWidth = NewWindowRect.r - NewWindowRect.l;
             sint32 NewWindowHeight = NewWindowRect.b - NewWindowRect.t;
-            if(NewWindowWidth != m->WindowDraggingSize.w || NewWindowHeight != m->WindowDraggingSize.h)
+            if(NewWindowWidth != m->mWindowDraggingSize.w || NewWindowHeight != m->mWindowDraggingSize.h)
             {
-                NewWindowWidth += (NewWindowWidth < m->WindowDraggingSize.w)? 1 : ((NewWindowWidth > m->WindowDraggingSize.w)? -1 : 0);
-                NewWindowHeight += (NewWindowHeight < m->WindowDraggingSize.h)? 1 : ((NewWindowHeight > m->WindowDraggingSize.h)? -1 : 0);
-                Platform::SetWindowRect(m->WindowDraggingPos.x, m->WindowDraggingPos.y,
-                    (NewWindowWidth * 9 + m->WindowDraggingSize.w * 1) / 10,
-                    (NewWindowHeight * 9 + m->WindowDraggingSize.h * 1) / 10);
+                NewWindowWidth += (NewWindowWidth < m->mWindowDraggingSize.w)? 1 : ((NewWindowWidth > m->mWindowDraggingSize.w)? -1 : 0);
+                NewWindowHeight += (NewWindowHeight < m->mWindowDraggingSize.h)? 1 : ((NewWindowHeight > m->mWindowDraggingSize.h)? -1 : 0);
+                Platform::SetWindowRect(m->mWindowDraggingPos.x, m->mWindowDraggingPos.y,
+                    (NewWindowWidth * 9 + m->mWindowDraggingSize.w * 1) / 10,
+                    (NewWindowHeight * 9 + m->mWindowDraggingSize.h * 1) / 10);
             }
         }
     }
@@ -232,6 +232,25 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
                 m->mPipe.SendToClient(Json.SaveJson());
             }
         }
+        jump(KeyCode == 115) // F4: 스포이드
+        {
+            point64 MousePos {0, 0};
+            Platform::Utility::GetCursorPos(MousePos);
+            rect128 ColorRect {MousePos.x, MousePos.y, MousePos.x + 1, MousePos.y + 1};
+            if(id_image_read LastImage = Platform::Utility::GetScreenshotImage(ColorRect))
+            if(id_bitmap NewBitmap = Platform::Utility::ImageToBitmap(LastImage))
+            {
+                auto Bits = Bmp::GetBits(NewBitmap);
+                m->mCapturedColor.r = Bits[2];
+                m->mCapturedColor.g = Bits[1];
+                m->mCapturedColor.b = Bits[0];
+                m->mCapturedEffect.Reset(1);
+                m->mCapturedEffect.MoveTo(0, 2.0);
+                Bmp::Remove(NewBitmap);
+                Platform::Utility::SendToTextClipboard(
+                    String::Format("#%02x%02x%02x", Bits[2], Bits[1], Bits[0]));
+            }
+        }
         jump(KeyCode == 116) // F5: 간단세이브
             m->FastSave();
     }
@@ -381,6 +400,21 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                     ZAY_INNER(panel, Border)
                     ZAY_RGBA(panel, 31, 198, 253, 192 * EasySaveAni / 100)
                         panel.rect(Border);
+                }
+
+                // 캡쳐된 색상
+                if(const sint32 ColorAni = (sint32) (30 * m->mCapturedEffect.value()))
+                {
+                    const sint32 RSize = ColorAni * ColorAni / 30;
+                    if(2 < RSize)
+                    ZAY_XYRR(panel, 10 + 30, 10 + 30, RSize, RSize)
+                    {
+                        ZAY_INNER(panel, -2)
+                        ZAY_RGB(panel, 0, 0, 0)
+                            panel.circle();
+                        ZAY_COLOR(panel, m->mCapturedColor)
+                            panel.circle();
+                    }
                 }
             }
 
@@ -1148,7 +1182,7 @@ ZEWidgetPipe::LogElement* ZEWidgetPipe::NextLogElement(LogElement* element)
     return Result;
 }
 
-zayproData::zayproData() : mEasySaveEffect(updater())
+zayproData::zayproData() : mEasySaveEffect(updater()), mCapturedEffect(updater())
 {
     String DateText = __DATE__;
     DateText.Replace("Jan", "01"); DateText.Replace("Feb", "02"); DateText.Replace("Mar", "03");
@@ -1161,6 +1195,7 @@ zayproData::zayproData() : mEasySaveEffect(updater())
     TimeText.Replace(":", "");
     mBuildTag = String::Format("BUILD_%s_%s_KST", (chars) DateText, (chars) TimeText);
     mEasySaveEffect.Reset(0);
+    mCapturedEffect.Reset(0);
 
     // 시스템폰트 등록
     if(buffer NewFontData = Asset::ToBuffer("font/Jalnan.ttf"))
@@ -2186,10 +2221,10 @@ void zayproData::RenderTitleBar(ZayPanel& panel)
                 {
                     Platform::Utility::GetCursorPos(OldCursorPos);
                     OldWindowRect = Platform::GetWindowRect();
-                    WindowDraggingPos.x = OldWindowRect.l;
-                    WindowDraggingPos.y = OldWindowRect.t;
-                    WindowDraggingSize.w = OldWindowRect.r - OldWindowRect.l;
-                    WindowDraggingSize.h = OldWindowRect.b - OldWindowRect.t;
+                    mWindowDraggingPos.x = OldWindowRect.l;
+                    mWindowDraggingPos.y = OldWindowRect.t;
+                    mWindowDraggingSize.w = OldWindowRect.r - OldWindowRect.l;
+                    mWindowDraggingSize.h = OldWindowRect.b - OldWindowRect.t;
                     clearCapture();
                 }
                 else if(t == GT_InDragging || t == GT_OutDragging)
@@ -2197,17 +2232,17 @@ void zayproData::RenderTitleBar(ZayPanel& panel)
                     mIsWindowDragging = true;
                     point64 CurCursorPos;
                     Platform::Utility::GetCursorPos(CurCursorPos);
-                    WindowDraggingPos.x = OldWindowRect.l + CurCursorPos.x - OldCursorPos.x;
-                    WindowDraggingPos.y = OldWindowRect.t + CurCursorPos.y - OldCursorPos.y;
-                    Platform::SetWindowPos(WindowDraggingPos.x, WindowDraggingPos.y);
+                    mWindowDraggingPos.x = OldWindowRect.l + CurCursorPos.x - OldCursorPos.x;
+                    mWindowDraggingPos.y = OldWindowRect.t + CurCursorPos.y - OldCursorPos.y;
+                    Platform::SetWindowPos(mWindowDraggingPos.x, mWindowDraggingPos.y);
                     invalidate();
                 }
                 else if(t == GT_InReleased || t == GT_OutReleased)
                 {
                     mIsWindowDragging = false;
                     Platform::SetWindowRect(
-                        WindowDraggingPos.x, WindowDraggingPos.y,
-                        WindowDraggingSize.w, WindowDraggingSize.h);
+                        mWindowDraggingPos.x, mWindowDraggingPos.y,
+                        mWindowDraggingSize.w, mWindowDraggingSize.h);
                 }
             }
         })

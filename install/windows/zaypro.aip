@@ -20,10 +20,10 @@
     <ROW Property="AppLogoIcon" Value="applogoicon.bmp" MultiBuildValue="DefaultBuild:aether.jpg" Type="1" MsiKey="AppLogoIcon"/>
     <ROW Property="CTRLS" Value="3"/>
     <ROW Property="Manufacturer" Value="AETHER"/>
-    <ROW Property="ProductCode" Value="1033:{642A6F95-7F3B-4FED-AE26-8140587F6A4C} 1041:{642A6F95-7F3B-4FED-AE26-8140587F6A4C} 1042:{642A6F95-7F3B-4FED-AE26-8140587F6A4C} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{299A5FE9-1552-455A-A86A-ED2C18F2C150} 1041:{299A5FE9-1552-455A-A86A-ED2C18F2C150} 1042:{299A5FE9-1552-455A-A86A-ED2C18F2C150} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1042"/>
     <ROW Property="ProductName" Value="ZAYPRO"/>
-    <ROW Property="ProductVersion" Value="2024.04.01" Options="32"/>
+    <ROW Property="ProductVersion" Value="2024.04.05" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{C8B25A87-8550-4DB0-9113-961EC6633F68}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -93,7 +93,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AETHER" ComponentId="{F4A3A5F4-C3FA-4A91-A35E-260AFF24E5FB}" Directory_="AETHER_Dir" Attributes="0"/>
-    <ROW Component="AI_CustomARPName" ComponentId="{C6ADE6A6-596F-4109-BA22-845976FAB808}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
+    <ROW Component="AI_CustomARPName" ComponentId="{308BAEA5-EBA8-4253-88CB-27E0741B697A}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{72D60A55-B413-4EF0-8664-572AE39A7EDE}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
     <ROW Component="APPDIR" ComponentId="{E3763F94-EE93-44E1-B772-A00DE159FBE5}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="D3Dcompiler_47.dll" ComponentId="{53A20B04-639D-4AC5-BE45-37DCCBD3DD8F}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll"/>

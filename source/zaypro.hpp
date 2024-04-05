@@ -282,6 +282,8 @@ public:
     Size mWorkViewSize;
     Point mWorkViewDrag;
     Point mWorkViewScroll;
+    Color mCapturedColor;
+    Tween1D mCapturedEffect;
 
 public: // 윈도우상태
     static const sint32 mTitleHeight = 37;
@@ -294,6 +296,6 @@ public: // 윈도우상태
     bool mNcRightBorder;
     bool mNcBottomBorder;
     bool mIsWindowDragging;
-    point64 WindowDraggingPos;
-    size64 WindowDraggingSize;
+    point64 mWindowDraggingPos;
+    size64 mWindowDraggingSize;
 };

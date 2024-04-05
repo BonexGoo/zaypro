@@ -1149,18 +1149,18 @@ sint32 ZEZayBox::BodyComment::GetCalcedSize(const BodyElement* sub) const
 
 void ZEZayBox::BodyComment::RenderCommentEditor(ZayPanel& panel, chars uiname)
 {
-    ZAY_RGB(panel, 255, 255, 255)
+    ZAY_RGB(panel, 42, 53, 64)
         panel.fill();
 
-    ZAY_INNER_SCISSOR(panel, 0)
-    ZAY_LTRB(panel, 3, 0, panel.w() - 3 - 4, panel.h())
+    ZAY_LTRB_SCISSOR(panel, 0, -5, panel.w(), panel.h()) // 커서의 KOR표시
+    ZAY_LTRB(panel, 3, 5, panel.w() - 3 - 4, panel.h())
     {
-        ZAY_RGB(panel, 0, 128, 0)
+        ZAY_RGB(panel, 0, 255, 0)
         if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, this))
             panel.repaint(2);
     }
 
-    ZAY_RGB(panel, 0, 0, 0)
+    ZAY_RGBA(panel, 0, 0, 0, 32)
         panel.rect(1);
 }
 
@@ -1186,13 +1186,13 @@ bool ZEZayBox::BodyComment::RenderInsider(chars uiname, chars rendername, ZayPan
     {
         if(!String::Compare(rendername, "content"))
         {
-            ZAY_RGB(panel, 0, 128, 0)
+            ZAY_RGB(panel, 0, 255, 0)
                 panel.text(mComment, UIFA_LeftMiddle, UIFE_Right);
             return true;
         }
         else if(!String::Compare(rendername, "default"))
         {
-            ZAY_RGBA(panel, 0, 0, 0, 64)
+            ZAY_RGBA(panel, 255, 255, 255, 96)
                 panel.text("(Write your comment)", UIFA_LeftMiddle, UIFE_Right);
             return true;
         }
@@ -1233,19 +1233,19 @@ sint32 ZEZayBox::BodyNameComment::GetCalcedSize(const BodyElement* sub) const
 
 void ZEZayBox::BodyNameComment::RenderNameCommentEditor(ZayPanel& panel, chars uiname, chars nametype)
 {
-    ZAY_RGB(panel, 255, 255, 255)
+    ZAY_RGB(panel, 42, 53, 64)
         panel.fill();
 
     mSavedNameType = nametype;
-    ZAY_INNER_SCISSOR(panel, 0)
-    ZAY_LTRB(panel, 3, 0, panel.w() - 3 - 4, panel.h())
+    ZAY_LTRB_SCISSOR(panel, 0, -5, panel.w(), panel.h()) // 커서의 KOR표시
+    ZAY_LTRB(panel, 3, 5, panel.w() - 3 - 4, panel.h())
     {
-        ZAY_RGB(panel, 0, 0, 0)
+        ZAY_RGB(panel, 255, 192, 0)
         if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, this))
             panel.repaint(2);
     }
 
-    ZAY_RGB(panel, 0, 0, 0)
+    ZAY_RGBA(panel, 0, 0, 0, 32)
         panel.rect(1);
 }
 
@@ -1288,25 +1288,25 @@ bool ZEZayBox::BodyNameComment::RenderInsider(chars uiname, chars rendername, Za
             {
                 if(mName.Length() == 0)
                 {
-                    ZAY_RGB(panel, 0, 128, 0)
+                    ZAY_RGB(panel, 0, 255, 0)
                         panel.text("#" + mComment, UIFA_LeftMiddle, UIFE_Right);
                 }
                 else
                 {
-                    ZAY_RGB(panel, 0, 0, 0)
+                    ZAY_RGB(panel, 255, 192, 0)
                         panel.text(mName, UIFA_LeftMiddle, UIFE_Right);
                     ZAY_LTRB(panel, Platform::Graphics::GetStringWidth(mName), 0, panel.w(), panel.h())
-                    ZAY_RGB(panel, 0, 128, 0)
+                    ZAY_RGB(panel, 0, 255, 0)
                         panel.text(" #" + mComment, UIFA_LeftMiddle, UIFE_Right);
                 }
             }
-            else ZAY_RGB(panel, 0, 0, 0)
+            else ZAY_RGB(panel, 255, 192, 0)
                 panel.text(mName, UIFA_LeftMiddle, UIFE_Right);
             return true;
         }
         else if(!String::Compare(rendername, "default"))
         {
-            ZAY_RGBA(panel, 0, 0, 0, 64)
+            ZAY_RGBA(panel, 255, 255, 255, 96)
                 panel.text(String::Format("(Write %s name#comment)", (chars) mSavedNameType), UIFA_LeftMiddle, UIFE_Right);
             return true;
         }
@@ -1971,9 +1971,9 @@ void ZEZayBox::BodyLoopOperation::RenderOperationEditor(ZayPanel& panel, chars u
     ZAY_LTRB(panel, 0, 0, RuleTextWidth + 2, panel.h())
     {
         ZAY_MOVE(panel, 1, 1)
-        ZAY_RGBA(panel, 255, 255, 255, 96)
+        ZAY_RGBA(panel, 0, 0, 0, 96)
             panel.text(RuleText, UIFA_LeftMiddle);
-        ZAY_RGB(panel, 0, 0, 0)
+        ZAY_RGBA(panel, 255, 255, 255, 192)
             panel.text(RuleText, UIFA_LeftMiddle);
     }
 
@@ -2128,9 +2128,9 @@ void ZEZayBox::BodyConditionOperation::RenderOperationEditor(ZayPanel& panel, ch
     ZAY_LTRB(panel, panel.w() - RuleTextWidth - 2, 0, panel.w(), panel.h())
     {
         ZAY_MOVE(panel, 1, 1)
-        ZAY_RGBA(panel, 255, 255, 255, 96)
+        ZAY_RGBA(panel, 0, 0, 0, 96)
             panel.text(RuleText, UIFA_RightMiddle);
-        ZAY_RGB(panel, 0, 0, 0)
+        ZAY_RGBA(panel, 255, 255, 255, 192)
             panel.text(RuleText, UIFA_RightMiddle);
     }
 }
@@ -2405,7 +2405,7 @@ void ZEZayBoxStarter::Render(ZayPanel& panel)
         if(mExpanded)
         ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
         {
-            ZAY_INNER(panel, 4)
+            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
             {
                 // 주석에디터
                 ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
@@ -2515,7 +2515,7 @@ void ZEZayBoxContent::Render(ZayPanel& panel)
         if(mExpanded)
         ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
         {
-            ZAY_INNER(panel, 4)
+            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
             {
                 // 주석에디터
                 ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
@@ -2686,7 +2686,7 @@ void ZEZayBoxLayout::Render(ZayPanel& panel)
         if(mExpanded)
         ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
         {
-            ZAY_INNER(panel, 4)
+            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
             {
                 // UI명칭주석에디터
                 ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
@@ -2820,7 +2820,7 @@ void ZEZayBoxCode::Render(ZayPanel& panel)
         if(mExpanded)
         ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
         {
-            ZAY_INNER(panel, 4)
+            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
             {
                 // 주석에디터
                 ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
@@ -2906,7 +2906,7 @@ void ZEZayBoxJumpOrGate::Render(ZayPanel& panel)
         if(mExpanded)
         ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
         {
-            ZAY_INNER(panel, 4)
+            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
             {
                 // 함수명칭주석에디터
                 ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
@@ -2983,7 +2983,7 @@ void ZEZayBoxLoop::Render(ZayPanel& panel)
         if(mExpanded)
         ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
         {
-            ZAY_INNER(panel, 4)
+            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
             {
                 // UI명칭주석에디터
                 ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
@@ -3065,7 +3065,7 @@ void ZEZayBoxCondition::Render(ZayPanel& panel)
         if(mExpanded && mHasElseAndOperation)
         ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
         {
-            ZAY_INNER(panel, 4)
+            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
             {
                 // 연산에디터
                 ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
