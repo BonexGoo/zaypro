@@ -1156,7 +1156,7 @@ void ZEZayBox::BodyComment::RenderCommentEditor(ZayPanel& panel, chars uiname)
     ZAY_LTRB(panel, 3, 5, panel.w() - 3 - 4, panel.h())
     {
         ZAY_RGB(panel, 0, 255, 0)
-        if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, this))
+        if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, false, this))
             panel.repaint(2);
     }
 
@@ -1241,7 +1241,7 @@ void ZEZayBox::BodyNameComment::RenderNameCommentEditor(ZayPanel& panel, chars u
     ZAY_LTRB(panel, 3, 5, panel.w() - 3 - 4, panel.h())
     {
         ZAY_RGB(panel, 255, 192, 0)
-        if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, this))
+        if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, false, this))
             panel.repaint(2);
     }
 
@@ -1455,7 +1455,7 @@ void ZEZayBox::BodyParamGroup::RenderParamEditor(ZayPanel& panel, chars uiname, 
     ZAY_LTRB(panel, 3, 0, panel.w() - ButtonWidth - 4, panel.h())
     {
         ZAY_RGB(panel, 0, 0, 0)
-        if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, this))
+        if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, false, this))
             panel.repaint(2);
     }
 
@@ -1849,7 +1849,7 @@ void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, 
         ZAY_LTRB(panel, 3, 0, panel.w() - 3 - 4, panel.h())
         {
             ZAY_RGB(panel, 0, 0, 0)
-            if(ZayControl::RenderEditBox(panel, UIKey, DomName(UIKey), 1, true, false, this))
+            if(ZayControl::RenderEditBox(panel, UIKey, DomName(UIKey), 1, true, false, false, this))
                 panel.repaint(2);
         }
 
@@ -1869,7 +1869,7 @@ void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, 
         ZAY_LTRB(panel, 3, 0, panel.w() - ButtonWidth - 4, panel.h())
         {
             ZAY_RGB(panel, 0, 0, 0)
-            if(ZayControl::RenderEditBox(panel, UIValue, DomName(UIValue), 1, true, false, this))
+            if(ZayControl::RenderEditBox(panel, UIValue, DomName(UIValue), 1, true, false, false, this))
                 panel.repaint(2);
         }
 
@@ -1988,7 +1988,7 @@ void ZEZayBox::BodyLoopOperation::RenderOperationEditor(ZayPanel& panel, chars u
         ZAY_LTRB(panel, 3, 0, panel.w() - 3 - 4, panel.h())
         {
             ZAY_RGB(panel, 0, 0, 0)
-            if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, this))
+            if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, false, this))
                 panel.repaint(2);
         }
 
@@ -2116,7 +2116,7 @@ void ZEZayBox::BodyConditionOperation::RenderOperationEditor(ZayPanel& panel, ch
         ZAY_LTRB(panel, 3, 0, panel.w() - 3 - 4, panel.h())
         {
             ZAY_RGB(panel, 0, 0, 0)
-            if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, this))
+            if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, false, this))
                 panel.repaint(2);
         }
 
