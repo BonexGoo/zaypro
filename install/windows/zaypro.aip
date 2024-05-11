@@ -20,10 +20,10 @@
     <ROW Property="AppLogoIcon" Value="applogoicon.bmp" MultiBuildValue="DefaultBuild:aether.jpg" Type="1" MsiKey="AppLogoIcon"/>
     <ROW Property="CTRLS" Value="3"/>
     <ROW Property="Manufacturer" Value="AETHER"/>
-    <ROW Property="ProductCode" Value="1033:{89A79603-9355-4071-8927-4469C2B6EF48} 1041:{89A79603-9355-4071-8927-4469C2B6EF48} 1042:{89A79603-9355-4071-8927-4469C2B6EF48} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{E7DA147C-63F5-46A3-9462-7744C91B5F95} 1041:{E7DA147C-63F5-46A3-9462-7744C91B5F95} 1042:{E7DA147C-63F5-46A3-9462-7744C91B5F95} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1042"/>
     <ROW Property="ProductName" Value="ZAYPRO"/>
-    <ROW Property="ProductVersion" Value="2024.04.16" Options="32"/>
+    <ROW Property="ProductVersion" Value="2024.05.12" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{C8B25A87-8550-4DB0-9113-961EC6633F68}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -45,193 +45,136 @@
     <ROW Directory="ProgramFilesFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~3|ProgramFilesFolder" IsPseudoRoot="1"/>
     <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
-    <ROW Directory="WindowsVolume" Directory_Parent="TARGETDIR" DefaultDir="WINDOW~1|WindowsVolume" IsPseudoRoot="1"/>
-    <ROW Directory="assets_1_Dir" Directory_Parent="challengers_Dir" DefaultDir="assets"/>
+    <ROW Directory="__1_Dir" Directory_Parent="zayproexamples_Dir" DefaultDir="오셀로"/>
+    <ROW Directory="__2_Dir" Directory_Parent="zayproexamples_Dir" DefaultDir="테트리스"/>
+    <ROW Directory="__Dir" Directory_Parent="zayproexamples_Dir" DefaultDir="스네이크"/>
     <ROW Directory="assets_Dir" Directory_Parent="zaypro_Dir" DefaultDir="assets"/>
-    <ROW Directory="audio_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="audio"/>
     <ROW Directory="audio_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="audio"/>
-    <ROW Directory="bearer_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="bearer"/>
     <ROW Directory="bearer_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="bearer"/>
-    <ROW Directory="bin_Release64_1_Dir" Directory_Parent="challengers_Dir" DefaultDir="BIN_RE~1|bin_Release64"/>
     <ROW Directory="bin_Release64_Dir" Directory_Parent="zaypro_Dir" DefaultDir="BIN_RE~1|bin_Release64"/>
-    <ROW Directory="challengers_Dir" Directory_Parent="WindowsVolume" DefaultDir="CHALLE~1|challengers"/>
-    <ROW Directory="etc_Dir" Directory_Parent="challengers_Dir" DefaultDir="etc"/>
-    <ROW Directory="font_1_Dir" Directory_Parent="assets_1_Dir" DefaultDir="font"/>
+    <ROW Directory="font_1_Dir" Directory_Parent="__Dir" DefaultDir="font"/>
+    <ROW Directory="font_2_Dir" Directory_Parent="__1_Dir" DefaultDir="font"/>
+    <ROW Directory="font_3_Dir" Directory_Parent="__2_Dir" DefaultDir="font"/>
     <ROW Directory="font_Dir" Directory_Parent="assets_Dir" DefaultDir="font"/>
-    <ROW Directory="html_Dir" Directory_Parent="assets_1_Dir" DefaultDir="html"/>
     <ROW Directory="icon_Dir" Directory_Parent="assets_Dir" DefaultDir="icon"/>
-    <ROW Directory="iconengines_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="ICONEN~1|iconengines"/>
     <ROW Directory="iconengines_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="ICONEN~1|iconengines"/>
-    <ROW Directory="icons_Dir" Directory_Parent="image_1_Dir" DefaultDir="icons"/>
-    <ROW Directory="image_1_Dir" Directory_Parent="assets_1_Dir" DefaultDir="image"/>
+    <ROW Directory="image_1_Dir" Directory_Parent="__Dir" DefaultDir="image"/>
+    <ROW Directory="image_2_Dir" Directory_Parent="__1_Dir" DefaultDir="image"/>
+    <ROW Directory="image_3_Dir" Directory_Parent="__2_Dir" DefaultDir="image"/>
     <ROW Directory="image_Dir" Directory_Parent="assets_Dir" DefaultDir="image"/>
-    <ROW Directory="imageformats_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="IMAGEF~1|imageformats"/>
     <ROW Directory="imageformats_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="IMAGEF~1|imageformats"/>
-    <ROW Directory="mediaservice_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="MEDIAS~1|mediaservice"/>
+    <ROW Directory="main_png_1_Dir" Directory_Parent="image_2_Dir" DefaultDir="main_png"/>
+    <ROW Directory="main_png_2_Dir" Directory_Parent="image_3_Dir" DefaultDir="main_png"/>
+    <ROW Directory="main_png_Dir" Directory_Parent="image_1_Dir" DefaultDir="main_png"/>
     <ROW Directory="mediaservice_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="MEDIAS~1|mediaservice"/>
-    <ROW Directory="platforms_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="PLATFO~1|platforms"/>
     <ROW Directory="platforms_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="PLATFO~1|platforms"/>
-    <ROW Directory="playlistformats_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="PLAYLI~1|playlistformats"/>
     <ROW Directory="playlistformats_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="PLAYLI~1|playlistformats"/>
-    <ROW Directory="position_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="position"/>
     <ROW Directory="position_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="position"/>
-    <ROW Directory="printsupport_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="PRINTS~1|printsupport"/>
     <ROW Directory="printsupport_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="PRINTS~1|printsupport"/>
-    <ROW Directory="python_Dir" Directory_Parent="challengers_Dir" DefaultDir="python"/>
-    <ROW Directory="qtwebengine_locales_1_Dir" Directory_Parent="translations_1_Dir" DefaultDir="QTWEBE~1|qtwebengine_locales"/>
     <ROW Directory="qtwebengine_locales_Dir" Directory_Parent="translations_Dir" DefaultDir="QTWEBE~1|qtwebengine_locales"/>
-    <ROW Directory="resources_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="RESOUR~1|resources"/>
     <ROW Directory="resources_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="RESOUR~1|resources"/>
-    <ROW Directory="sound_Dir" Directory_Parent="assets_1_Dir" DefaultDir="sound"/>
-    <ROW Directory="styles_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="styles"/>
+    <ROW Directory="sound_1_Dir" Directory_Parent="__1_Dir" DefaultDir="sound"/>
+    <ROW Directory="sound_2_Dir" Directory_Parent="__2_Dir" DefaultDir="sound"/>
+    <ROW Directory="sound_Dir" Directory_Parent="__Dir" DefaultDir="sound"/>
     <ROW Directory="styles_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="styles"/>
-    <ROW Directory="translations_1_Dir" Directory_Parent="bin_Release64_1_Dir" DefaultDir="TRANSL~1|translations"/>
     <ROW Directory="translations_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="TRANSL~1|translations"/>
-    <ROW Directory="ui_component_Dir" Directory_Parent="image_1_Dir" DefaultDir="UI_COM~1|ui_component"/>
-    <ROW Directory="widget_Dir" Directory_Parent="assets_1_Dir" DefaultDir="widget"/>
+    <ROW Directory="widget_1_Dir" Directory_Parent="__1_Dir" DefaultDir="widget"/>
+    <ROW Directory="widget_2_Dir" Directory_Parent="__2_Dir" DefaultDir="widget"/>
+    <ROW Directory="widget_Dir" Directory_Parent="__Dir" DefaultDir="widget"/>
     <ROW Directory="zaypro_Dir" Directory_Parent="AETHER_1_Dir" DefaultDir="zaypro"/>
+    <ROW Directory="zayproexamples_Dir" Directory_Parent="DesktopFolder" DefaultDir="ZAYPRO~1|zaypro examples"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AETHER" ComponentId="{F4A3A5F4-C3FA-4A91-A35E-260AFF24E5FB}" Directory_="AETHER_Dir" Attributes="0"/>
-    <ROW Component="AI_CustomARPName" ComponentId="{7F80CC34-61C7-4519-9380-8D615C6F4877}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
+    <ROW Component="AI_CustomARPName" ComponentId="{D90BED5A-AAF5-4D28-95A4-40E53C2217DE}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{72D60A55-B413-4EF0-8664-572AE39A7EDE}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
     <ROW Component="APPDIR" ComponentId="{E3763F94-EE93-44E1-B772-A00DE159FBE5}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="D3Dcompiler_47.dll" ComponentId="{53A20B04-639D-4AC5-BE45-37DCCBD3DD8F}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll"/>
-    <ROW Component="D3Dcompiler_47.dll_1" ComponentId="{5A2CC829-C767-4542-B6F9-95F48A7826B9}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll_1"/>
-    <ROW Component="Jalnan.ttf" ComponentId="{648C3EAD-77FD-42D7-AB36-0D9E595E352D}" Directory_="font_Dir" Attributes="0" Type="0"/>
-    <ROW Component="NotoSansKRBold.ttf" ComponentId="{927985B8-4C0B-4E1B-B2BF-E96EA81A9CA7}" Directory_="font_1_Dir" Attributes="0" Type="0"/>
+    <ROW Component="D3Dcompiler_47.dll" ComponentId="{6362A4E7-49F9-4BDE-861D-8B84542517E9}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll"/>
+    <ROW Component="Jalnan.ttf" ComponentId="{6CE71415-1718-41A2-9910-DBC972B2FD6B}" Directory_="font_Dir" Attributes="0" Type="0"/>
+    <ROW Component="NotoSansKRBold.ttf" ComponentId="{73611EA2-4C11-44B6-BB02-2ADBDE0D7600}" Directory_="font_1_Dir" Attributes="0" Type="0"/>
+    <ROW Component="NotoSansKRBold.ttf_1" ComponentId="{8E135E53-80D6-43DD-8B68-79F623A5F8BF}" Directory_="font_2_Dir" Attributes="0" Type="0"/>
+    <ROW Component="NotoSansKRBold.ttf_2" ComponentId="{257B4722-0400-4C4B-AE27-2B57547426B9}" Directory_="font_3_Dir" Attributes="0" Type="0"/>
     <ROW Component="ProductInformation" ComponentId="{A6F03292-0F5F-41A0-BA00-12018B168B7D}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
-    <ROW Component="Qt5Bluetooth.dll" ComponentId="{316E6528-ED84-4C57-8525-DC41A2C9A237}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Bluetooth.dll"/>
-    <ROW Component="Qt5Bluetooth.dll_1" ComponentId="{F4E38D1C-79A1-42B4-B294-3A891E0F1B4A}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Bluetooth.dll_1"/>
-    <ROW Component="Qt5Core.dll" ComponentId="{83DA38F1-C157-4A85-872C-041D017F1F3F}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Core.dll"/>
-    <ROW Component="Qt5Core.dll_1" ComponentId="{D2D874CE-AB74-4865-B26A-900C9EC97F4C}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Core.dll_1"/>
-    <ROW Component="Qt5Gui.dll" ComponentId="{44A7D492-55FC-4CA8-AB23-34F65958F638}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Gui.dll"/>
-    <ROW Component="Qt5Gui.dll_1" ComponentId="{57D0F6D2-D2EE-4926-9012-43700798DB22}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Gui.dll_1"/>
-    <ROW Component="Qt5Multimedia.dll" ComponentId="{434CC9DD-67D0-43DF-938B-8CA3B0EB07C8}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Multimedia.dll"/>
-    <ROW Component="Qt5Multimedia.dll_1" ComponentId="{F94CD16E-1EA6-402E-A34A-FF10FBB2E17E}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Multimedia.dll_1"/>
-    <ROW Component="Qt5Network.dll" ComponentId="{9D746B99-16AB-440C-9695-3D298838578D}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Network.dll"/>
-    <ROW Component="Qt5Network.dll_1" ComponentId="{31AFBE3E-A1D4-400A-836B-BD282072ABC5}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Network.dll_1"/>
-    <ROW Component="Qt5OpenGL.dll" ComponentId="{57B150BC-E722-4B1D-9412-5F4824F5F0E9}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5OpenGL.dll"/>
-    <ROW Component="Qt5OpenGL.dll_1" ComponentId="{A40914BD-1ABD-436B-B7EB-A3EFE5AD7840}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5OpenGL.dll_1"/>
-    <ROW Component="Qt5Positioning.dll" ComponentId="{7493DD56-88C6-4200-AAB6-E895D5521882}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Positioning.dll"/>
-    <ROW Component="Qt5Positioning.dll_1" ComponentId="{81917576-CA56-48C8-8E51-F37A14B8324F}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Positioning.dll_1"/>
-    <ROW Component="Qt5PrintSupport.dll" ComponentId="{268F6F65-D822-467B-8BF1-F390616EDEC9}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5PrintSupport.dll"/>
-    <ROW Component="Qt5PrintSupport.dll_1" ComponentId="{3C81DFEE-E65B-4119-BD01-0C1B2AF16BC8}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5PrintSupport.dll_1"/>
-    <ROW Component="Qt5Qml.dll" ComponentId="{C98C1CA0-689D-458B-82FD-CCC6DD027D35}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Qml.dll"/>
-    <ROW Component="Qt5Qml.dll_1" ComponentId="{7A8E9DB4-25CD-444C-B174-7E62E34194CB}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Qml.dll_1"/>
-    <ROW Component="Qt5QmlModels.dll" ComponentId="{B48C9C5D-1294-47F3-9344-A771B862FA96}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5QmlModels.dll"/>
-    <ROW Component="Qt5QmlModels.dll_1" ComponentId="{75A754D0-CA6E-48E1-9278-85E406893934}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5QmlModels.dll_1"/>
-    <ROW Component="Qt5Quick.dll" ComponentId="{96EC6A06-3C32-426F-AC33-37C0418921B6}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Quick.dll"/>
-    <ROW Component="Qt5Quick.dll_1" ComponentId="{C53E09AE-3549-48C4-BAA8-ADD93344B553}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Quick.dll_1"/>
-    <ROW Component="Qt5QuickWidgets.dll" ComponentId="{15421F41-A8DB-48C0-A76A-F6AB4E6F599C}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5QuickWidgets.dll"/>
-    <ROW Component="Qt5QuickWidgets.dll_1" ComponentId="{492D8E95-C992-47A4-88F3-01458D64BF68}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5QuickWidgets.dll_1"/>
-    <ROW Component="Qt5SerialPort.dll" ComponentId="{A58483CB-C495-433A-9C39-058ADED408C8}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5SerialPort.dll"/>
-    <ROW Component="Qt5SerialPort.dll_1" ComponentId="{91CFDA50-0DDA-4073-A4F1-D8E1BAB49D33}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5SerialPort.dll_1"/>
-    <ROW Component="Qt5Svg.dll" ComponentId="{66D7ED59-8B05-4545-9636-CA5EEF7BE6BC}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Svg.dll"/>
-    <ROW Component="Qt5Svg.dll_1" ComponentId="{AF92222D-E0CB-4E8E-8965-BABE9466CA2A}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Svg.dll_1"/>
-    <ROW Component="Qt5WebChannel.dll" ComponentId="{8C74D57E-BAEB-471B-BCC1-F923B5E1169C}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebChannel.dll"/>
-    <ROW Component="Qt5WebChannel.dll_1" ComponentId="{1284AB90-3015-462F-A839-C318F0BC3BB0}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5WebChannel.dll_1"/>
-    <ROW Component="Qt5WebEngineCore.dll" ComponentId="{0E9367AE-BA50-4E99-B811-A3D7419C6335}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebEngineCore.dll"/>
-    <ROW Component="Qt5WebEngineCore.dll_1" ComponentId="{B6DF2C36-E6EC-427B-A65F-2A1EE80409A6}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5WebEngineCore.dll_1"/>
-    <ROW Component="Qt5WebEngineWidgets.dll" ComponentId="{C875E610-8C75-4DB0-AA42-DE6298B9451B}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebEngineWidgets.dll"/>
-    <ROW Component="Qt5WebEngineWidgets.dll_1" ComponentId="{BE3602E2-B9EC-4BBB-B6B9-C5EE8E66FCE0}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5WebEngineWidgets.dll_1"/>
-    <ROW Component="Qt5WebSockets.dll" ComponentId="{462ADB76-4DBA-481A-8D64-996921F632B0}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebSockets.dll"/>
-    <ROW Component="Qt5WebSockets.dll_1" ComponentId="{4DAACAFF-D276-41BF-8F4D-F16BB9B3A4C3}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5WebSockets.dll_1"/>
-    <ROW Component="Qt5Widgets.dll" ComponentId="{79BB1BEF-86DD-4B59-85E4-C65B89354570}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Widgets.dll"/>
-    <ROW Component="Qt5Widgets.dll_1" ComponentId="{A51174D5-BDA8-460D-A1D0-5160F60CFB4E}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="Qt5Widgets.dll_1"/>
-    <ROW Component="QtWebEngineProcess.exe" ComponentId="{9F21D184-601A-4282-B3C6-37E7A53E2A24}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="QtWebEngineProcess.exe"/>
-    <ROW Component="QtWebEngineProcess.exe_1" ComponentId="{84628155-4952-4A20-8CD2-3A74B8931165}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="QtWebEngineProcess.exe_1"/>
-    <ROW Component="UINameTag.exe" ComponentId="{72DD7830-A2FE-4004-BC02-C2894ACF27CC}" Directory_="etc_Dir" Attributes="256" KeyPath="UINameTag.exe"/>
-    <ROW Component="am.pak" ComponentId="{C86D0222-BED3-44B9-8CAE-BAE2A25BC0BB}" Directory_="qtwebengine_locales_Dir" Attributes="0" KeyPath="am.pak" Type="0"/>
-    <ROW Component="am.pak_1" ComponentId="{E0CFA64C-EC22-4065-9F66-5428C302C016}" Directory_="qtwebengine_locales_1_Dir" Attributes="0" KeyPath="am.pak_1" Type="0"/>
-    <ROW Component="animation.json" ComponentId="{721659CF-B03C-4EF6-9A6C-F8D9246D06C5}" Directory_="widget_Dir" Attributes="0" KeyPath="animation.json" Type="0"/>
-    <ROW Component="btn_atlas.png" ComponentId="{C0F995F7-1919-45BC-97C5-06E0EBFC5D05}" Directory_="ui_component_Dir" Attributes="0" KeyPath="btn_atlas.png" Type="0"/>
-    <ROW Component="challengers.exe" ComponentId="{6BE9CA6B-B063-40D3-81CD-E292E4696C3C}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="challengers.exe"/>
-    <ROW Component="challengers.py" ComponentId="{87E1C65A-EC3C-41EA-ACEF-1CD622A1A0A7}" Directory_="python_Dir" Attributes="0" KeyPath="challengers.py" Type="0"/>
-    <ROW Component="concrt140.dll" ComponentId="{E80A162F-31CC-4FF2-912A-110C83CDCF4B}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="concrt140.dll"/>
-    <ROW Component="concrt140.dll_1" ComponentId="{730070FC-FEE0-4439-B176-6068C4B94795}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="concrt140.dll_1"/>
-    <ROW Component="dsengine.dll" ComponentId="{0C117B21-AD6E-4193-8565-681F2C571B7F}" Directory_="mediaservice_Dir" Attributes="256" KeyPath="dsengine.dll"/>
-    <ROW Component="dsengine.dll_1" ComponentId="{C2DB0C40-76F5-4067-9E56-B7BC592E9902}" Directory_="mediaservice_1_Dir" Attributes="256" KeyPath="dsengine.dll_1"/>
-    <ROW Component="firebg.html" ComponentId="{9B746E51-3553-401A-96D5-FCBB4115FB3F}" Directory_="html_Dir" Attributes="0" KeyPath="firebg.html" Type="0"/>
-    <ROW Component="icon512.png" ComponentId="{ACFCB000-A20A-4660-9A79-CEC17865E05E}" Directory_="icon_Dir" Attributes="0" KeyPath="icon512.png" Type="0"/>
-    <ROW Component="icon_ui_action_atlas.png" ComponentId="{2436DF90-8A4C-4F74-A614-AC5505AA7EA4}" Directory_="icons_Dir" Attributes="0" KeyPath="icon_ui_action_atlas.png" Type="0"/>
-    <ROW Component="icudtl.dat" ComponentId="{9D4E9811-2412-486B-99B2-AAE41B4B2E04}" Directory_="resources_Dir" Attributes="0" KeyPath="icudtl.dat" Type="0"/>
-    <ROW Component="icudtl.dat_1" ComponentId="{FF619D77-5F93-491F-B5B1-9EA87CD3D614}" Directory_="resources_1_Dir" Attributes="0" KeyPath="icudtl.dat_1" Type="0"/>
-    <ROW Component="libEGL.dll" ComponentId="{2C41ACC3-C9E4-45D8-B764-CDDD45EDDFC5}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="libEGL.dll"/>
-    <ROW Component="libEGL.dll_1" ComponentId="{5AAF32D6-506B-4B3C-9051-1457EFE50D39}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="libEGL.dll_1"/>
-    <ROW Component="libGLESv2.dll" ComponentId="{22E9E22C-6ED8-4BFA-92A5-B6A19E527FF5}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="libGLESv2.dll"/>
-    <ROW Component="libGLESv2.dll_1" ComponentId="{6239C1AF-72D1-4A65-A8B6-C7813A30CAFA}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="libGLESv2.dll_1"/>
-    <ROW Component="lovelee.mp3" ComponentId="{F014C43D-1A18-403F-A052-D6E78B4AC8D8}" Directory_="sound_Dir" Attributes="0" KeyPath="lovelee.mp3" Type="0"/>
-    <ROW Component="main.png" ComponentId="{F88C9825-FEA5-41A6-A104-DB9D525DDC3E}" Directory_="image_1_Dir" Attributes="0" KeyPath="main.png" Type="0"/>
-    <ROW Component="msvcp140.dll" ComponentId="{CCFD2368-E551-409D-9B03-54B9342F31E3}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140.dll"/>
-    <ROW Component="msvcp140.dll_1" ComponentId="{49FB98A4-FF66-4199-A022-52AE2D7FD43F}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="msvcp140.dll_1"/>
-    <ROW Component="msvcp140_1.dll" ComponentId="{AEE1EF53-041B-4723-BE2A-870CF463D0C6}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_1.dll"/>
-    <ROW Component="msvcp140_1.dll_1" ComponentId="{E0EC040B-F708-4EBA-8809-FEA6F6069BD8}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="msvcp140_1.dll_1"/>
-    <ROW Component="msvcp140_2.dll" ComponentId="{F6F48289-9B39-4786-A2EB-16832CE74A78}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_2.dll"/>
-    <ROW Component="msvcp140_2.dll_1" ComponentId="{E3946C20-321B-408D-9FC3-4A4BD2900D4B}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="msvcp140_2.dll_1"/>
-    <ROW Component="msvcp140_atomic_wait.dll" ComponentId="{BFE2AC62-F2B8-4AEF-ACB0-32FA601A067C}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_atomic_wait.dll"/>
-    <ROW Component="msvcp140_atomic_wait.dll_1" ComponentId="{B6B63D3C-C1BA-4A36-94DB-9174D742043F}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="msvcp140_atomic_wait.dll_1"/>
-    <ROW Component="msvcp140_codecvt_ids.dll" ComponentId="{0E1487C1-4C6C-4351-B5D3-732ACB58E6DA}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_codecvt_ids.dll"/>
-    <ROW Component="msvcp140_codecvt_ids.dll_1" ComponentId="{2C94B4BA-530C-44E1-B091-2DBA605B9DB1}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="msvcp140_codecvt_ids.dll_1"/>
-    <ROW Component="noimg.png" ComponentId="{451D6F36-1AC5-4132-9ACE-968B5884C93C}" Directory_="image_Dir" Attributes="0" KeyPath="noimg.png" Type="0"/>
-    <ROW Component="opengl32sw.dll" ComponentId="{C01BC2C9-D187-4E42-9F2D-8EE60F5E91F6}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="opengl32sw.dll"/>
-    <ROW Component="opengl32sw.dll_1" ComponentId="{F10619EA-D709-45D4-A954-50408E21B369}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="opengl32sw.dll_1"/>
-    <ROW Component="qgenericbearer.dll" ComponentId="{F58DED3B-1D54-4A4C-828F-973C9D7F5641}" Directory_="bearer_Dir" Attributes="256" KeyPath="qgenericbearer.dll"/>
-    <ROW Component="qgenericbearer.dll_1" ComponentId="{2F28F00D-0489-4719-BB8E-0B58D0DDA6BE}" Directory_="bearer_1_Dir" Attributes="256" KeyPath="qgenericbearer.dll_1"/>
-    <ROW Component="qgif.dll" ComponentId="{37CC9F72-9D3C-4A14-AFC7-99C6483BEA72}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qgif.dll"/>
-    <ROW Component="qgif.dll_1" ComponentId="{F302D55F-F70A-4DDC-8FE1-48C38F11F550}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qgif.dll_1"/>
-    <ROW Component="qicns.dll" ComponentId="{1A7C960C-DD0E-4AF0-8AD6-22950B009EBB}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qicns.dll"/>
-    <ROW Component="qicns.dll_1" ComponentId="{5853AB67-E4FD-4CE1-915C-A53E65FEB15A}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qicns.dll_1"/>
-    <ROW Component="qico.dll" ComponentId="{90242FE4-F185-4D3B-BAD7-92038B87E866}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qico.dll"/>
-    <ROW Component="qico.dll_1" ComponentId="{D2171D37-2171-4385-BA0C-608FACC03196}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qico.dll_1"/>
-    <ROW Component="qjpeg.dll" ComponentId="{5B092F64-DC29-4C45-A2FA-AC5E0B49B3CD}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qjpeg.dll"/>
-    <ROW Component="qjpeg.dll_1" ComponentId="{82226437-9325-4F71-82EE-FA8C3FDFB96D}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qjpeg.dll_1"/>
-    <ROW Component="qsvg.dll" ComponentId="{B8C4263B-F198-40F5-8AFE-B840FCDE53EF}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qsvg.dll"/>
-    <ROW Component="qsvg.dll_1" ComponentId="{74CAF375-41C2-4F56-8888-98751266093B}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qsvg.dll_1"/>
-    <ROW Component="qsvgicon.dll" ComponentId="{1EA249B2-0D4A-49B0-BEBD-00CD02F7304F}" Directory_="iconengines_Dir" Attributes="256" KeyPath="qsvgicon.dll"/>
-    <ROW Component="qsvgicon.dll_1" ComponentId="{62C13207-61B0-47B1-8C7F-41FE58B029C0}" Directory_="iconengines_1_Dir" Attributes="256" KeyPath="qsvgicon.dll_1"/>
-    <ROW Component="qt_ar.qm" ComponentId="{F4D64047-EF77-4E28-8FB2-DED8BA000715}" Directory_="translations_Dir" Attributes="0" KeyPath="qt_ar.qm" Type="0"/>
-    <ROW Component="qt_ar.qm_1" ComponentId="{167FF7D3-1861-45E3-8014-B482B73810B7}" Directory_="translations_1_Dir" Attributes="0" KeyPath="qt_ar.qm_1" Type="0"/>
-    <ROW Component="qtaudio_wasapi.dll" ComponentId="{4E73581E-7C6D-4F2A-BD69-866E2983932F}" Directory_="audio_Dir" Attributes="256" KeyPath="qtaudio_wasapi.dll"/>
-    <ROW Component="qtaudio_wasapi.dll_1" ComponentId="{631B06DC-3A8D-4C9A-A62C-DF6D8848D998}" Directory_="audio_1_Dir" Attributes="256" KeyPath="qtaudio_wasapi.dll_1"/>
-    <ROW Component="qtaudio_windows.dll" ComponentId="{D434F499-1582-4F34-B41B-2BDCE933B3AC}" Directory_="audio_Dir" Attributes="256" KeyPath="qtaudio_windows.dll"/>
-    <ROW Component="qtaudio_windows.dll_1" ComponentId="{64FD886D-D10C-4AD5-85F0-CA52007067FB}" Directory_="audio_1_Dir" Attributes="256" KeyPath="qtaudio_windows.dll_1"/>
-    <ROW Component="qtga.dll" ComponentId="{2F0CACA2-CDF3-40EA-A88C-C98E8B9B8543}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qtga.dll"/>
-    <ROW Component="qtga.dll_1" ComponentId="{7CDA89EF-D92C-49D4-84B4-73D61AEC594D}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qtga.dll_1"/>
-    <ROW Component="qtiff.dll" ComponentId="{01EB74C1-8723-454E-B30B-603783E96985}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qtiff.dll"/>
-    <ROW Component="qtiff.dll_1" ComponentId="{AED247C8-2934-448C-AD87-A85303ECE95F}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qtiff.dll_1"/>
-    <ROW Component="qtmedia_audioengine.dll" ComponentId="{648F386E-716B-4CA4-BE02-3E6619E52C5D}" Directory_="mediaservice_Dir" Attributes="256" KeyPath="qtmedia_audioengine.dll"/>
-    <ROW Component="qtmedia_audioengine.dll_1" ComponentId="{7C1C1B63-34D5-4153-A1CF-CBE6CC7DEADA}" Directory_="mediaservice_1_Dir" Attributes="256" KeyPath="qtmedia_audioengine.dll_1"/>
-    <ROW Component="qtmultimedia_m3u.dll" ComponentId="{36977BDB-DDA9-4AEA-B5D0-49F7CD2F1EA2}" Directory_="playlistformats_Dir" Attributes="256" KeyPath="qtmultimedia_m3u.dll"/>
-    <ROW Component="qtmultimedia_m3u.dll_1" ComponentId="{DA5B0FE7-06B3-4419-A0B3-848FFD6D0132}" Directory_="playlistformats_1_Dir" Attributes="256" KeyPath="qtmultimedia_m3u.dll_1"/>
-    <ROW Component="qtposition_positionpoll.dll" ComponentId="{CF4A9DEA-D457-4ABA-ADD6-FD67C49C26CB}" Directory_="position_Dir" Attributes="256" KeyPath="qtposition_positionpoll.dll"/>
-    <ROW Component="qtposition_positionpoll.dll_1" ComponentId="{8D0B1803-BFC9-47E8-8386-C24165B6345A}" Directory_="position_1_Dir" Attributes="256" KeyPath="qtposition_positionpoll.dll_1"/>
-    <ROW Component="qtposition_serialnmea.dll" ComponentId="{64D4B577-D96E-43F5-A5F7-FE6A499AD402}" Directory_="position_Dir" Attributes="256" KeyPath="qtposition_serialnmea.dll"/>
-    <ROW Component="qtposition_serialnmea.dll_1" ComponentId="{688CC16A-FF58-4218-88F7-198EB428F9B3}" Directory_="position_1_Dir" Attributes="256" KeyPath="qtposition_serialnmea.dll_1"/>
-    <ROW Component="qtposition_winrt.dll" ComponentId="{B5725629-74CE-4573-8EE9-086CC3CDB018}" Directory_="position_Dir" Attributes="256" KeyPath="qtposition_winrt.dll"/>
-    <ROW Component="qtposition_winrt.dll_1" ComponentId="{B9BD8942-46A5-4EF9-B67B-CE9CD369D342}" Directory_="position_1_Dir" Attributes="256" KeyPath="qtposition_winrt.dll_1"/>
-    <ROW Component="qwbmp.dll" ComponentId="{C51286D5-7DA1-486B-9F6E-8DA3985D268D}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qwbmp.dll"/>
-    <ROW Component="qwbmp.dll_1" ComponentId="{53B076FD-92D4-4651-B437-32C17C30CC77}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qwbmp.dll_1"/>
-    <ROW Component="qwebp.dll" ComponentId="{71FC27A0-C1F8-4DF6-9CB1-6B94247C965F}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qwebp.dll"/>
-    <ROW Component="qwebp.dll_1" ComponentId="{FC355B04-AA6C-469E-8FF5-0B6166D829B5}" Directory_="imageformats_1_Dir" Attributes="256" KeyPath="qwebp.dll_1"/>
-    <ROW Component="qwindows.dll" ComponentId="{E214A114-40AD-4A3F-A539-A093AF60D5EE}" Directory_="platforms_Dir" Attributes="256" KeyPath="qwindows.dll"/>
-    <ROW Component="qwindows.dll_1" ComponentId="{EA83F001-D708-4C0C-885C-B853EDCE27D0}" Directory_="platforms_1_Dir" Attributes="256" KeyPath="qwindows.dll_1"/>
-    <ROW Component="qwindowsvistastyle.dll" ComponentId="{4EC75DCC-0480-49F2-8502-C09498BF32AB}" Directory_="styles_Dir" Attributes="256" KeyPath="qwindowsvistastyle.dll"/>
-    <ROW Component="qwindowsvistastyle.dll_1" ComponentId="{DF68EEB9-E12A-407A-804A-9975E05370B2}" Directory_="styles_1_Dir" Attributes="256" KeyPath="qwindowsvistastyle.dll_1"/>
-    <ROW Component="ui_atlaskey.png" ComponentId="{BEA8E06E-6FE3-4B00-AC5F-854A51F8EF88}" Directory_="etc_Dir" Attributes="0" KeyPath="ui_atlaskey.png_2" Type="0"/>
-    <ROW Component="vccorlib140.dll" ComponentId="{6C526B8E-ED63-4084-B3A2-5696345295AF}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="vccorlib140.dll"/>
-    <ROW Component="vccorlib140.dll_1" ComponentId="{256DC0AE-3208-4EC9-9F94-B2E5514686AB}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="vccorlib140.dll_1"/>
-    <ROW Component="vcruntime140.dll" ComponentId="{E0D7BFB4-9FBF-4BD8-A7E6-D350CB9AAA11}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="vcruntime140.dll"/>
-    <ROW Component="vcruntime140.dll_1" ComponentId="{F66EF3E6-C5C5-4C1D-9F38-4B707F9E6364}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="vcruntime140.dll_1"/>
-    <ROW Component="vcruntime140_1.dll" ComponentId="{75593DF3-4B80-4447-BA94-E51632980B2F}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="vcruntime140_1.dll"/>
-    <ROW Component="vcruntime140_1.dll_1" ComponentId="{69F5BD36-2BC7-4977-97CE-C406EA99C99E}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="vcruntime140_1.dll_1"/>
-    <ROW Component="vcruntime140_threads.dll" ComponentId="{9020619B-792C-4344-8454-E2F98F8E3DD2}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="vcruntime140_threads.dll"/>
-    <ROW Component="vcruntime140_threads.dll_1" ComponentId="{6EA15A4A-7F88-4EC9-B3B5-E4ADFD113731}" Directory_="bin_Release64_1_Dir" Attributes="256" KeyPath="vcruntime140_threads.dll_1"/>
-    <ROW Component="windowsprintersupport.dll" ComponentId="{E65F2E2F-CA68-4656-AD8E-49F5F3ED1B4B}" Directory_="printsupport_Dir" Attributes="256" KeyPath="windowsprintersupport.dll"/>
-    <ROW Component="windowsprintersupport.dll_1" ComponentId="{37082304-99D5-4A6E-A76E-D18579AD759F}" Directory_="printsupport_1_Dir" Attributes="256" KeyPath="windowsprintersupport.dll_1"/>
-    <ROW Component="wmfengine.dll" ComponentId="{2BA69A36-1793-4572-8FA9-D43218FCD185}" Directory_="mediaservice_Dir" Attributes="256" KeyPath="wmfengine.dll"/>
-    <ROW Component="wmfengine.dll_1" ComponentId="{7BDC9928-847E-4F9E-BC98-BCF5002ADE87}" Directory_="mediaservice_1_Dir" Attributes="256" KeyPath="wmfengine.dll_1"/>
-    <ROW Component="zaypro.exe" ComponentId="{22E3A8C4-9CDA-42CC-A22B-80E3435865C8}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="zaypro.exe"/>
+    <ROW Component="Qt5Bluetooth.dll" ComponentId="{36EC3EEE-5DFA-4A41-8716-45BD2D6F1B35}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Bluetooth.dll"/>
+    <ROW Component="Qt5Core.dll" ComponentId="{927DDBCE-B496-48CA-96D7-FA2637C7B3E2}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Core.dll"/>
+    <ROW Component="Qt5Gui.dll" ComponentId="{3E1571DA-1FF8-4B6E-85DF-B7055D290C7C}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Gui.dll"/>
+    <ROW Component="Qt5Multimedia.dll" ComponentId="{6711094A-087B-40C2-84EA-4B656B074C3E}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Multimedia.dll"/>
+    <ROW Component="Qt5Network.dll" ComponentId="{E6B3D3FB-ACFD-4F65-9E99-CC9FE2DC71E2}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Network.dll"/>
+    <ROW Component="Qt5OpenGL.dll" ComponentId="{F8649EE2-C4FF-4CBD-8DF4-72CD0DA6C322}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5OpenGL.dll"/>
+    <ROW Component="Qt5Positioning.dll" ComponentId="{090C3FD2-AAA2-42AB-A9F9-07EFBC6E3BF7}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Positioning.dll"/>
+    <ROW Component="Qt5PrintSupport.dll" ComponentId="{69877BE7-696A-46BC-9345-08CC477CD49E}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5PrintSupport.dll"/>
+    <ROW Component="Qt5Qml.dll" ComponentId="{CA958ACE-E499-4B08-9289-65E540373D61}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Qml.dll"/>
+    <ROW Component="Qt5QmlModels.dll" ComponentId="{C2B79015-C023-417F-B10B-BC089F904F1B}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5QmlModels.dll"/>
+    <ROW Component="Qt5Quick.dll" ComponentId="{EA90687F-9C3F-4CD3-8787-D146FAE52135}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Quick.dll"/>
+    <ROW Component="Qt5QuickWidgets.dll" ComponentId="{D6323B1F-AFE5-4500-B26D-0EE9C1EE0AAC}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5QuickWidgets.dll"/>
+    <ROW Component="Qt5SerialPort.dll" ComponentId="{9426EC11-05B9-4FA2-ABA4-1A5484994A3D}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5SerialPort.dll"/>
+    <ROW Component="Qt5Svg.dll" ComponentId="{70001F35-0ACE-49E9-B6E3-97F27ADDAD5A}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Svg.dll"/>
+    <ROW Component="Qt5WebChannel.dll" ComponentId="{232081DF-FB89-41EB-8E92-45CEEDA5D121}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebChannel.dll"/>
+    <ROW Component="Qt5WebEngineCore.dll" ComponentId="{F924A6AC-C3EF-4FD5-8FFD-89DA1B850954}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebEngineCore.dll"/>
+    <ROW Component="Qt5WebEngineWidgets.dll" ComponentId="{113CC861-5732-4292-B261-F929F0C71A77}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebEngineWidgets.dll"/>
+    <ROW Component="Qt5WebSockets.dll" ComponentId="{125D892F-F6BA-43EC-8F56-FF14F30AE2F7}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebSockets.dll"/>
+    <ROW Component="Qt5Widgets.dll" ComponentId="{DE947855-4988-40F1-B20A-FE1D456F391D}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Widgets.dll"/>
+    <ROW Component="QtWebEngineProcess.exe" ComponentId="{67C7F9C2-D2A5-42E5-A48E-75C40012EE9A}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="QtWebEngineProcess.exe"/>
+    <ROW Component="aether_logo.bmp" ComponentId="{0EA3E18F-98AA-4705-8B91-5513460472A6}" Directory_="main_png_Dir" Attributes="0" KeyPath="aether_logo.bmp" Type="0"/>
+    <ROW Component="aether_logo.bmp_1" ComponentId="{133733A4-C2FE-4B49-979E-7F2A2B4D1BCE}" Directory_="main_png_1_Dir" Attributes="0" KeyPath="aether_logo.bmp_1" Type="0"/>
+    <ROW Component="aether_logo.bmp_2" ComponentId="{AF052036-F366-424E-9266-670C26FF8B79}" Directory_="main_png_2_Dir" Attributes="0" KeyPath="aether_logo.bmp_2" Type="0"/>
+    <ROW Component="am.pak" ComponentId="{0EC9FE1B-0B49-41BA-BD87-9E0B7FF92E1B}" Directory_="qtwebengine_locales_Dir" Attributes="0" KeyPath="am.pak" Type="0"/>
+    <ROW Component="concrt140.dll" ComponentId="{7BBFB580-FE21-433D-AA27-87BB69F21125}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="concrt140.dll"/>
+    <ROW Component="dsengine.dll" ComponentId="{4EC375E9-FB31-4E92-9F0A-5CB6A1B2A685}" Directory_="mediaservice_Dir" Attributes="256" KeyPath="dsengine.dll"/>
+    <ROW Component="icon512.png" ComponentId="{7356443E-8F94-490B-9E0E-2EA578CF9A75}" Directory_="icon_Dir" Attributes="0" KeyPath="icon512.png" Type="0"/>
+    <ROW Component="icudtl.dat" ComponentId="{25887F9A-1B78-44CF-AE79-940D03D0ABDD}" Directory_="resources_Dir" Attributes="0" KeyPath="icudtl.dat" Type="0"/>
+    <ROW Component="libEGL.dll" ComponentId="{18F26262-733A-481F-8434-1674A07DF3A4}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="libEGL.dll"/>
+    <ROW Component="libGLESv2.dll" ComponentId="{E717876E-950A-4524-B312-1803486C3C10}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="libGLESv2.dll"/>
+    <ROW Component="lovelee.mp3" ComponentId="{8B8042BB-1BB7-4CE1-A298-3C4DEBDC7537}" Directory_="sound_Dir" Attributes="0" KeyPath="lovelee.mp3" Type="0"/>
+    <ROW Component="lovelee.mp3_1" ComponentId="{600F1AD5-FB95-41EF-A1CA-15602D2E4DF8}" Directory_="sound_1_Dir" Attributes="0" KeyPath="lovelee.mp3_1" Type="0"/>
+    <ROW Component="lovelee.mp3_2" ComponentId="{490A35EA-5B23-4250-9E5A-A8D8BC4E869D}" Directory_="sound_2_Dir" Attributes="0" KeyPath="lovelee.mp3_2" Type="0"/>
+    <ROW Component="main.png" ComponentId="{A4D8B023-05BA-4764-8FE5-6FED009C8257}" Directory_="image_1_Dir" Attributes="0" KeyPath="main.png" Type="0"/>
+    <ROW Component="main.png_1" ComponentId="{A989BD58-CD17-410E-84DD-0F462BF86428}" Directory_="image_2_Dir" Attributes="0" KeyPath="main.png_1" Type="0"/>
+    <ROW Component="main.png_2" ComponentId="{83136CD8-D20E-41FB-B6A9-72DFF4AE7A7C}" Directory_="image_3_Dir" Attributes="0" KeyPath="main.png_2" Type="0"/>
+    <ROW Component="msvcp140.dll" ComponentId="{9837E3FE-AC7C-4D22-86E8-835A2964FAF2}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140.dll"/>
+    <ROW Component="msvcp140_1.dll" ComponentId="{71A0E0CA-68C6-48A6-B0F1-5B60C60B3226}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_1.dll"/>
+    <ROW Component="msvcp140_2.dll" ComponentId="{A43AD2D3-9029-45D4-B77A-282721EA7ED4}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_2.dll"/>
+    <ROW Component="msvcp140_atomic_wait.dll" ComponentId="{B2CB5A31-03C5-42E0-B463-D64240244B4A}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_atomic_wait.dll"/>
+    <ROW Component="msvcp140_codecvt_ids.dll" ComponentId="{A893005E-A8F7-4480-A669-268ED88B7A23}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="msvcp140_codecvt_ids.dll"/>
+    <ROW Component="noimg.png" ComponentId="{64E03394-AC03-4A87-A934-3D9611CA9BF6}" Directory_="image_Dir" Attributes="0" KeyPath="noimg.png" Type="0"/>
+    <ROW Component="opengl32sw.dll" ComponentId="{DA8719E8-1697-4426-831D-2EC6445130CD}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="opengl32sw.dll"/>
+    <ROW Component="qgenericbearer.dll" ComponentId="{49C6821F-62FB-404D-95A2-4C0822F622A6}" Directory_="bearer_Dir" Attributes="256" KeyPath="qgenericbearer.dll"/>
+    <ROW Component="qgif.dll" ComponentId="{7ACE1279-D7CA-421E-B0EA-F192B8112DE7}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qgif.dll"/>
+    <ROW Component="qicns.dll" ComponentId="{24BD2623-BE75-4594-9167-B0D7294AA67D}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qicns.dll"/>
+    <ROW Component="qico.dll" ComponentId="{027866BD-C370-411C-A449-36568F6D1051}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qico.dll"/>
+    <ROW Component="qjpeg.dll" ComponentId="{87F039D4-5B26-4D38-9CA8-BAF2272FDD15}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qjpeg.dll"/>
+    <ROW Component="qsvg.dll" ComponentId="{3590BEF8-C864-4B59-82FC-33549E461FAA}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qsvg.dll"/>
+    <ROW Component="qsvgicon.dll" ComponentId="{8E3A1258-364D-4CED-952E-40144D688771}" Directory_="iconengines_Dir" Attributes="256" KeyPath="qsvgicon.dll"/>
+    <ROW Component="qt_ar.qm" ComponentId="{886F5C81-765E-44F7-B314-98883A6B6DD7}" Directory_="translations_Dir" Attributes="0" KeyPath="qt_ar.qm" Type="0"/>
+    <ROW Component="qtaudio_wasapi.dll" ComponentId="{83444540-D225-4765-86F5-91AACB4EC8DB}" Directory_="audio_Dir" Attributes="256" KeyPath="qtaudio_wasapi.dll"/>
+    <ROW Component="qtaudio_windows.dll" ComponentId="{68BC4051-973C-4F2D-A2F5-1B4BAD642AEA}" Directory_="audio_Dir" Attributes="256" KeyPath="qtaudio_windows.dll"/>
+    <ROW Component="qtga.dll" ComponentId="{12AE0A88-3FA0-4409-B0AD-34E3BEBD2B20}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qtga.dll"/>
+    <ROW Component="qtiff.dll" ComponentId="{5B995A0E-2373-43C4-809C-A1CD20C66AFD}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qtiff.dll"/>
+    <ROW Component="qtmedia_audioengine.dll" ComponentId="{BDF3CBC1-8292-4964-842B-5444A6DC551D}" Directory_="mediaservice_Dir" Attributes="256" KeyPath="qtmedia_audioengine.dll"/>
+    <ROW Component="qtmultimedia_m3u.dll" ComponentId="{BAEE7ABA-0A69-43F1-8E41-043CE6CDE2E2}" Directory_="playlistformats_Dir" Attributes="256" KeyPath="qtmultimedia_m3u.dll"/>
+    <ROW Component="qtposition_positionpoll.dll" ComponentId="{F6AD7AF3-72DF-422A-B433-1C2DBFED462F}" Directory_="position_Dir" Attributes="256" KeyPath="qtposition_positionpoll.dll"/>
+    <ROW Component="qtposition_serialnmea.dll" ComponentId="{DD9E636B-21B2-49E7-9668-2894CC1FBBE5}" Directory_="position_Dir" Attributes="256" KeyPath="qtposition_serialnmea.dll"/>
+    <ROW Component="qtposition_winrt.dll" ComponentId="{F1CC661E-E9C5-4D7F-88E5-B44CA4507391}" Directory_="position_Dir" Attributes="256" KeyPath="qtposition_winrt.dll"/>
+    <ROW Component="qwbmp.dll" ComponentId="{AD9B46A9-DF99-41D0-B75A-49C60CFC7523}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qwbmp.dll"/>
+    <ROW Component="qwebp.dll" ComponentId="{38249D5F-CC17-45DF-AA4F-2C15774E24FB}" Directory_="imageformats_Dir" Attributes="256" KeyPath="qwebp.dll"/>
+    <ROW Component="qwindows.dll" ComponentId="{8DE487C1-7B6D-42BA-903D-1DAA441EDD2F}" Directory_="platforms_Dir" Attributes="256" KeyPath="qwindows.dll"/>
+    <ROW Component="qwindowsvistastyle.dll" ComponentId="{B60F6E35-031B-4BE7-83FE-9ED3FC135D62}" Directory_="styles_Dir" Attributes="256" KeyPath="qwindowsvistastyle.dll"/>
+    <ROW Component="vccorlib140.dll" ComponentId="{590A4F60-2341-415E-A0A4-26468131A54A}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="vccorlib140.dll"/>
+    <ROW Component="vcruntime140.dll" ComponentId="{0B0E2F39-9C33-4EB7-B914-1888F8F47AB3}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="vcruntime140.dll"/>
+    <ROW Component="vcruntime140_1.dll" ComponentId="{492C02BF-2434-4368-8ADA-8E2FE8B11B65}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="vcruntime140_1.dll"/>
+    <ROW Component="vcruntime140_threads.dll" ComponentId="{D1748133-7594-42AB-A0E6-C606E29D28FB}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="vcruntime140_threads.dll"/>
+    <ROW Component="windowsprintersupport.dll" ComponentId="{6ED48699-6D3E-4A93-A92E-77B15400157B}" Directory_="printsupport_Dir" Attributes="256" KeyPath="windowsprintersupport.dll"/>
+    <ROW Component="wmfengine.dll" ComponentId="{29B8D5A5-E941-4820-96BC-3622B4C24A0E}" Directory_="mediaservice_Dir" Attributes="256" KeyPath="wmfengine.dll"/>
+    <ROW Component="zaypro" ComponentId="{3CEF42E2-E1E9-4C7E-8637-C67A03434C6C}" Directory_="zaypro_Dir" Attributes="0"/>
+    <ROW Component="zaypro.exe" ComponentId="{6505B2FF-F5EC-452A-B9A3-9FFEDA379A98}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="zaypro.exe"/>
+    <ROW Component="zayproexamples" ComponentId="{42681C56-00CA-441F-A738-A54F45C40789}" Directory_="zayproexamples_Dir" Attributes="0"/>
+    <ROW Component="zayshow.exe" ComponentId="{82570103-6FE9-4C96-9A6C-D5CB6F3E5F6E}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="zayshow.exe"/>
+    <ROW Component="zayshow.json" ComponentId="{77D6CD17-48A1-4AD6-A3BA-475F80690AD0}" Directory_="widget_Dir" Attributes="0" KeyPath="zayshow.json" Type="0"/>
+    <ROW Component="zayshow.json_1" ComponentId="{814F4B08-EBEB-4D6E-B386-ED51A2A1CA42}" Directory_="widget_1_Dir" Attributes="0" KeyPath="zayshow.json_1" Type="0"/>
+    <ROW Component="zayshow.json_2" ComponentId="{F4A5498A-58C2-4E57-974D-4A442F578999}" Directory_="widget_2_Dir" Attributes="0" KeyPath="zayshow.json_2" Type="0"/>
+    <ROW Component="zayshow.py" ComponentId="{4D9CFA4B-601F-472F-A2A7-12E2ABD6135D}" Directory_="__Dir" Attributes="0" KeyPath="zayshow.py" Type="0"/>
+    <ROW Component="zayshow.py_1" ComponentId="{06CE1AD9-E6F1-4B59-B1EC-664BAB07D900}" Directory_="__1_Dir" Attributes="0" KeyPath="zayshow.py_1" Type="0"/>
+    <ROW Component="zayshow.py_2" ComponentId="{E8CCE6DE-3990-4F80-AB88-C4113F3216B3}" Directory_="__2_Dir" Attributes="0" KeyPath="zayshow.py_2" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
@@ -244,6 +187,7 @@
     <ROW File="icon512.png" Component_="icon512.png" FileName="icon512.png" Attributes="0" SourcePath="zaypro\assets\icon\icon512.png" SelfReg="false"/>
     <ROW File="noimg.png" Component_="noimg.png" FileName="noimg.png" Attributes="0" SourcePath="zaypro\assets\image\noimg.png" SelfReg="false"/>
     <ROW File="ui_atlaskey.png" Component_="noimg.png" FileName="UI_ATL~1.PNG|ui_atlaskey.png" Attributes="0" SourcePath="zaypro\assets\image\ui_atlaskey.png" SelfReg="false"/>
+    <ROW File="ui_atlaskey2.png" Component_="noimg.png" FileName="UI_ATL~2.PNG|ui_atlaskey2.png" Attributes="0" SourcePath="zaypro\assets\image\ui_atlaskey2.png" SelfReg="false"/>
     <ROW File="zaypro_atlas.png" Component_="noimg.png" FileName="ZAYPRO~1.PNG|zaypro_atlas.png" Attributes="0" SourcePath="zaypro\assets\image\zaypro_atlas.png" SelfReg="false"/>
     <ROW File="zaypro_atlas_gray.png" Component_="noimg.png" FileName="ZAYPRO~2.PNG|zaypro_atlas_gray.png" Attributes="0" SourcePath="zaypro\assets\image\zaypro_atlas_gray.png" SelfReg="false"/>
     <ROW File="zaypro_shot.png" Component_="noimg.png" FileName="ZAYPRO~3.PNG|zaypro_shot.png" Attributes="0" SourcePath="zaypro\assets\image\zaypro_shot.png" SelfReg="false"/>
@@ -386,178 +330,247 @@
     <ROW File="vcruntime140_1.dll" Component_="vcruntime140_1.dll" FileName="VCRUNT~2.DLL|vcruntime140_1.dll" Attributes="0" SourcePath="zaypro\bin_Release64\vcruntime140_1.dll" SelfReg="false"/>
     <ROW File="vcruntime140_threads.dll" Component_="vcruntime140_threads.dll" FileName="VCRUNT~3.DLL|vcruntime140_threads.dll" Attributes="0" SourcePath="zaypro\bin_Release64\vcruntime140_threads.dll" SelfReg="false"/>
     <ROW File="zaypro.exe" Component_="zaypro.exe" FileName="zaypro.exe" Attributes="0" SourcePath="zaypro\bin_Release64\zaypro.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="qtaudio_wasapi.dll_1" Component_="qtaudio_wasapi.dll_1" FileName="QTAUDI~1.DLL|qtaudio_wasapi.dll" Attributes="0" SourcePath="challengers\bin_Release64\audio\qtaudio_wasapi.dll" SelfReg="false"/>
-    <ROW File="qtaudio_windows.dll_1" Component_="qtaudio_windows.dll_1" FileName="QTAUDI~2.DLL|qtaudio_windows.dll" Attributes="0" SourcePath="challengers\bin_Release64\audio\qtaudio_windows.dll" SelfReg="false"/>
-    <ROW File="qgenericbearer.dll_1" Component_="qgenericbearer.dll_1" FileName="QGENER~1.DLL|qgenericbearer.dll" Attributes="0" SourcePath="challengers\bin_Release64\bearer\qgenericbearer.dll" SelfReg="false"/>
-    <ROW File="challengers.exe" Component_="challengers.exe" FileName="CHALLE~1.EXE|challengers.exe" Attributes="0" SourcePath="challengers\bin_Release64\challengers.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="concrt140.dll_1" Component_="concrt140.dll_1" FileName="CONCRT~1.DLL|concrt140.dll" Attributes="0" SourcePath="challengers\bin_Release64\concrt140.dll" SelfReg="false"/>
-    <ROW File="D3Dcompiler_47.dll_1" Component_="D3Dcompiler_47.dll_1" FileName="D3DCOM~1.DLL|D3Dcompiler_47.dll" Attributes="0" SourcePath="challengers\bin_Release64\D3Dcompiler_47.dll" SelfReg="false"/>
-    <ROW File="qsvgicon.dll_1" Component_="qsvgicon.dll_1" FileName="qsvgicon.dll" Attributes="0" SourcePath="challengers\bin_Release64\iconengines\qsvgicon.dll" SelfReg="false"/>
-    <ROW File="qgif.dll_1" Component_="qgif.dll_1" FileName="qgif.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qgif.dll" SelfReg="false"/>
-    <ROW File="qicns.dll_1" Component_="qicns.dll_1" FileName="qicns.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qicns.dll" SelfReg="false"/>
-    <ROW File="qico.dll_1" Component_="qico.dll_1" FileName="qico.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qico.dll" SelfReg="false"/>
-    <ROW File="qjpeg.dll_1" Component_="qjpeg.dll_1" FileName="qjpeg.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qjpeg.dll" SelfReg="false"/>
-    <ROW File="qsvg.dll_1" Component_="qsvg.dll_1" FileName="qsvg.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qsvg.dll" SelfReg="false"/>
-    <ROW File="qtga.dll_1" Component_="qtga.dll_1" FileName="qtga.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qtga.dll" SelfReg="false"/>
-    <ROW File="qtiff.dll_1" Component_="qtiff.dll_1" FileName="qtiff.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qtiff.dll" SelfReg="false"/>
-    <ROW File="qwbmp.dll_1" Component_="qwbmp.dll_1" FileName="qwbmp.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qwbmp.dll" SelfReg="false"/>
-    <ROW File="qwebp.dll_1" Component_="qwebp.dll_1" FileName="qwebp.dll" Attributes="0" SourcePath="challengers\bin_Release64\imageformats\qwebp.dll" SelfReg="false"/>
-    <ROW File="libEGL.dll_1" Component_="libEGL.dll_1" FileName="libEGL.dll" Attributes="0" SourcePath="challengers\bin_Release64\libEGL.dll" SelfReg="false"/>
-    <ROW File="libGLESv2.dll_1" Component_="libGLESv2.dll_1" FileName="LIBGLE~1.DLL|libGLESv2.dll" Attributes="0" SourcePath="challengers\bin_Release64\libGLESv2.dll" SelfReg="false"/>
-    <ROW File="dsengine.dll_1" Component_="dsengine.dll_1" FileName="dsengine.dll" Attributes="0" SourcePath="challengers\bin_Release64\mediaservice\dsengine.dll" SelfReg="false"/>
-    <ROW File="qtmedia_audioengine.dll_1" Component_="qtmedia_audioengine.dll_1" FileName="QTMEDI~1.DLL|qtmedia_audioengine.dll" Attributes="0" SourcePath="challengers\bin_Release64\mediaservice\qtmedia_audioengine.dll" SelfReg="false"/>
-    <ROW File="wmfengine.dll_1" Component_="wmfengine.dll_1" FileName="WMFENG~1.DLL|wmfengine.dll" Attributes="0" SourcePath="challengers\bin_Release64\mediaservice\wmfengine.dll" SelfReg="false"/>
-    <ROW File="msvcp140.dll_1" Component_="msvcp140.dll_1" FileName="msvcp140.dll" Attributes="0" SourcePath="challengers\bin_Release64\msvcp140.dll" SelfReg="false"/>
-    <ROW File="msvcp140_1.dll_1" Component_="msvcp140_1.dll_1" FileName="MSVCP1~1.DLL|msvcp140_1.dll" Attributes="0" SourcePath="challengers\bin_Release64\msvcp140_1.dll" SelfReg="false"/>
-    <ROW File="msvcp140_2.dll_1" Component_="msvcp140_2.dll_1" FileName="MSVCP1~2.DLL|msvcp140_2.dll" Attributes="0" SourcePath="challengers\bin_Release64\msvcp140_2.dll" SelfReg="false"/>
-    <ROW File="msvcp140_atomic_wait.dll_1" Component_="msvcp140_atomic_wait.dll_1" FileName="MSVCP1~3.DLL|msvcp140_atomic_wait.dll" Attributes="0" SourcePath="challengers\bin_Release64\msvcp140_atomic_wait.dll" SelfReg="false"/>
-    <ROW File="msvcp140_codecvt_ids.dll_1" Component_="msvcp140_codecvt_ids.dll_1" FileName="MSVCP1~4.DLL|msvcp140_codecvt_ids.dll" Attributes="0" SourcePath="challengers\bin_Release64\msvcp140_codecvt_ids.dll" SelfReg="false"/>
-    <ROW File="opengl32sw.dll_1" Component_="opengl32sw.dll_1" FileName="OPENGL~1.DLL|opengl32sw.dll" Attributes="0" SourcePath="challengers\bin_Release64\opengl32sw.dll" SelfReg="false"/>
-    <ROW File="qwindows.dll_1" Component_="qwindows.dll_1" FileName="qwindows.dll" Attributes="0" SourcePath="challengers\bin_Release64\platforms\qwindows.dll" SelfReg="false"/>
-    <ROW File="qtmultimedia_m3u.dll_1" Component_="qtmultimedia_m3u.dll_1" FileName="QTMULT~1.DLL|qtmultimedia_m3u.dll" Attributes="0" SourcePath="challengers\bin_Release64\playlistformats\qtmultimedia_m3u.dll" SelfReg="false"/>
-    <ROW File="qtposition_positionpoll.dll_1" Component_="qtposition_positionpoll.dll_1" FileName="QTPOSI~1.DLL|qtposition_positionpoll.dll" Attributes="0" SourcePath="challengers\bin_Release64\position\qtposition_positionpoll.dll" SelfReg="false"/>
-    <ROW File="qtposition_serialnmea.dll_1" Component_="qtposition_serialnmea.dll_1" FileName="QTPOSI~2.DLL|qtposition_serialnmea.dll" Attributes="0" SourcePath="challengers\bin_Release64\position\qtposition_serialnmea.dll" SelfReg="false"/>
-    <ROW File="qtposition_winrt.dll_1" Component_="qtposition_winrt.dll_1" FileName="QTPOSI~3.DLL|qtposition_winrt.dll" Attributes="0" SourcePath="challengers\bin_Release64\position\qtposition_winrt.dll" SelfReg="false"/>
-    <ROW File="windowsprintersupport.dll_1" Component_="windowsprintersupport.dll_1" FileName="WINDOW~1.DLL|windowsprintersupport.dll" Attributes="0" SourcePath="challengers\bin_Release64\printsupport\windowsprintersupport.dll" SelfReg="false"/>
-    <ROW File="Qt5Bluetooth.dll_1" Component_="Qt5Bluetooth.dll_1" FileName="QT5BLU~1.DLL|Qt5Bluetooth.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Bluetooth.dll" SelfReg="false"/>
-    <ROW File="Qt5Core.dll_1" Component_="Qt5Core.dll_1" FileName="Qt5Core.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Core.dll" SelfReg="false"/>
-    <ROW File="Qt5Gui.dll_1" Component_="Qt5Gui.dll_1" FileName="Qt5Gui.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Gui.dll" SelfReg="false"/>
-    <ROW File="Qt5Multimedia.dll_1" Component_="Qt5Multimedia.dll_1" FileName="QT5MUL~1.DLL|Qt5Multimedia.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Multimedia.dll" SelfReg="false"/>
-    <ROW File="Qt5Network.dll_1" Component_="Qt5Network.dll_1" FileName="QT5NET~1.DLL|Qt5Network.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Network.dll" SelfReg="false"/>
-    <ROW File="Qt5OpenGL.dll_1" Component_="Qt5OpenGL.dll_1" FileName="QT5OPE~1.DLL|Qt5OpenGL.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5OpenGL.dll" SelfReg="false"/>
-    <ROW File="Qt5Positioning.dll_1" Component_="Qt5Positioning.dll_1" FileName="QT5POS~1.DLL|Qt5Positioning.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Positioning.dll" SelfReg="false"/>
-    <ROW File="Qt5PrintSupport.dll_1" Component_="Qt5PrintSupport.dll_1" FileName="QT5PRI~1.DLL|Qt5PrintSupport.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5PrintSupport.dll" SelfReg="false"/>
-    <ROW File="Qt5Qml.dll_1" Component_="Qt5Qml.dll_1" FileName="Qt5Qml.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Qml.dll" SelfReg="false"/>
-    <ROW File="Qt5QmlModels.dll_1" Component_="Qt5QmlModels.dll_1" FileName="QT5QML~1.DLL|Qt5QmlModels.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5QmlModels.dll" SelfReg="false"/>
-    <ROW File="Qt5Quick.dll_1" Component_="Qt5Quick.dll_1" FileName="Qt5Quick.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Quick.dll" SelfReg="false"/>
-    <ROW File="Qt5QuickWidgets.dll_1" Component_="Qt5QuickWidgets.dll_1" FileName="QT5QUI~1.DLL|Qt5QuickWidgets.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5QuickWidgets.dll" SelfReg="false"/>
-    <ROW File="Qt5SerialPort.dll_1" Component_="Qt5SerialPort.dll_1" FileName="QT5SER~1.DLL|Qt5SerialPort.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5SerialPort.dll" SelfReg="false"/>
-    <ROW File="Qt5Svg.dll_1" Component_="Qt5Svg.dll_1" FileName="Qt5Svg.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Svg.dll" SelfReg="false"/>
-    <ROW File="Qt5WebChannel.dll_1" Component_="Qt5WebChannel.dll_1" FileName="QT5WEB~1.DLL|Qt5WebChannel.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5WebChannel.dll" SelfReg="false"/>
-    <ROW File="Qt5WebEngineCore.dll_1" Component_="Qt5WebEngineCore.dll_1" FileName="QT5WEB~2.DLL|Qt5WebEngineCore.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5WebEngineCore.dll" SelfReg="false"/>
-    <ROW File="Qt5WebEngineWidgets.dll_1" Component_="Qt5WebEngineWidgets.dll_1" FileName="QT5WEB~3.DLL|Qt5WebEngineWidgets.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5WebEngineWidgets.dll" SelfReg="false"/>
-    <ROW File="Qt5WebSockets.dll_1" Component_="Qt5WebSockets.dll_1" FileName="QT5WEB~4.DLL|Qt5WebSockets.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5WebSockets.dll" SelfReg="false"/>
-    <ROW File="Qt5Widgets.dll_1" Component_="Qt5Widgets.dll_1" FileName="QT5WID~1.DLL|Qt5Widgets.dll" Attributes="0" SourcePath="challengers\bin_Release64\Qt5Widgets.dll" SelfReg="false"/>
-    <ROW File="QtWebEngineProcess.exe_1" Component_="QtWebEngineProcess.exe_1" FileName="QTWEBE~1.EXE|QtWebEngineProcess.exe" Attributes="0" SourcePath="challengers\bin_Release64\QtWebEngineProcess.exe" SelfReg="false"/>
-    <ROW File="icudtl.dat_1" Component_="icudtl.dat_1" FileName="icudtl.dat" Attributes="0" SourcePath="challengers\bin_Release64\resources\icudtl.dat" SelfReg="false"/>
-    <ROW File="qtwebengine_devtools_resources.pak_1" Component_="icudtl.dat_1" FileName="QTWEBE~1.PAK|qtwebengine_devtools_resources.pak" Attributes="0" SourcePath="challengers\bin_Release64\resources\qtwebengine_devtools_resources.pak" SelfReg="false"/>
-    <ROW File="qtwebengine_resources.pak_1" Component_="icudtl.dat_1" FileName="QTWEBE~2.PAK|qtwebengine_resources.pak" Attributes="0" SourcePath="challengers\bin_Release64\resources\qtwebengine_resources.pak" SelfReg="false"/>
-    <ROW File="qtwebengine_resources_100p.pak_1" Component_="icudtl.dat_1" FileName="QTWEBE~3.PAK|qtwebengine_resources_100p.pak" Attributes="0" SourcePath="challengers\bin_Release64\resources\qtwebengine_resources_100p.pak" SelfReg="false"/>
-    <ROW File="qtwebengine_resources_200p.pak_1" Component_="icudtl.dat_1" FileName="QTWEBE~4.PAK|qtwebengine_resources_200p.pak" Attributes="0" SourcePath="challengers\bin_Release64\resources\qtwebengine_resources_200p.pak" SelfReg="false"/>
-    <ROW File="qwindowsvistastyle.dll_1" Component_="qwindowsvistastyle.dll_1" FileName="QWINDO~1.DLL|qwindowsvistastyle.dll" Attributes="0" SourcePath="challengers\bin_Release64\styles\qwindowsvistastyle.dll" SelfReg="false"/>
-    <ROW File="am.pak_1" Component_="am.pak_1" FileName="am.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\am.pak" SelfReg="false"/>
-    <ROW File="ar.pak_1" Component_="am.pak_1" FileName="ar.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ar.pak" SelfReg="false"/>
-    <ROW File="bg.pak_1" Component_="am.pak_1" FileName="bg.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\bg.pak" SelfReg="false"/>
-    <ROW File="bn.pak_1" Component_="am.pak_1" FileName="bn.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\bn.pak" SelfReg="false"/>
-    <ROW File="ca.pak_1" Component_="am.pak_1" FileName="ca.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ca.pak" SelfReg="false"/>
-    <ROW File="cs.pak_1" Component_="am.pak_1" FileName="cs.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\cs.pak" SelfReg="false"/>
-    <ROW File="da.pak_1" Component_="am.pak_1" FileName="da.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\da.pak" SelfReg="false"/>
-    <ROW File="de.pak_1" Component_="am.pak_1" FileName="de.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\de.pak" SelfReg="false"/>
-    <ROW File="el.pak_1" Component_="am.pak_1" FileName="el.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\el.pak" SelfReg="false"/>
-    <ROW File="enGB.pak_1" Component_="am.pak_1" FileName="en-GB.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\en-GB.pak" SelfReg="false"/>
-    <ROW File="enUS.pak_1" Component_="am.pak_1" FileName="en-US.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\en-US.pak" SelfReg="false"/>
-    <ROW File="es419.pak_1" Component_="am.pak_1" FileName="es-419.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\es-419.pak" SelfReg="false"/>
-    <ROW File="es.pak_1" Component_="am.pak_1" FileName="es.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\es.pak" SelfReg="false"/>
-    <ROW File="et.pak_1" Component_="am.pak_1" FileName="et.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\et.pak" SelfReg="false"/>
-    <ROW File="fa.pak_1" Component_="am.pak_1" FileName="fa.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\fa.pak" SelfReg="false"/>
-    <ROW File="fi.pak_1" Component_="am.pak_1" FileName="fi.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\fi.pak" SelfReg="false"/>
-    <ROW File="fil.pak_1" Component_="am.pak_1" FileName="fil.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\fil.pak" SelfReg="false"/>
-    <ROW File="fr.pak_1" Component_="am.pak_1" FileName="fr.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\fr.pak" SelfReg="false"/>
-    <ROW File="gu.pak_1" Component_="am.pak_1" FileName="gu.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\gu.pak" SelfReg="false"/>
-    <ROW File="he.pak_1" Component_="am.pak_1" FileName="he.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\he.pak" SelfReg="false"/>
-    <ROW File="hi.pak_1" Component_="am.pak_1" FileName="hi.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\hi.pak" SelfReg="false"/>
-    <ROW File="hr.pak_1" Component_="am.pak_1" FileName="hr.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\hr.pak" SelfReg="false"/>
-    <ROW File="hu.pak_1" Component_="am.pak_1" FileName="hu.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\hu.pak" SelfReg="false"/>
-    <ROW File="id.pak_1" Component_="am.pak_1" FileName="id.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\id.pak" SelfReg="false"/>
-    <ROW File="it.pak_1" Component_="am.pak_1" FileName="it.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\it.pak" SelfReg="false"/>
-    <ROW File="ja.pak_1" Component_="am.pak_1" FileName="ja.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ja.pak" SelfReg="false"/>
-    <ROW File="kn.pak_1" Component_="am.pak_1" FileName="kn.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\kn.pak" SelfReg="false"/>
-    <ROW File="ko.pak_1" Component_="am.pak_1" FileName="ko.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ko.pak" SelfReg="false"/>
-    <ROW File="lt.pak_1" Component_="am.pak_1" FileName="lt.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\lt.pak" SelfReg="false"/>
-    <ROW File="lv.pak_1" Component_="am.pak_1" FileName="lv.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\lv.pak" SelfReg="false"/>
-    <ROW File="ml.pak_1" Component_="am.pak_1" FileName="ml.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ml.pak" SelfReg="false"/>
-    <ROW File="mr.pak_1" Component_="am.pak_1" FileName="mr.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\mr.pak" SelfReg="false"/>
-    <ROW File="ms.pak_1" Component_="am.pak_1" FileName="ms.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ms.pak" SelfReg="false"/>
-    <ROW File="nb.pak_1" Component_="am.pak_1" FileName="nb.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\nb.pak" SelfReg="false"/>
-    <ROW File="nl.pak_1" Component_="am.pak_1" FileName="nl.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\nl.pak" SelfReg="false"/>
-    <ROW File="pl.pak_1" Component_="am.pak_1" FileName="pl.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\pl.pak" SelfReg="false"/>
-    <ROW File="ptBR.pak_1" Component_="am.pak_1" FileName="pt-BR.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\pt-BR.pak" SelfReg="false"/>
-    <ROW File="ptPT.pak_1" Component_="am.pak_1" FileName="pt-PT.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\pt-PT.pak" SelfReg="false"/>
-    <ROW File="ro.pak_1" Component_="am.pak_1" FileName="ro.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ro.pak" SelfReg="false"/>
-    <ROW File="ru.pak_1" Component_="am.pak_1" FileName="ru.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ru.pak" SelfReg="false"/>
-    <ROW File="sk.pak_1" Component_="am.pak_1" FileName="sk.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\sk.pak" SelfReg="false"/>
-    <ROW File="sl.pak_1" Component_="am.pak_1" FileName="sl.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\sl.pak" SelfReg="false"/>
-    <ROW File="sr.pak_1" Component_="am.pak_1" FileName="sr.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\sr.pak" SelfReg="false"/>
-    <ROW File="sv.pak_1" Component_="am.pak_1" FileName="sv.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\sv.pak" SelfReg="false"/>
-    <ROW File="sw.pak_1" Component_="am.pak_1" FileName="sw.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\sw.pak" SelfReg="false"/>
-    <ROW File="ta.pak_1" Component_="am.pak_1" FileName="ta.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\ta.pak" SelfReg="false"/>
-    <ROW File="te.pak_1" Component_="am.pak_1" FileName="te.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\te.pak" SelfReg="false"/>
-    <ROW File="th.pak_1" Component_="am.pak_1" FileName="th.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\th.pak" SelfReg="false"/>
-    <ROW File="tr.pak_1" Component_="am.pak_1" FileName="tr.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\tr.pak" SelfReg="false"/>
-    <ROW File="uk.pak_1" Component_="am.pak_1" FileName="uk.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\uk.pak" SelfReg="false"/>
-    <ROW File="vi.pak_1" Component_="am.pak_1" FileName="vi.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\vi.pak" SelfReg="false"/>
-    <ROW File="zhCN.pak_1" Component_="am.pak_1" FileName="zh-CN.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\zh-CN.pak" SelfReg="false"/>
-    <ROW File="zhTW.pak_1" Component_="am.pak_1" FileName="zh-TW.pak" Attributes="0" SourcePath="challengers\bin_Release64\translations\qtwebengine_locales\zh-TW.pak" SelfReg="false"/>
-    <ROW File="qt_ar.qm_1" Component_="qt_ar.qm_1" FileName="qt_ar.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_ar.qm" SelfReg="false"/>
-    <ROW File="qt_bg.qm_1" Component_="qt_ar.qm_1" FileName="qt_bg.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_bg.qm" SelfReg="false"/>
-    <ROW File="qt_ca.qm_1" Component_="qt_ar.qm_1" FileName="qt_ca.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_ca.qm" SelfReg="false"/>
-    <ROW File="qt_cs.qm_1" Component_="qt_ar.qm_1" FileName="qt_cs.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_cs.qm" SelfReg="false"/>
-    <ROW File="qt_da.qm_1" Component_="qt_ar.qm_1" FileName="qt_da.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_da.qm" SelfReg="false"/>
-    <ROW File="qt_de.qm_1" Component_="qt_ar.qm_1" FileName="qt_de.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_de.qm" SelfReg="false"/>
-    <ROW File="qt_en.qm_1" Component_="qt_ar.qm_1" FileName="qt_en.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_en.qm" SelfReg="false"/>
-    <ROW File="qt_es.qm_1" Component_="qt_ar.qm_1" FileName="qt_es.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_es.qm" SelfReg="false"/>
-    <ROW File="qt_fi.qm_1" Component_="qt_ar.qm_1" FileName="qt_fi.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_fi.qm" SelfReg="false"/>
-    <ROW File="qt_fr.qm_1" Component_="qt_ar.qm_1" FileName="qt_fr.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_fr.qm" SelfReg="false"/>
-    <ROW File="qt_gd.qm_1" Component_="qt_ar.qm_1" FileName="qt_gd.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_gd.qm" SelfReg="false"/>
-    <ROW File="qt_he.qm_1" Component_="qt_ar.qm_1" FileName="qt_he.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_he.qm" SelfReg="false"/>
-    <ROW File="qt_hu.qm_1" Component_="qt_ar.qm_1" FileName="qt_hu.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_hu.qm" SelfReg="false"/>
-    <ROW File="qt_it.qm_1" Component_="qt_ar.qm_1" FileName="qt_it.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_it.qm" SelfReg="false"/>
-    <ROW File="qt_ja.qm_1" Component_="qt_ar.qm_1" FileName="qt_ja.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_ja.qm" SelfReg="false"/>
-    <ROW File="qt_ko.qm_1" Component_="qt_ar.qm_1" FileName="qt_ko.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_ko.qm" SelfReg="false"/>
-    <ROW File="qt_lv.qm_1" Component_="qt_ar.qm_1" FileName="qt_lv.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_lv.qm" SelfReg="false"/>
-    <ROW File="qt_pl.qm_1" Component_="qt_ar.qm_1" FileName="qt_pl.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_pl.qm" SelfReg="false"/>
-    <ROW File="qt_ru.qm_1" Component_="qt_ar.qm_1" FileName="qt_ru.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_ru.qm" SelfReg="false"/>
-    <ROW File="qt_sk.qm_1" Component_="qt_ar.qm_1" FileName="qt_sk.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_sk.qm" SelfReg="false"/>
-    <ROW File="qt_tr.qm_1" Component_="qt_ar.qm_1" FileName="qt_tr.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_tr.qm" SelfReg="false"/>
-    <ROW File="qt_uk.qm_1" Component_="qt_ar.qm_1" FileName="qt_uk.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_uk.qm" SelfReg="false"/>
-    <ROW File="qt_zh_TW.qm_1" Component_="qt_ar.qm_1" FileName="qt_zh_TW.qm" Attributes="0" SourcePath="challengers\bin_Release64\translations\qt_zh_TW.qm" SelfReg="false"/>
-    <ROW File="vccorlib140.dll_1" Component_="vccorlib140.dll_1" FileName="VCCORL~1.DLL|vccorlib140.dll" Attributes="0" SourcePath="challengers\bin_Release64\vccorlib140.dll" SelfReg="false"/>
-    <ROW File="vcruntime140.dll_1" Component_="vcruntime140.dll_1" FileName="VCRUNT~1.DLL|vcruntime140.dll" Attributes="0" SourcePath="challengers\bin_Release64\vcruntime140.dll" SelfReg="false"/>
-    <ROW File="vcruntime140_1.dll_1" Component_="vcruntime140_1.dll_1" FileName="VCRUNT~2.DLL|vcruntime140_1.dll" Attributes="0" SourcePath="challengers\bin_Release64\vcruntime140_1.dll" SelfReg="false"/>
-    <ROW File="vcruntime140_threads.dll_1" Component_="vcruntime140_threads.dll_1" FileName="VCRUNT~3.DLL|vcruntime140_threads.dll" Attributes="0" SourcePath="challengers\bin_Release64\vcruntime140_threads.dll" SelfReg="false"/>
-    <ROW File="UINameTag.exe" Component_="UINameTag.exe" FileName="UINAME~1.EXE|UINameTag.exe" Attributes="0" SourcePath="challengers\etc\UINameTag.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="ui_atlaskey.png_2" Component_="ui_atlaskey.png" FileName="UI_ATL~1.PNG|ui_atlaskey.png" Attributes="0" SourcePath="challengers\etc\ui_atlaskey.png" SelfReg="false"/>
-    <ROW File="ui_atlaskey2.png_1" Component_="ui_atlaskey.png" FileName="UI_ATL~2.PNG|ui_atlaskey2.png" Attributes="0" SourcePath="challengers\etc\ui_atlaskey2.png" SelfReg="false"/>
-    <ROW File="NotoSansKRBold.ttf" Component_="NotoSansKRBold.ttf" FileName="NOTOSA~1.TTF|NotoSansKR-Bold.ttf" Attributes="0" SourcePath="challengers\assets\font\NotoSansKR-Bold.ttf" SelfReg="false"/>
-    <ROW File="NotoSansKRMedium.ttf" Component_="NotoSansKRBold.ttf" FileName="NOTOSA~2.TTF|NotoSansKR-Medium.ttf" Attributes="0" SourcePath="challengers\assets\font\NotoSansKR-Medium.ttf" SelfReg="false"/>
-    <ROW File="NotoSansKRRegular.ttf" Component_="NotoSansKRBold.ttf" FileName="NOTOSA~3.TTF|NotoSansKR-Regular.ttf" Attributes="0" SourcePath="challengers\assets\font\NotoSansKR-Regular.ttf" SelfReg="false"/>
-    <ROW File="RobotoBold.ttf" Component_="NotoSansKRBold.ttf" FileName="ROBOTO~1.TTF|Roboto-Bold.ttf" Attributes="0" SourcePath="challengers\assets\font\Roboto-Bold.ttf" SelfReg="false"/>
-    <ROW File="RobotoMedium.ttf" Component_="NotoSansKRBold.ttf" FileName="ROBOTO~2.TTF|Roboto-Medium.ttf" Attributes="0" SourcePath="challengers\assets\font\Roboto-Medium.ttf" SelfReg="false"/>
-    <ROW File="firebg.html" Component_="firebg.html" FileName="FIREBG~1.HTM|firebg.html" Attributes="0" SourcePath="challengers\assets\html\firebg.html" SelfReg="false"/>
-    <ROW File="firebg.webm" Component_="firebg.html" FileName="FIREBG~1.WEB|firebg.webm" Attributes="0" SourcePath="challengers\assets\html\firebg.webm" SelfReg="false"/>
-    <ROW File="icon_ui_action_atlas.png" Component_="icon_ui_action_atlas.png" FileName="ICON_U~1.PNG|icon_ui_action_atlas.png" Attributes="0" SourcePath="challengers\assets\image\icons\icon_ui_action_atlas.png" SelfReg="false"/>
-    <ROW File="main.png" Component_="main.png" FileName="main.png" Attributes="0" SourcePath="challengers\assets\image\main.png" SelfReg="false"/>
-    <ROW File="noimg.png_1" Component_="main.png" FileName="noimg.png" Attributes="0" SourcePath="challengers\assets\image\noimg.png" SelfReg="false"/>
-    <ROW File="ui_atlaskey.png_1" Component_="main.png" FileName="UI_ATL~1.PNG|ui_atlaskey.png" Attributes="0" SourcePath="challengers\assets\image\ui_atlaskey.png" SelfReg="false"/>
-    <ROW File="ui_atlaskey2.png" Component_="main.png" FileName="UI_ATL~2.PNG|ui_atlaskey2.png" Attributes="0" SourcePath="challengers\assets\image\ui_atlaskey2.png" SelfReg="false"/>
-    <ROW File="btn_atlas.png" Component_="btn_atlas.png" FileName="BTN_AT~1.PNG|btn_atlas.png" Attributes="0" SourcePath="challengers\assets\image\ui_component\btn_atlas.png" SelfReg="false"/>
-    <ROW File="lovelee.mp3" Component_="lovelee.mp3" FileName="lovelee.mp3" Attributes="0" SourcePath="challengers\assets\sound\lovelee.mp3" SelfReg="false"/>
-    <ROW File="animation.json" Component_="animation.json" FileName="ANIMAT~1.JSO|animation.json" Attributes="0" SourcePath="challengers\assets\widget\animation.json" SelfReg="false"/>
-    <ROW File="calculator.json" Component_="animation.json" FileName="CALCUL~1.JSO|calculator.json" Attributes="0" SourcePath="challengers\assets\widget\calculator.json" SelfReg="false"/>
-    <ROW File="data.json" Component_="animation.json" FileName="DATA~1.JSO|data.json" Attributes="0" SourcePath="challengers\assets\widget\data.json" SelfReg="false"/>
-    <ROW File="flexible.json" Component_="animation.json" FileName="FLEXIB~1.JSO|flexible.json" Attributes="0" SourcePath="challengers\assets\widget\flexible.json" SelfReg="false"/>
-    <ROW File="intro.json" Component_="animation.json" FileName="INTRO~1.JSO|intro.json" Attributes="0" SourcePath="challengers\assets\widget\intro.json" SelfReg="false"/>
-    <ROW File="sample.json" Component_="animation.json" FileName="SAMPLE~1.JSO|sample.json" Attributes="0" SourcePath="challengers\assets\widget\sample.json" SelfReg="false"/>
-    <ROW File="todolist.json" Component_="animation.json" FileName="TODOLI~1.JSO|todolist.json" Attributes="0" SourcePath="challengers\assets\widget\todolist.json" SelfReg="false"/>
-    <ROW File="json" Component_="animation.json" FileName="두더지~1.JSO|두더지.json" Attributes="0" SourcePath="challengers\assets\widget\두더지.json" SelfReg="false"/>
-    <ROW File="json_1" Component_="animation.json" FileName="테트리스~1.JSO|테트리스.json" Attributes="0" SourcePath="challengers\assets\widget\테트리스.json" SelfReg="false"/>
-    <ROW File="challengers.py" Component_="challengers.py" FileName="CHALLE~1.PY|challengers.py" Attributes="0" SourcePath="challengers\python\challengers.py" SelfReg="false"/>
-    <ROW File="py" Component_="challengers.py" FileName="두더지게임.py" Attributes="0" SourcePath="challengers\python\두더지게임.py" SelfReg="false"/>
-    <ROW File="py_1" Component_="challengers.py" FileName="테트리스.py" Attributes="0" SourcePath="challengers\python\테트리스.py" SelfReg="false"/>
-    <ROW File="json_2" Component_="animation.json" FileName="오셀로~1.JSO|오셀로.json" Attributes="0" SourcePath="challengers\assets\widget\오셀로.json" SelfReg="false"/>
-    <ROW File="py_2" Component_="challengers.py" FileName="오셀로.py" Attributes="0" SourcePath="challengers\python\오셀로.py" SelfReg="false"/>
-    <ROW File="json_3" Component_="animation.json" FileName="스네이크~1.JSO|스네이크.json" Attributes="0" SourcePath="challengers\assets\widget\스네이크.json" SelfReg="false"/>
-    <ROW File="py_3" Component_="challengers.py" FileName="스네이크.py" Attributes="0" SourcePath="challengers\python\스네이크.py" SelfReg="false"/>
+    <ROW File="zayshow.exe" Component_="zayshow.exe" FileName="zayshow.exe" Attributes="0" SourcePath="zaypro\bin_Release64\zayshow.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="NotoSansKRBold.ttf" Component_="NotoSansKRBold.ttf" FileName="NOTOSA~1.TTF|NotoSansKR-Bold.ttf" Attributes="0" SourcePath="zaypro\example\스네이크\font\NotoSansKR-Bold.ttf" SelfReg="false"/>
+    <ROW File="NotoSansKRMedium.ttf" Component_="NotoSansKRBold.ttf" FileName="NOTOSA~2.TTF|NotoSansKR-Medium.ttf" Attributes="0" SourcePath="zaypro\example\스네이크\font\NotoSansKR-Medium.ttf" SelfReg="false"/>
+    <ROW File="NotoSansKRRegular.ttf" Component_="NotoSansKRBold.ttf" FileName="NOTOSA~3.TTF|NotoSansKR-Regular.ttf" Attributes="0" SourcePath="zaypro\example\스네이크\font\NotoSansKR-Regular.ttf" SelfReg="false"/>
+    <ROW File="RobotoBold.ttf" Component_="NotoSansKRBold.ttf" FileName="ROBOTO~1.TTF|Roboto-Bold.ttf" Attributes="0" SourcePath="zaypro\example\스네이크\font\Roboto-Bold.ttf" SelfReg="false"/>
+    <ROW File="RobotoMedium.ttf" Component_="NotoSansKRBold.ttf" FileName="ROBOTO~2.TTF|Roboto-Medium.ttf" Attributes="0" SourcePath="zaypro\example\스네이크\font\Roboto-Medium.ttf" SelfReg="false"/>
+    <ROW File="main.png" Component_="main.png" FileName="main.png" Attributes="0" SourcePath="zaypro\example\스네이크\image\main.png" SelfReg="false"/>
+    <ROW File="aether_logo.bmp" Component_="aether_logo.bmp" FileName="AETHER~1.BMP|aether_logo.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\aether_logo.bmp" SelfReg="false"/>
+    <ROW File="aether_logo.json" Component_="aether_logo.bmp" FileName="AETHER~1.JSO|aether_logo.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\aether_logo.json" SelfReg="false"/>
+    <ROW File="btn_close_h_p.bmp" Component_="aether_logo.bmp" FileName="BTN_CL~1.BMP|btn_close_h_p.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_close_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_close_h_p.json" Component_="aether_logo.bmp" FileName="BTN_CL~1.JSO|btn_close_h_p.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_close_h_p.json" SelfReg="false"/>
+    <ROW File="btn_close_n.bmp" Component_="aether_logo.bmp" FileName="BTN_CL~2.BMP|btn_close_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_close_n.bmp" SelfReg="false"/>
+    <ROW File="btn_close_n.json" Component_="aether_logo.bmp" FileName="BTN_CL~2.JSO|btn_close_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_close_n.json" SelfReg="false"/>
+    <ROW File="btn_down_h_p.bmp" Component_="aether_logo.bmp" FileName="BTN_DO~1.BMP|btn_down_h_p.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_down_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_down_h_p.json" Component_="aether_logo.bmp" FileName="BTN_DO~1.JSO|btn_down_h_p.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_down_h_p.json" SelfReg="false"/>
+    <ROW File="btn_down_n.bmp" Component_="aether_logo.bmp" FileName="BTN_DO~2.BMP|btn_down_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_down_n.bmp" SelfReg="false"/>
+    <ROW File="btn_down_n.json" Component_="aether_logo.bmp" FileName="BTN_DO~2.JSO|btn_down_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_down_n.json" SelfReg="false"/>
+    <ROW File="btn_minimimize_h_.bmp" Component_="aether_logo.bmp" FileName="BTN_MI~1.BMP|btn_minimimize_h_.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_minimimize_h_.bmp" SelfReg="false"/>
+    <ROW File="btn_minimimize_h_.json" Component_="aether_logo.bmp" FileName="BTN_MI~1.JSO|btn_minimimize_h_.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_minimimize_h_.json" SelfReg="false"/>
+    <ROW File="btn_minimimize_n.bmp" Component_="aether_logo.bmp" FileName="BTN_MI~2.BMP|btn_minimimize_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_minimimize_n.bmp" SelfReg="false"/>
+    <ROW File="btn_minimimize_n.json" Component_="aether_logo.bmp" FileName="BTN_MI~2.JSO|btn_minimimize_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_minimimize_n.json" SelfReg="false"/>
+    <ROW File="btn_pin_h.bmp" Component_="aether_logo.bmp" FileName="BTN_PI~1.BMP|btn_pin_h.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_h.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_h.json" Component_="aether_logo.bmp" FileName="BTN_PI~1.JSO|btn_pin_h.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_h.json" SelfReg="false"/>
+    <ROW File="btn_pin_n.bmp" Component_="aether_logo.bmp" FileName="BTN_PI~2.BMP|btn_pin_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_n.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_n.json" Component_="aether_logo.bmp" FileName="BTN_PI~2.JSO|btn_pin_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_n.json" SelfReg="false"/>
+    <ROW File="btn_pin_p_s.bmp" Component_="aether_logo.bmp" FileName="BTN_PI~3.BMP|btn_pin_p_s.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_p_s.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_p_s.json" Component_="aether_logo.bmp" FileName="BTN_PI~3.JSO|btn_pin_p_s.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_p_s.json" SelfReg="false"/>
+    <ROW File="btn_thumbnail_edit.bmp" Component_="aether_logo.bmp" FileName="BTN_TH~1.BMP|btn_thumbnail_edit.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_thumbnail_edit.bmp" SelfReg="false"/>
+    <ROW File="btn_thumbnail_edit.json" Component_="aether_logo.bmp" FileName="BTN_TH~1.JSO|btn_thumbnail_edit.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_thumbnail_edit.json" SelfReg="false"/>
+    <ROW File="btn_upsizing_h_p.bmp" Component_="aether_logo.bmp" FileName="BTN_UP~1.BMP|btn_upsizing_h_p.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_upsizing_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_upsizing_h_p.json" Component_="aether_logo.bmp" FileName="BTN_UP~1.JSO|btn_upsizing_h_p.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_upsizing_h_p.json" SelfReg="false"/>
+    <ROW File="btn_upsizing_n.bmp" Component_="aether_logo.bmp" FileName="BTN_UP~2.BMP|btn_upsizing_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_upsizing_n.bmp" SelfReg="false"/>
+    <ROW File="btn_upsizing_n.json" Component_="aether_logo.bmp" FileName="BTN_UP~2.JSO|btn_upsizing_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_upsizing_n.json" SelfReg="false"/>
+    <ROW File="btn_up_h_p.bmp" Component_="aether_logo.bmp" FileName="BTN_UP~3.BMP|btn_up_h_p.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_up_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_up_h_p.json" Component_="aether_logo.bmp" FileName="BTN_UP~3.JSO|btn_up_h_p.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_up_h_p.json" SelfReg="false"/>
+    <ROW File="btn_up_n.bmp" Component_="aether_logo.bmp" FileName="btn_up_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_up_n.bmp" SelfReg="false"/>
+    <ROW File="btn_up_n.json" Component_="aether_logo.bmp" FileName="BTN_UP~4.JSO|btn_up_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_up_n.json" SelfReg="false"/>
+    <ROW File="icon_add.bmp" Component_="aether_logo.bmp" FileName="icon_add.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_add.bmp" SelfReg="false"/>
+    <ROW File="icon_add.json" Component_="aether_logo.bmp" FileName="ICON_A~1.JSO|icon_add.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_add.json" SelfReg="false"/>
+    <ROW File="icon_add_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_A~1.BMP|icon_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_add_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_add_colored.json" Component_="aether_logo.bmp" FileName="ICON_A~2.JSO|icon_add_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_add_colored.json" SelfReg="false"/>
+    <ROW File="icon_check.bmp" Component_="aether_logo.bmp" FileName="ICON_C~1.BMP|icon_check.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_check.bmp" SelfReg="false"/>
+    <ROW File="icon_check.json" Component_="aether_logo.bmp" FileName="ICON_C~1.JSO|icon_check.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_check.json" SelfReg="false"/>
+    <ROW File="icon_edit.bmp" Component_="aether_logo.bmp" FileName="ICON_E~1.BMP|icon_edit.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_edit.bmp" SelfReg="false"/>
+    <ROW File="icon_edit.json" Component_="aether_logo.bmp" FileName="ICON_E~1.JSO|icon_edit.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_edit.json" SelfReg="false"/>
+    <ROW File="icon_edit_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_E~2.BMP|icon_edit_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_edit_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_edit_colored.json" Component_="aether_logo.bmp" FileName="ICON_E~2.JSO|icon_edit_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_edit_colored.json" SelfReg="false"/>
+    <ROW File="icon_eraser.bmp" Component_="aether_logo.bmp" FileName="ICON_E~3.BMP|icon_eraser.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_eraser.bmp" SelfReg="false"/>
+    <ROW File="icon_eraser.json" Component_="aether_logo.bmp" FileName="ICON_E~3.JSO|icon_eraser.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_eraser.json" SelfReg="false"/>
+    <ROW File="icon_eraser_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_E~4.BMP|icon_eraser_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_eraser_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_eraser_colored.json" Component_="aether_logo.bmp" FileName="ICON_E~4.JSO|icon_eraser_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_eraser_colored.json" SelfReg="false"/>
+    <ROW File="icon_gear.bmp" Component_="aether_logo.bmp" FileName="ICON_G~1.BMP|icon_gear.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_gear.bmp" SelfReg="false"/>
+    <ROW File="icon_gear.json" Component_="aether_logo.bmp" FileName="ICON_G~1.JSO|icon_gear.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_gear.json" SelfReg="false"/>
+    <ROW File="icon_gear_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_G~2.BMP|icon_gear_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_gear_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_gear_colored.json" Component_="aether_logo.bmp" FileName="ICON_G~2.JSO|icon_gear_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_gear_colored.json" SelfReg="false"/>
+    <ROW File="icon_humbnail_add.bmp" Component_="aether_logo.bmp" FileName="ICON_H~1.BMP|icon_humbnail_add.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_humbnail_add.bmp" SelfReg="false"/>
+    <ROW File="icon_humbnail_add.json" Component_="aether_logo.bmp" FileName="ICON_H~1.JSO|icon_humbnail_add.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_humbnail_add.json" SelfReg="false"/>
+    <ROW File="icon_rocket.bmp" Component_="aether_logo.bmp" FileName="ICON_R~1.BMP|icon_rocket.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_rocket.bmp" SelfReg="false"/>
+    <ROW File="icon_rocket.json" Component_="aether_logo.bmp" FileName="ICON_R~1.JSO|icon_rocket.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_rocket.json" SelfReg="false"/>
+    <ROW File="icon_rocket_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_R~2.BMP|icon_rocket_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_rocket_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_rocket_colored.json" Component_="aether_logo.bmp" FileName="ICON_R~2.JSO|icon_rocket_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_rocket_colored.json" SelfReg="false"/>
+    <ROW File="icon_thumbmail_add_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_T~1.BMP|icon_thumbmail_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbmail_add_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbmail_add_colored.json" Component_="aether_logo.bmp" FileName="ICON_T~1.JSO|icon_thumbmail_add_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbmail_add_colored.json" SelfReg="false"/>
+    <ROW File="icon_thumbnail.bmp" Component_="aether_logo.bmp" FileName="ICON_T~2.BMP|icon_thumbnail.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbnail.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbnail.json" Component_="aether_logo.bmp" FileName="ICON_T~2.JSO|icon_thumbnail.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbnail.json" SelfReg="false"/>
+    <ROW File="icon_thumbnail_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_T~3.BMP|icon_thumbnail_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbnail_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbnail_colored.json" Component_="aether_logo.bmp" FileName="ICON_T~3.JSO|icon_thumbnail_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbnail_colored.json" SelfReg="false"/>
+    <ROW File="icon_trash.bmp" Component_="aether_logo.bmp" FileName="ICON_T~4.BMP|icon_trash.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_trash.bmp" SelfReg="false"/>
+    <ROW File="icon_trash.json" Component_="aether_logo.bmp" FileName="ICON_T~4.JSO|icon_trash.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_trash.json" SelfReg="false"/>
+    <ROW File="icon_trash_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_T~5.BMP|icon_trash_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_trash_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_trash_colored.json" Component_="aether_logo.bmp" FileName="ICON_T~5.JSO|icon_trash_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_trash_colored.json" SelfReg="false"/>
+    <ROW File="icon_zoom.bmp" Component_="aether_logo.bmp" FileName="ICON_Z~1.BMP|icon_zoom.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_zoom.bmp" SelfReg="false"/>
+    <ROW File="icon_zoom.json" Component_="aether_logo.bmp" FileName="ICON_Z~1.JSO|icon_zoom.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_zoom.json" SelfReg="false"/>
+    <ROW File="python_logo.bmp" Component_="aether_logo.bmp" FileName="PYTHON~1.BMP|python_logo.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\python_logo.bmp" SelfReg="false"/>
+    <ROW File="python_logo.json" Component_="aether_logo.bmp" FileName="PYTHON~1.JSO|python_logo.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\python_logo.json" SelfReg="false"/>
+    <ROW File="zaypro_logo.bmp" Component_="aether_logo.bmp" FileName="ZAYPRO~1.BMP|zaypro_logo.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\zaypro_logo.bmp" SelfReg="false"/>
+    <ROW File="zaypro_logo.json" Component_="aether_logo.bmp" FileName="ZAYPRO~1.JSO|zaypro_logo.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\zaypro_logo.json" SelfReg="false"/>
+    <ROW File="lovelee.mp3" Component_="lovelee.mp3" FileName="lovelee.mp3" Attributes="0" SourcePath="zaypro\example\스네이크\sound\lovelee.mp3" SelfReg="false"/>
+    <ROW File="zayshow.json" Component_="zayshow.json" FileName="ZAYSHO~1.JSO|zayshow.json" Attributes="0" SourcePath="zaypro\example\스네이크\widget\zayshow.json" SelfReg="false"/>
+    <ROW File="zay" Component_="zayshow.json" FileName="스네이크.zay" Attributes="0" SourcePath="zaypro\example\스네이크\widget\스네이크.zay" SelfReg="false"/>
+    <ROW File="zayshow.py" Component_="zayshow.py" FileName="zayshow.py" Attributes="0" SourcePath="zaypro\example\스네이크\zayshow.py" SelfReg="false"/>
+    <ROW File="py" Component_="zayshow.py" FileName="스네이크.py" Attributes="0" SourcePath="zaypro\example\스네이크\스네이크.py" SelfReg="false"/>
+    <ROW File="NotoSansKRBold.ttf_1" Component_="NotoSansKRBold.ttf_1" FileName="NOTOSA~1.TTF|NotoSansKR-Bold.ttf" Attributes="0" SourcePath="zaypro\example\오셀로\font\NotoSansKR-Bold.ttf" SelfReg="false"/>
+    <ROW File="RobotoMedium.ttf_1" Component_="NotoSansKRBold.ttf_1" FileName="ROBOTO~1.TTF|Roboto-Medium.ttf" Attributes="0" SourcePath="zaypro\example\오셀로\font\Roboto-Medium.ttf" SelfReg="false"/>
+    <ROW File="main.png_1" Component_="main.png_1" FileName="main.png" Attributes="0" SourcePath="zaypro\example\오셀로\image\main.png" SelfReg="false"/>
+    <ROW File="aether_logo.bmp_1" Component_="aether_logo.bmp_1" FileName="AETHER~1.BMP|aether_logo.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\aether_logo.bmp" SelfReg="false"/>
+    <ROW File="aether_logo.json_1" Component_="aether_logo.bmp_1" FileName="AETHER~1.JSO|aether_logo.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\aether_logo.json" SelfReg="false"/>
+    <ROW File="btn_close_h_p.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_CL~1.BMP|btn_close_h_p.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_close_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_close_h_p.json_1" Component_="aether_logo.bmp_1" FileName="BTN_CL~1.JSO|btn_close_h_p.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_close_h_p.json" SelfReg="false"/>
+    <ROW File="btn_close_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_CL~2.BMP|btn_close_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_close_n.bmp" SelfReg="false"/>
+    <ROW File="btn_close_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_CL~2.JSO|btn_close_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_close_n.json" SelfReg="false"/>
+    <ROW File="btn_down_h_p.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_DO~1.BMP|btn_down_h_p.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_down_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_down_h_p.json_1" Component_="aether_logo.bmp_1" FileName="BTN_DO~1.JSO|btn_down_h_p.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_down_h_p.json" SelfReg="false"/>
+    <ROW File="btn_down_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_DO~2.BMP|btn_down_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_down_n.bmp" SelfReg="false"/>
+    <ROW File="btn_down_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_DO~2.JSO|btn_down_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_down_n.json" SelfReg="false"/>
+    <ROW File="btn_minimimize_h_.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_MI~1.BMP|btn_minimimize_h_.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_minimimize_h_.bmp" SelfReg="false"/>
+    <ROW File="btn_minimimize_h_.json_1" Component_="aether_logo.bmp_1" FileName="BTN_MI~1.JSO|btn_minimimize_h_.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_minimimize_h_.json" SelfReg="false"/>
+    <ROW File="btn_minimimize_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_MI~2.BMP|btn_minimimize_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_minimimize_n.bmp" SelfReg="false"/>
+    <ROW File="btn_minimimize_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_MI~2.JSO|btn_minimimize_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_minimimize_n.json" SelfReg="false"/>
+    <ROW File="btn_pin_h.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~1.BMP|btn_pin_h.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_h.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_h.json_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~1.JSO|btn_pin_h.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_h.json" SelfReg="false"/>
+    <ROW File="btn_pin_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~2.BMP|btn_pin_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_n.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~2.JSO|btn_pin_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_n.json" SelfReg="false"/>
+    <ROW File="btn_pin_p_s.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~3.BMP|btn_pin_p_s.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_p_s.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_p_s.json_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~3.JSO|btn_pin_p_s.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_p_s.json" SelfReg="false"/>
+    <ROW File="btn_thumbnail_edit.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_TH~1.BMP|btn_thumbnail_edit.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_thumbnail_edit.bmp" SelfReg="false"/>
+    <ROW File="btn_thumbnail_edit.json_1" Component_="aether_logo.bmp_1" FileName="BTN_TH~1.JSO|btn_thumbnail_edit.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_thumbnail_edit.json" SelfReg="false"/>
+    <ROW File="btn_upsizing_h_p.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~1.BMP|btn_upsizing_h_p.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_upsizing_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_upsizing_h_p.json_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~1.JSO|btn_upsizing_h_p.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_upsizing_h_p.json" SelfReg="false"/>
+    <ROW File="btn_upsizing_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~2.BMP|btn_upsizing_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_upsizing_n.bmp" SelfReg="false"/>
+    <ROW File="btn_upsizing_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~2.JSO|btn_upsizing_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_upsizing_n.json" SelfReg="false"/>
+    <ROW File="btn_up_h_p.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~3.BMP|btn_up_h_p.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_up_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_up_h_p.json_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~3.JSO|btn_up_h_p.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_up_h_p.json" SelfReg="false"/>
+    <ROW File="btn_up_n.bmp_1" Component_="aether_logo.bmp_1" FileName="btn_up_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_up_n.bmp" SelfReg="false"/>
+    <ROW File="btn_up_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~4.JSO|btn_up_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_up_n.json" SelfReg="false"/>
+    <ROW File="icon_add.bmp_1" Component_="aether_logo.bmp_1" FileName="icon_add.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_add.bmp" SelfReg="false"/>
+    <ROW File="icon_add.json_1" Component_="aether_logo.bmp_1" FileName="ICON_A~1.JSO|icon_add.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_add.json" SelfReg="false"/>
+    <ROW File="icon_add_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_A~1.BMP|icon_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_add_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_add_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_A~2.JSO|icon_add_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_add_colored.json" SelfReg="false"/>
+    <ROW File="icon_check.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_C~1.BMP|icon_check.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_check.bmp" SelfReg="false"/>
+    <ROW File="icon_check.json_1" Component_="aether_logo.bmp_1" FileName="ICON_C~1.JSO|icon_check.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_check.json" SelfReg="false"/>
+    <ROW File="icon_edit.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_E~1.BMP|icon_edit.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_edit.bmp" SelfReg="false"/>
+    <ROW File="icon_edit.json_1" Component_="aether_logo.bmp_1" FileName="ICON_E~1.JSO|icon_edit.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_edit.json" SelfReg="false"/>
+    <ROW File="icon_edit_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_E~2.BMP|icon_edit_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_edit_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_edit_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_E~2.JSO|icon_edit_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_edit_colored.json" SelfReg="false"/>
+    <ROW File="icon_eraser.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_E~3.BMP|icon_eraser.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_eraser.bmp" SelfReg="false"/>
+    <ROW File="icon_eraser.json_1" Component_="aether_logo.bmp_1" FileName="ICON_E~3.JSO|icon_eraser.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_eraser.json" SelfReg="false"/>
+    <ROW File="icon_eraser_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_E~4.BMP|icon_eraser_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_eraser_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_eraser_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_E~4.JSO|icon_eraser_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_eraser_colored.json" SelfReg="false"/>
+    <ROW File="icon_gear.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_G~1.BMP|icon_gear.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_gear.bmp" SelfReg="false"/>
+    <ROW File="icon_gear.json_1" Component_="aether_logo.bmp_1" FileName="ICON_G~1.JSO|icon_gear.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_gear.json" SelfReg="false"/>
+    <ROW File="icon_gear_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_G~2.BMP|icon_gear_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_gear_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_gear_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_G~2.JSO|icon_gear_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_gear_colored.json" SelfReg="false"/>
+    <ROW File="icon_humbnail_add.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_H~1.BMP|icon_humbnail_add.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_humbnail_add.bmp" SelfReg="false"/>
+    <ROW File="icon_humbnail_add.json_1" Component_="aether_logo.bmp_1" FileName="ICON_H~1.JSO|icon_humbnail_add.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_humbnail_add.json" SelfReg="false"/>
+    <ROW File="icon_rocket.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_R~1.BMP|icon_rocket.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_rocket.bmp" SelfReg="false"/>
+    <ROW File="icon_rocket.json_1" Component_="aether_logo.bmp_1" FileName="ICON_R~1.JSO|icon_rocket.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_rocket.json" SelfReg="false"/>
+    <ROW File="icon_rocket_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_R~2.BMP|icon_rocket_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_rocket_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_rocket_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_R~2.JSO|icon_rocket_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_rocket_colored.json" SelfReg="false"/>
+    <ROW File="icon_thumbmail_add_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~1.BMP|icon_thumbmail_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbmail_add_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbmail_add_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~1.JSO|icon_thumbmail_add_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbmail_add_colored.json" SelfReg="false"/>
+    <ROW File="icon_thumbnail.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~2.BMP|icon_thumbnail.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbnail.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbnail.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~2.JSO|icon_thumbnail.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbnail.json" SelfReg="false"/>
+    <ROW File="icon_thumbnail_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~3.BMP|icon_thumbnail_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbnail_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbnail_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~3.JSO|icon_thumbnail_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbnail_colored.json" SelfReg="false"/>
+    <ROW File="icon_trash.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~4.BMP|icon_trash.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_trash.bmp" SelfReg="false"/>
+    <ROW File="icon_trash.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~4.JSO|icon_trash.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_trash.json" SelfReg="false"/>
+    <ROW File="icon_trash_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~5.BMP|icon_trash_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_trash_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_trash_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~5.JSO|icon_trash_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_trash_colored.json" SelfReg="false"/>
+    <ROW File="icon_zoom.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_Z~1.BMP|icon_zoom.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_zoom.bmp" SelfReg="false"/>
+    <ROW File="icon_zoom.json_1" Component_="aether_logo.bmp_1" FileName="ICON_Z~1.JSO|icon_zoom.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_zoom.json" SelfReg="false"/>
+    <ROW File="python_logo.bmp_1" Component_="aether_logo.bmp_1" FileName="PYTHON~1.BMP|python_logo.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\python_logo.bmp" SelfReg="false"/>
+    <ROW File="python_logo.json_1" Component_="aether_logo.bmp_1" FileName="PYTHON~1.JSO|python_logo.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\python_logo.json" SelfReg="false"/>
+    <ROW File="zaypro_logo.bmp_1" Component_="aether_logo.bmp_1" FileName="ZAYPRO~1.BMP|zaypro_logo.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\zaypro_logo.bmp" SelfReg="false"/>
+    <ROW File="zaypro_logo.json_1" Component_="aether_logo.bmp_1" FileName="ZAYPRO~1.JSO|zaypro_logo.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\zaypro_logo.json" SelfReg="false"/>
+    <ROW File="lovelee.mp3_1" Component_="lovelee.mp3_1" FileName="lovelee.mp3" Attributes="0" SourcePath="zaypro\example\오셀로\sound\lovelee.mp3" SelfReg="false"/>
+    <ROW File="zayshow.json_1" Component_="zayshow.json_1" FileName="ZAYSHO~1.JSO|zayshow.json" Attributes="0" SourcePath="zaypro\example\오셀로\widget\zayshow.json" SelfReg="false"/>
+    <ROW File="zay_1" Component_="zayshow.json_1" FileName="오셀로.zay" Attributes="0" SourcePath="zaypro\example\오셀로\widget\오셀로.zay" SelfReg="false"/>
+    <ROW File="zayshow.py_1" Component_="zayshow.py_1" FileName="zayshow.py" Attributes="0" SourcePath="zaypro\example\오셀로\zayshow.py" SelfReg="false"/>
+    <ROW File="py_1" Component_="zayshow.py_1" FileName="오셀로.py" Attributes="0" SourcePath="zaypro\example\오셀로\오셀로.py" SelfReg="false"/>
+    <ROW File="NotoSansKRBold.ttf_2" Component_="NotoSansKRBold.ttf_2" FileName="NOTOSA~1.TTF|NotoSansKR-Bold.ttf" Attributes="0" SourcePath="zaypro\example\테트리스\font\NotoSansKR-Bold.ttf" SelfReg="false"/>
+    <ROW File="NotoSansKRMedium.ttf_1" Component_="NotoSansKRBold.ttf_2" FileName="NOTOSA~2.TTF|NotoSansKR-Medium.ttf" Attributes="0" SourcePath="zaypro\example\테트리스\font\NotoSansKR-Medium.ttf" SelfReg="false"/>
+    <ROW File="NotoSansKRRegular.ttf_1" Component_="NotoSansKRBold.ttf_2" FileName="NOTOSA~3.TTF|NotoSansKR-Regular.ttf" Attributes="0" SourcePath="zaypro\example\테트리스\font\NotoSansKR-Regular.ttf" SelfReg="false"/>
+    <ROW File="RobotoBold.ttf_1" Component_="NotoSansKRBold.ttf_2" FileName="ROBOTO~1.TTF|Roboto-Bold.ttf" Attributes="0" SourcePath="zaypro\example\테트리스\font\Roboto-Bold.ttf" SelfReg="false"/>
+    <ROW File="RobotoMedium.ttf_2" Component_="NotoSansKRBold.ttf_2" FileName="ROBOTO~2.TTF|Roboto-Medium.ttf" Attributes="0" SourcePath="zaypro\example\테트리스\font\Roboto-Medium.ttf" SelfReg="false"/>
+    <ROW File="main.png_2" Component_="main.png_2" FileName="main.png" Attributes="0" SourcePath="zaypro\example\테트리스\image\main.png" SelfReg="false"/>
+    <ROW File="aether_logo.bmp_2" Component_="aether_logo.bmp_2" FileName="AETHER~1.BMP|aether_logo.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\aether_logo.bmp" SelfReg="false"/>
+    <ROW File="aether_logo.json_2" Component_="aether_logo.bmp_2" FileName="AETHER~1.JSO|aether_logo.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\aether_logo.json" SelfReg="false"/>
+    <ROW File="btn_close_h_p.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_CL~1.BMP|btn_close_h_p.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_close_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_close_h_p.json_2" Component_="aether_logo.bmp_2" FileName="BTN_CL~1.JSO|btn_close_h_p.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_close_h_p.json" SelfReg="false"/>
+    <ROW File="btn_close_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_CL~2.BMP|btn_close_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_close_n.bmp" SelfReg="false"/>
+    <ROW File="btn_close_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_CL~2.JSO|btn_close_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_close_n.json" SelfReg="false"/>
+    <ROW File="btn_down_h_p.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_DO~1.BMP|btn_down_h_p.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_down_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_down_h_p.json_2" Component_="aether_logo.bmp_2" FileName="BTN_DO~1.JSO|btn_down_h_p.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_down_h_p.json" SelfReg="false"/>
+    <ROW File="btn_down_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_DO~2.BMP|btn_down_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_down_n.bmp" SelfReg="false"/>
+    <ROW File="btn_down_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_DO~2.JSO|btn_down_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_down_n.json" SelfReg="false"/>
+    <ROW File="btn_minimimize_h_.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_MI~1.BMP|btn_minimimize_h_.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_minimimize_h_.bmp" SelfReg="false"/>
+    <ROW File="btn_minimimize_h_.json_2" Component_="aether_logo.bmp_2" FileName="BTN_MI~1.JSO|btn_minimimize_h_.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_minimimize_h_.json" SelfReg="false"/>
+    <ROW File="btn_minimimize_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_MI~2.BMP|btn_minimimize_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_minimimize_n.bmp" SelfReg="false"/>
+    <ROW File="btn_minimimize_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_MI~2.JSO|btn_minimimize_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_minimimize_n.json" SelfReg="false"/>
+    <ROW File="btn_pin_h.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~1.BMP|btn_pin_h.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_h.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_h.json_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~1.JSO|btn_pin_h.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_h.json" SelfReg="false"/>
+    <ROW File="btn_pin_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~2.BMP|btn_pin_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_n.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~2.JSO|btn_pin_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_n.json" SelfReg="false"/>
+    <ROW File="btn_pin_p_s.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~3.BMP|btn_pin_p_s.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_p_s.bmp" SelfReg="false"/>
+    <ROW File="btn_pin_p_s.json_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~3.JSO|btn_pin_p_s.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_p_s.json" SelfReg="false"/>
+    <ROW File="btn_thumbnail_edit.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_TH~1.BMP|btn_thumbnail_edit.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_thumbnail_edit.bmp" SelfReg="false"/>
+    <ROW File="btn_thumbnail_edit.json_2" Component_="aether_logo.bmp_2" FileName="BTN_TH~1.JSO|btn_thumbnail_edit.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_thumbnail_edit.json" SelfReg="false"/>
+    <ROW File="btn_upsizing_h_p.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~1.BMP|btn_upsizing_h_p.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_upsizing_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_upsizing_h_p.json_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~1.JSO|btn_upsizing_h_p.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_upsizing_h_p.json" SelfReg="false"/>
+    <ROW File="btn_upsizing_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~2.BMP|btn_upsizing_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_upsizing_n.bmp" SelfReg="false"/>
+    <ROW File="btn_upsizing_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~2.JSO|btn_upsizing_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_upsizing_n.json" SelfReg="false"/>
+    <ROW File="btn_up_h_p.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~3.BMP|btn_up_h_p.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_up_h_p.bmp" SelfReg="false"/>
+    <ROW File="btn_up_h_p.json_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~3.JSO|btn_up_h_p.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_up_h_p.json" SelfReg="false"/>
+    <ROW File="btn_up_n.bmp_2" Component_="aether_logo.bmp_2" FileName="btn_up_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_up_n.bmp" SelfReg="false"/>
+    <ROW File="btn_up_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~4.JSO|btn_up_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_up_n.json" SelfReg="false"/>
+    <ROW File="icon_add.bmp_2" Component_="aether_logo.bmp_2" FileName="icon_add.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_add.bmp" SelfReg="false"/>
+    <ROW File="icon_add.json_2" Component_="aether_logo.bmp_2" FileName="ICON_A~1.JSO|icon_add.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_add.json" SelfReg="false"/>
+    <ROW File="icon_add_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_A~1.BMP|icon_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_add_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_add_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_A~2.JSO|icon_add_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_add_colored.json" SelfReg="false"/>
+    <ROW File="icon_check.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_C~1.BMP|icon_check.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_check.bmp" SelfReg="false"/>
+    <ROW File="icon_check.json_2" Component_="aether_logo.bmp_2" FileName="ICON_C~1.JSO|icon_check.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_check.json" SelfReg="false"/>
+    <ROW File="icon_edit.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_E~1.BMP|icon_edit.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_edit.bmp" SelfReg="false"/>
+    <ROW File="icon_edit.json_2" Component_="aether_logo.bmp_2" FileName="ICON_E~1.JSO|icon_edit.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_edit.json" SelfReg="false"/>
+    <ROW File="icon_edit_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_E~2.BMP|icon_edit_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_edit_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_edit_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_E~2.JSO|icon_edit_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_edit_colored.json" SelfReg="false"/>
+    <ROW File="icon_eraser.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_E~3.BMP|icon_eraser.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_eraser.bmp" SelfReg="false"/>
+    <ROW File="icon_eraser.json_2" Component_="aether_logo.bmp_2" FileName="ICON_E~3.JSO|icon_eraser.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_eraser.json" SelfReg="false"/>
+    <ROW File="icon_eraser_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_E~4.BMP|icon_eraser_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_eraser_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_eraser_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_E~4.JSO|icon_eraser_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_eraser_colored.json" SelfReg="false"/>
+    <ROW File="icon_gear.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_G~1.BMP|icon_gear.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_gear.bmp" SelfReg="false"/>
+    <ROW File="icon_gear.json_2" Component_="aether_logo.bmp_2" FileName="ICON_G~1.JSO|icon_gear.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_gear.json" SelfReg="false"/>
+    <ROW File="icon_gear_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_G~2.BMP|icon_gear_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_gear_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_gear_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_G~2.JSO|icon_gear_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_gear_colored.json" SelfReg="false"/>
+    <ROW File="icon_humbnail_add.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_H~1.BMP|icon_humbnail_add.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_humbnail_add.bmp" SelfReg="false"/>
+    <ROW File="icon_humbnail_add.json_2" Component_="aether_logo.bmp_2" FileName="ICON_H~1.JSO|icon_humbnail_add.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_humbnail_add.json" SelfReg="false"/>
+    <ROW File="icon_rocket.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_R~1.BMP|icon_rocket.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_rocket.bmp" SelfReg="false"/>
+    <ROW File="icon_rocket.json_2" Component_="aether_logo.bmp_2" FileName="ICON_R~1.JSO|icon_rocket.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_rocket.json" SelfReg="false"/>
+    <ROW File="icon_rocket_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_R~2.BMP|icon_rocket_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_rocket_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_rocket_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_R~2.JSO|icon_rocket_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_rocket_colored.json" SelfReg="false"/>
+    <ROW File="icon_thumbmail_add_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~1.BMP|icon_thumbmail_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbmail_add_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbmail_add_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~1.JSO|icon_thumbmail_add_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbmail_add_colored.json" SelfReg="false"/>
+    <ROW File="icon_thumbnail.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~2.BMP|icon_thumbnail.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbnail.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbnail.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~2.JSO|icon_thumbnail.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbnail.json" SelfReg="false"/>
+    <ROW File="icon_thumbnail_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~3.BMP|icon_thumbnail_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbnail_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_thumbnail_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~3.JSO|icon_thumbnail_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbnail_colored.json" SelfReg="false"/>
+    <ROW File="icon_trash.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~4.BMP|icon_trash.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_trash.bmp" SelfReg="false"/>
+    <ROW File="icon_trash.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~4.JSO|icon_trash.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_trash.json" SelfReg="false"/>
+    <ROW File="icon_trash_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~5.BMP|icon_trash_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_trash_colored.bmp" SelfReg="false"/>
+    <ROW File="icon_trash_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~5.JSO|icon_trash_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_trash_colored.json" SelfReg="false"/>
+    <ROW File="icon_zoom.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_Z~1.BMP|icon_zoom.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_zoom.bmp" SelfReg="false"/>
+    <ROW File="icon_zoom.json_2" Component_="aether_logo.bmp_2" FileName="ICON_Z~1.JSO|icon_zoom.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_zoom.json" SelfReg="false"/>
+    <ROW File="python_logo.bmp_2" Component_="aether_logo.bmp_2" FileName="PYTHON~1.BMP|python_logo.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\python_logo.bmp" SelfReg="false"/>
+    <ROW File="python_logo.json_2" Component_="aether_logo.bmp_2" FileName="PYTHON~1.JSO|python_logo.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\python_logo.json" SelfReg="false"/>
+    <ROW File="zaypro_logo.bmp_2" Component_="aether_logo.bmp_2" FileName="ZAYPRO~1.BMP|zaypro_logo.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\zaypro_logo.bmp" SelfReg="false"/>
+    <ROW File="zaypro_logo.json_2" Component_="aether_logo.bmp_2" FileName="ZAYPRO~1.JSO|zaypro_logo.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\zaypro_logo.json" SelfReg="false"/>
+    <ROW File="lovelee.mp3_2" Component_="lovelee.mp3_2" FileName="lovelee.mp3" Attributes="0" SourcePath="zaypro\example\테트리스\sound\lovelee.mp3" SelfReg="false"/>
+    <ROW File="zayshow.json_2" Component_="zayshow.json_2" FileName="ZAYSHO~1.JSO|zayshow.json" Attributes="0" SourcePath="zaypro\example\테트리스\widget\zayshow.json" SelfReg="false"/>
+    <ROW File="zay_2" Component_="zayshow.json_2" FileName="테트리스.zay" Attributes="0" SourcePath="zaypro\example\테트리스\widget\테트리스.zay" SelfReg="false"/>
+    <ROW File="zayshow.py_2" Component_="zayshow.py_2" FileName="zayshow.py" Attributes="0" SourcePath="zaypro\example\테트리스\zayshow.py" SelfReg="false"/>
+    <ROW File="py_2" Component_="zayshow.py_2" FileName="테트리스.py" Attributes="0" SourcePath="zaypro\example\테트리스\테트리스.py" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -688,6 +701,8 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
     <ROW Directory_="AETHER_Dir" Component_="AETHER" ManualDelete="false"/>
+    <ROW Directory_="zaypro_Dir" Component_="zaypro" ManualDelete="false"/>
+    <ROW Directory_="zayproexamples_Dir" Component_="zayproexamples" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
@@ -726,6 +741,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
+    <ROW Feature_="MainFeature" Component_="zaypro"/>
     <ROW Feature_="MainFeature" Component_="Jalnan.ttf"/>
     <ROW Feature_="MainFeature" Component_="icon512.png"/>
     <ROW Feature_="MainFeature" Component_="noimg.png"/>
@@ -772,14 +788,14 @@
     <ROW Feature_="MainFeature" Component_="Qt5Qml.dll"/>
     <ROW Feature_="MainFeature" Component_="Qt5QmlModels.dll"/>
     <ROW Feature_="MainFeature" Component_="Qt5Quick.dll"/>
+    <ROW Feature_="MainFeature" Component_="AI_ExePath"/>
+    <ROW Feature_="MainFeature" Component_="AI_CustomARPName"/>
     <ROW Feature_="MainFeature" Component_="Qt5QuickWidgets.dll"/>
     <ROW Feature_="MainFeature" Component_="Qt5SerialPort.dll"/>
     <ROW Feature_="MainFeature" Component_="Qt5Svg.dll"/>
     <ROW Feature_="MainFeature" Component_="Qt5WebChannel.dll"/>
     <ROW Feature_="MainFeature" Component_="Qt5WebEngineCore.dll"/>
     <ROW Feature_="MainFeature" Component_="Qt5WebEngineWidgets.dll"/>
-    <ROW Feature_="MainFeature" Component_="AI_ExePath"/>
-    <ROW Feature_="MainFeature" Component_="AI_CustomARPName"/>
     <ROW Feature_="MainFeature" Component_="Qt5WebSockets.dll"/>
     <ROW Feature_="MainFeature" Component_="Qt5Widgets.dll"/>
     <ROW Feature_="MainFeature" Component_="QtWebEngineProcess.exe"/>
@@ -792,83 +808,30 @@
     <ROW Feature_="MainFeature" Component_="vcruntime140_1.dll"/>
     <ROW Feature_="MainFeature" Component_="vcruntime140_threads.dll"/>
     <ROW Feature_="MainFeature" Component_="zaypro.exe"/>
-    <ROW Feature_="MainFeature" Component_="qtaudio_wasapi.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qtaudio_windows.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qgenericbearer.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="challengers.exe"/>
-    <ROW Feature_="MainFeature" Component_="concrt140.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="D3Dcompiler_47.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qsvgicon.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qgif.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qicns.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qico.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qjpeg.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qsvg.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qtga.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qtiff.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qwbmp.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qwebp.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="libEGL.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="libGLESv2.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="dsengine.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qtmedia_audioengine.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="wmfengine.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="msvcp140.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="msvcp140_1.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="msvcp140_2.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="msvcp140_atomic_wait.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="msvcp140_codecvt_ids.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="opengl32sw.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qwindows.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qtmultimedia_m3u.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qtposition_positionpoll.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qtposition_serialnmea.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="qtposition_winrt.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="windowsprintersupport.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Bluetooth.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Core.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Gui.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Multimedia.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Network.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5OpenGL.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Positioning.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5PrintSupport.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Qml.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5QmlModels.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Quick.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5QuickWidgets.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5SerialPort.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Svg.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5WebChannel.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5WebEngineCore.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5WebEngineWidgets.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5WebSockets.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Qt5Widgets.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="QtWebEngineProcess.exe_1"/>
-    <ROW Feature_="MainFeature" Component_="icudtl.dat_1"/>
-    <ROW Feature_="MainFeature" Component_="qwindowsvistastyle.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="am.pak_1"/>
-    <ROW Feature_="MainFeature" Component_="qt_ar.qm_1"/>
-    <ROW Feature_="MainFeature" Component_="vccorlib140.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="vcruntime140.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="vcruntime140_1.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="vcruntime140_threads.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="AETHER"/>
-    <ROW Feature_="MainFeature" Component_="UINameTag.exe"/>
-    <ROW Feature_="MainFeature" Component_="ui_atlaskey.png"/>
+    <ROW Feature_="MainFeature" Component_="zayshow.exe"/>
+    <ROW Feature_="MainFeature" Component_="zayproexamples"/>
     <ROW Feature_="MainFeature" Component_="NotoSansKRBold.ttf"/>
-    <ROW Feature_="MainFeature" Component_="firebg.html"/>
-    <ROW Feature_="MainFeature" Component_="icon_ui_action_atlas.png"/>
     <ROW Feature_="MainFeature" Component_="main.png"/>
-    <ROW Feature_="MainFeature" Component_="btn_atlas.png"/>
+    <ROW Feature_="MainFeature" Component_="aether_logo.bmp"/>
     <ROW Feature_="MainFeature" Component_="lovelee.mp3"/>
-    <ROW Feature_="MainFeature" Component_="animation.json"/>
-    <ROW Feature_="MainFeature" Component_="challengers.py"/>
+    <ROW Feature_="MainFeature" Component_="zayshow.json"/>
+    <ROW Feature_="MainFeature" Component_="zayshow.py"/>
+    <ROW Feature_="MainFeature" Component_="NotoSansKRBold.ttf_1"/>
+    <ROW Feature_="MainFeature" Component_="main.png_1"/>
+    <ROW Feature_="MainFeature" Component_="aether_logo.bmp_1"/>
+    <ROW Feature_="MainFeature" Component_="lovelee.mp3_1"/>
+    <ROW Feature_="MainFeature" Component_="zayshow.json_1"/>
+    <ROW Feature_="MainFeature" Component_="zayshow.py_1"/>
+    <ROW Feature_="MainFeature" Component_="NotoSansKRBold.ttf_2"/>
+    <ROW Feature_="MainFeature" Component_="main.png_2"/>
+    <ROW Feature_="MainFeature" Component_="aether_logo.bmp_2"/>
+    <ROW Feature_="MainFeature" Component_="lovelee.mp3_2"/>
+    <ROW Feature_="MainFeature" Component_="zayshow.json_2"/>
+    <ROW Feature_="MainFeature" Component_="zayshow.py_2"/>
+    <ROW Feature_="MainFeature" Component_="AETHER"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
-    <ROW Name="UINameTag.exe" SourcePath="challengers\etc\UINameTag.exe" Index="0"/>
-    <ROW Name="challengers.exe" SourcePath="challengers\bin_Release64\challengers.exe" Index="0"/>
     <ROW Name="main.exe" SourcePath="etc\main.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
@@ -955,12 +918,8 @@
     <ROW Registry="Windows" Root="-1" Key="Software\Microsoft\Windows" Name="\"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="UINameTag" Directory_="AETHER_Dir" Name="UINAME~1|UINameTag" Component_="UINameTag.exe" Target="[#UINameTag.exe]" Hotkey="0" Icon_="UINameTag.exe" IconIndex="0" ShowCmd="1" WkDir="etc_Dir"/>
-    <ROW Shortcut="challengers" Directory_="AETHER_Dir" Name="CHALLE~1|challengers" Component_="challengers.exe" Target="[#challengers.exe]" Hotkey="0" Icon_="challengers.exe" IconIndex="0" ShowCmd="1" WkDir="bin_Release64_1_Dir"/>
-    <ROW Shortcut="challengers_1" Directory_="DesktopFolder" Name="CHALLE~1|challengers" Component_="challengers.exe" Target="[#challengers.exe]" Hotkey="0" Icon_="challengers.exe" IconIndex="0" ShowCmd="1" WkDir="bin_Release64_1_Dir"/>
     <ROW Shortcut="uninstall" Directory_="AETHER_Dir" Name="UNINST~1|uninstall" Component_="AI_ExePath" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
-    <ROW Shortcut="zaypro" Directory_="AETHER_Dir" Name="zaypro" Component_="zaypro.exe" Target="[#zaypro.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="bin_Release64_Dir"/>
-    <ROW Shortcut="zaypro_1" Directory_="DesktopFolder" Name="zaypro" Component_="zaypro.exe" Target="[#zaypro.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="bin_Release64_Dir"/>
+    <ROW Shortcut="zaypro_1" Directory_="AETHER_Dir" Name="zaypro" Component_="zaypro.exe" Target="[#zaypro.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="bin_Release64_Dir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiTextStyleComponent">
     <ROW TextStyle="BrandingStyle" FaceName="Segoe UI" Size="8" Color="2171376" MultiBuildColor="DefaultBuild:2565927" StyleBits="0" MsiKey="BrandingStyle"/>

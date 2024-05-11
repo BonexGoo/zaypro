@@ -50,13 +50,13 @@
     <ClCompile Include="..\source\zaypro.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\main.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\resource.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\source\zaybox.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\zaypro_main.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
