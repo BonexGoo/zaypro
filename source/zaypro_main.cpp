@@ -19,6 +19,10 @@ bool PlatformInit()
         Platform::File::ResetAssetsRemRoot(DataPath);
     #endif
 
+    // 관리자권한으로 실행하면 레지스트리에 zayshow를 등록
+    Platform::Utility::BindExtProgram(".zay", "Zay.Show",
+        Platform::Utility::GetProgramPath(true) + "zayshow.exe");
+
     Platform::SetViewCreator(ZayView::Creator);
     Platform::SetWindowName("ZAYPRO");
 
