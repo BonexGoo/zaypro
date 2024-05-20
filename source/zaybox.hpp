@@ -62,8 +62,7 @@ public:
     inline Point hookpos() const {return mHookPos;}
 
 public:
-    void RenderTitle(ZayPanel& panel, chars title, bool hook,
-        ChildType childtype, bool copy, bool expand, bool resize, bool remove);
+    void RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool copy, bool expand, bool resize, bool remove);
     void RenderHook(ZayPanel& panel, chars uiname);
     void RenderBall(ZayPanel& panel, chars uiname);
     void RenderGroupMoveButton(ZayPanel& panel, chars uiname);

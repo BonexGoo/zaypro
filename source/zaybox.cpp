@@ -237,8 +237,7 @@ void ZEZayBox::ChangeChild(ZEZayBox& oldchild, ZEZayBox& newchild)
     }
 }
 
-void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, bool hook,
-    ChildType childtype, bool copy, bool expand, bool resize, bool remove)
+void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool copy, bool expand, bool resize, bool remove)
 {
     const String UITitle = String::Format("%d-title", mID);
     const String UIGroupMove = String::Format("%d-groupmove", mID);
@@ -247,7 +246,6 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, bool hook,
     const String UIResize = String::Format("%d-resize", mID);
     const String UIRemove = String::Format("%d-remove", mID);
     const String UIHookRemove = String::Format("%d-hookremove", mID);
-    const String UIHook = String::Format("%d-hook", mID);
     const String UIBall = String::Format("%d-ball", mID);
     const sint32 ButtonWidth = 20;
     const bool IsFocusing = !!(panel.state(UITitle) & (PS_Focused | PS_Dragging));
@@ -279,10 +277,6 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, bool hook,
         })
     ZAY_LTRB(panel, 0, -2, panel.w() + 4, panel.h() + 2)
     {
-        // L로프(후크)
-        if(hook)
-            RenderHook(panel, UIHook);
-
         // R로프(볼)
         if(childtype == ChildType::Inner)
             RenderBall(panel, UIBall);
@@ -369,23 +363,24 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, bool hook,
 void ZEZayBox::RenderHook(ZayPanel& panel, chars uiname)
 {
     const bool IsFocusing = !!(panel.state(uiname) & (PS_Focused | PS_Dragging));
+    const bool IsDropping = !!(panel.state(uiname) & PS_Dropping);
+    const bool IsFocusingOnly = (IsFocusing && !IsDropping);
     ZAY_COLOR_IF(panel, mColor, mHooked)
     ZAY_RGB_IF(panel, 80, 80, 80, mHooked)
     ZAY_RGB_IF(panel, 255, 64, 0, !mHooked)
-    ZAY_RGB_IF(panel, 96, 96, 96, !mHooked && !IsFocusing)
+    ZAY_RGB_IF(panel, 96, 96, 96, !mHooked && !IsFocusingOnly)
     {
-        ZAY_MOVE(panel, 0, panel.h() / 2)
+        ZAY_MOVE(panel, 0, TitleBarHeight / 2)
         {
             Points RopeDots;
             RopeDots.AtAdding() = Point(5, 0);
             RopeDots.AtAdding() = Point(-1, 0);
             RopeDots.AtAdding() = Point(mHookPos.x + mHookDrag.x + 6, mHookPos.y + mHookDrag.y);
             RopeDots.AtAdding() = Point(mHookPos.x + mHookDrag.x, mHookPos.y + mHookDrag.y);
-            ZAY_SCISSOR_CLEAR(panel)
-                panel.polybezier(RopeDots, 2, true, false);
+            panel.polybezier(RopeDots, 2, true, false);
         }
 
-        ZAY_XYRR_UI(panel, mHookPos.x, panel.h() / 2 + mHookPos.y, 8, 8, (mHooked)? "" : uiname,
+        ZAY_XYRR_UI(panel, mHookPos.x, TitleBarHeight / 2 + mHookPos.y, 8, 8, (mHooked)? "" : uiname,
             ZAY_GESTURE_VNTXY(v, n, t, x, y, this)
             {
                 static Point OldPos;
@@ -2402,7 +2397,7 @@ void ZEZayBoxStarter::Render(ZayPanel& panel)
         panel.ninepatch(R("box_bg"));
 
         // 타이틀
-        RenderTitle(panel, mCompType, false, ChildType::Inner, false, true, true, false);
+        RenderTitle(panel, mCompType, ChildType::Inner, false, true, true, false);
 
         // 바디
         if(mExpanded)
@@ -2502,44 +2497,52 @@ void ZEZayBoxContent::Render(ZayPanel& panel)
 {
     const String UIBody = String::Format("%d-body", mID);
     const String UIComment = String::Format("%d-comment", mID);
+    const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
-    ZAY_INNER_SCISSOR(panel, -ScissorGap)
-    ZAY_INNER(panel, ScissorGap)
     {
-        panel.ninepatch(R("box_bg"));
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
+            panel.ninepatch(R("box_bg"));
 
-        // 인사이드볼
-        if(mChildType == ChildType::Insider)
-        ZAY_XYWH(panel, 0, 0, panel.w(), TitleBarHeight)
-            mInsideGroup.RenderBalls(panel);
+        // L로프(후크)
+        RenderHook(panel, UIHook);
 
-        // 타이틀
-        RenderTitle(panel, mCompType, true, mChildType, true, true, true, true);
-
-        // 바디
-        if(mExpanded)
-        ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
         {
-            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+            // 인사이드볼
+            if(mChildType == ChildType::Insider)
+            ZAY_XYWH(panel, 0, 0, panel.w(), TitleBarHeight)
+                mInsideGroup.RenderBalls(panel);
+
+            // 타이틀
+            RenderTitle(panel, mCompType, mChildType, true, true, true, true);
+
+            // 바디
+            if(mExpanded)
+            ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
             {
-                // 주석에디터
-                ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
-                ZAY_INNER(panel, 4)
-                    mComment.RenderCommentEditor(panel, UIComment);
-
-                // 파라미터그룹
-                sint32 ParamGroupHeight = 0;
-                if(mHasParam)
+                ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
                 {
-                    ParamGroupHeight = (ParamHeight + 4) * (mParamGroup.mParams.Count() + 1) + 9;
-                    ZAY_LTRB(panel, 0, EditorHeight, panel.w(), EditorHeight + ParamGroupHeight)
-                        mParamGroup.RenderParamGroup(panel);
-                }
+                    // 주석에디터
+                    ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
+                    ZAY_INNER(panel, 4)
+                        mComment.RenderCommentEditor(panel, UIComment);
 
-                // 인풋그룹
-                if(mChildType == ChildType::Setter)
-                ZAY_LTRB(panel, 0, EditorHeight + ParamGroupHeight, panel.w(), panel.h())
-                    mSetGroup.RenderValueGroup(panel, "OnSet");
+                    // 파라미터그룹
+                    sint32 ParamGroupHeight = 0;
+                    if(mHasParam)
+                    {
+                        ParamGroupHeight = (ParamHeight + 4) * (mParamGroup.mParams.Count() + 1) + 9;
+                        ZAY_LTRB(panel, 0, EditorHeight, panel.w(), EditorHeight + ParamGroupHeight)
+                            mParamGroup.RenderParamGroup(panel);
+                    }
+
+                    // 인풋그룹
+                    if(mChildType == ChildType::Setter)
+                    ZAY_LTRB(panel, 0, EditorHeight + ParamGroupHeight, panel.w(), panel.h())
+                        mSetGroup.RenderValueGroup(panel, "OnSet");
+                }
             }
         }
     }
@@ -2680,49 +2683,57 @@ void ZEZayBoxLayout::Render(ZayPanel& panel)
 {
     const String UIBody = String::Format("%d-body", mID);
     const String UINameComment = String::Format("%d-namecomment", mID);
+    const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
-    ZAY_INNER_SCISSOR(panel, -ScissorGap)
-    ZAY_INNER(panel, ScissorGap)
     {
-        panel.ninepatch(R("box_bg"));
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
+            panel.ninepatch(R("box_bg"));
 
-        // 타이틀
-        RenderTitle(panel, mCompType, true, ChildType::Inner, true, true, true, true);
+        // L로프(후크)
+        RenderHook(panel, UIHook);
 
-        // 바디
-        if(mExpanded)
-        ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
         {
-            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+            // 타이틀
+            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true);
+
+            // 바디
+            if(mExpanded)
+            ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
             {
-                // UI명칭주석에디터
-                ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
-                ZAY_INNER(panel, 4)
-                    mNameComment.RenderNameCommentEditor(panel, UINameComment, "UI");
-
-                // 파라미터그룹
-                const sint32 ParamGroupHeight = (ParamHeight + 4) * (mParamGroup.mParams.Count() + 1) + 9;
-                ZAY_LTRB(panel, 0, EditorHeight, panel.w(), EditorHeight + ParamGroupHeight)
-                    mParamGroup.RenderParamGroup(panel);
-
-                // 인풋그룹
-                ZAY_LTRB(panel, 0, EditorHeight + ParamGroupHeight, panel.w(), panel.h())
+                ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
                 {
-                    branch;
-                    jump(mClickMode == ClickMode::Click)
-                        mClickGroup.RenderValueGroup(panel, "OnClick", &mTouchGroup, true);
-                    jump(mClickMode == ClickMode::Click_DoubleClick)
-                        mClickGroup.RenderValueGroup(panel, "OnClick/D", &mTouchGroup, true);
-                    jump(mClickMode == ClickMode::Click_LongPress)
-                        mClickGroup.RenderValueGroup(panel, "OnClick/L", &mTouchGroup, true);
-                    jump(mClickMode == ClickMode::Click_Swipe)
-                        mClickGroup.RenderValueGroup(panel, "OnClick/S", &mTouchGroup, true);
-                    jump(mClickMode == ClickMode::Click_DoubleClick_LongPress)
-                        mClickGroup.RenderValueGroup(panel, "OnClick/D/L", &mTouchGroup, true);
-                    jump(mClickMode == ClickMode::Touch)
-                        mClickGroup.RenderValueGroup(panel, "OnTouch", &mTouchGroup);
-                    jump(mClickMode == ClickMode::Error)
-                        mClickGroup.RenderValueGroup(panel, "Error", &mTouchGroup);
+                    // UI명칭주석에디터
+                    ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
+                    ZAY_INNER(panel, 4)
+                        mNameComment.RenderNameCommentEditor(panel, UINameComment, "UI");
+
+                    // 파라미터그룹
+                    const sint32 ParamGroupHeight = (ParamHeight + 4) * (mParamGroup.mParams.Count() + 1) + 9;
+                    ZAY_LTRB(panel, 0, EditorHeight, panel.w(), EditorHeight + ParamGroupHeight)
+                        mParamGroup.RenderParamGroup(panel);
+
+                    // 인풋그룹
+                    ZAY_LTRB(panel, 0, EditorHeight + ParamGroupHeight, panel.w(), panel.h())
+                    {
+                        branch;
+                        jump(mClickMode == ClickMode::Click)
+                            mClickGroup.RenderValueGroup(panel, "OnClick", &mTouchGroup, true);
+                        jump(mClickMode == ClickMode::Click_DoubleClick)
+                            mClickGroup.RenderValueGroup(panel, "OnClick/D", &mTouchGroup, true);
+                        jump(mClickMode == ClickMode::Click_LongPress)
+                            mClickGroup.RenderValueGroup(panel, "OnClick/L", &mTouchGroup, true);
+                        jump(mClickMode == ClickMode::Click_Swipe)
+                            mClickGroup.RenderValueGroup(panel, "OnClick/S", &mTouchGroup, true);
+                        jump(mClickMode == ClickMode::Click_DoubleClick_LongPress)
+                            mClickGroup.RenderValueGroup(panel, "OnClick/D/L", &mTouchGroup, true);
+                        jump(mClickMode == ClickMode::Touch)
+                            mClickGroup.RenderValueGroup(panel, "OnTouch", &mTouchGroup);
+                        jump(mClickMode == ClickMode::Error)
+                            mClickGroup.RenderValueGroup(panel, "Error", &mTouchGroup);
+                    }
                 }
             }
         }
@@ -2816,29 +2827,37 @@ void ZEZayBoxCode::Render(ZayPanel& panel)
 {
     const String UIBody = String::Format("%d-body", mID);
     const String UIComment = String::Format("%d-comment", mID);
+    const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
-    ZAY_INNER_SCISSOR(panel, -ScissorGap)
-    ZAY_INNER(panel, ScissorGap)
     {
-        panel.ninepatch(R("box_bg"));
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
+            panel.ninepatch(R("box_bg"));
 
-        // 타이틀
-        RenderTitle(panel, mCompType, true, ChildType::Inner, true, true, true, true);
+        // L로프(후크)
+        RenderHook(panel, UIHook);
 
-        // 바디
-        if(mExpanded)
-        ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
         {
-            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
-            {
-                // 주석에디터
-                ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
-                ZAY_INNER(panel, 4)
-                    mComment.RenderCommentEditor(panel, UIComment);
+            // 타이틀
+            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true);
 
-                // 인풋그룹
-                ZAY_LTRB(panel, 0, EditorHeight, panel.w(), panel.h())
-                    mCodeGroup.RenderValueGroup(panel, "");
+            // 바디
+            if(mExpanded)
+            ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+            {
+                ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+                {
+                    // 주석에디터
+                    ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
+                    ZAY_INNER(panel, 4)
+                        mComment.RenderCommentEditor(panel, UIComment);
+
+                    // 인풋그룹
+                    ZAY_LTRB(panel, 0, EditorHeight, panel.w(), panel.h())
+                        mCodeGroup.RenderValueGroup(panel, "");
+                }
             }
         }
     }
@@ -2904,25 +2923,34 @@ void ZEZayBoxJumpOrGate::Render(ZayPanel& panel)
 {
     const String UIBody = String::Format("%d-body", mID);
     const String UINameComment = String::Format("%d-namecomment", mID);
+    const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
-    ZAY_INNER_SCISSOR(panel, -ScissorGap)
-    ZAY_INNER(panel, ScissorGap)
     {
-        panel.ninepatch(R("box_bg"));
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
+            panel.ninepatch(R("box_bg"));
 
-        // 타이틀
-        RenderTitle(panel, mCompType, (mIsGate)? false : true, (mIsGate)? ChildType::Inner : ChildType::None, true, true, true, true);
+        // L로프(후크)
+        if(!mIsGate)
+            RenderHook(panel, UIHook);
 
-        // 바디
-        if(mExpanded)
-        ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
         {
-            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+            // 타이틀
+            RenderTitle(panel, mCompType, (mIsGate)? ChildType::Inner : ChildType::None, true, true, true, true);
+
+            // 바디
+            if(mExpanded)
+            ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
             {
-                // 함수명칭주석에디터
-                ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
-                ZAY_INNER(panel, 4)
-                    mNameComment.RenderNameCommentEditor(panel, UINameComment, "GATE");
+                ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+                {
+                    // 함수명칭주석에디터
+                    ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
+                    ZAY_INNER(panel, 4)
+                        mNameComment.RenderNameCommentEditor(panel, UINameComment, "GATE");
+                }
             }
         }
     }
@@ -2983,30 +3011,38 @@ void ZEZayBoxLoop::Render(ZayPanel& panel)
     const String UIBody = String::Format("%d-body", mID);
     const String UINameComment = String::Format("%d-namecomment", mID);
     const String UIOperation = String::Format("%d-operation", mID);
+    const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
-    ZAY_INNER_SCISSOR(panel, -ScissorGap)
-    ZAY_INNER(panel, ScissorGap)
     {
-        panel.ninepatch(R("box_bg"));
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
+            panel.ninepatch(R("box_bg"));
 
-        // 타이틀
-        RenderTitle(panel, mCompType, true, ChildType::Inner, true, true, true, true);
+        // L로프(후크)
+        RenderHook(panel, UIHook);
 
-        // 바디
-        if(mExpanded)
-        ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
         {
-            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
-            {
-                // UI명칭주석에디터
-                ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
-                ZAY_INNER(panel, 4)
-                    mNameComment.RenderNameCommentEditor(panel, UINameComment, "LOOP");
+            // 타이틀
+            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true);
 
-                // 연산에디터
-                ZAY_LTRB(panel, 0, EditorHeight, panel.w(), EditorHeight + EditorHeight)
-                ZAY_INNER(panel, 4)
-                    mOperation.RenderOperationEditor(panel, UIOperation, mNameComment.mName);
+            // 바디
+            if(mExpanded)
+            ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+            {
+                ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+                {
+                    // UI명칭주석에디터
+                    ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
+                    ZAY_INNER(panel, 4)
+                        mNameComment.RenderNameCommentEditor(panel, UINameComment, "LOOP");
+
+                    // 연산에디터
+                    ZAY_LTRB(panel, 0, EditorHeight, panel.w(), EditorHeight + EditorHeight)
+                    ZAY_INNER(panel, 4)
+                        mOperation.RenderOperationEditor(panel, UIOperation, mNameComment.mName);
+                }
             }
         }
     }
@@ -3065,27 +3101,35 @@ void ZEZayBoxCondition::Render(ZayPanel& panel)
 {
     const String UIBody = String::Format("%d-body", mID);
     const String UIOperation = String::Format("%d-operation", mID);
+    const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded && mHasElseAndOperation)? mBodySize.h : 0))
-    ZAY_INNER_SCISSOR(panel, -ScissorGap)
-    ZAY_INNER(panel, ScissorGap)
     {
-        panel.ninepatch(R("box_bg"));
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
+            panel.ninepatch(R("box_bg"));
 
-        // 타이틀
-        if(mOperation.mWithElse)
-            RenderTitle(panel, "el" + mCompType, true, ChildType::None, true, mHasElseAndOperation, true, true);
-        else RenderTitle(panel, mCompType, true, ChildType::None, true, mHasElseAndOperation, true, true);
+        // L로프(후크)
+        RenderHook(panel, UIHook);
 
-        // 바디
-        if(mExpanded && mHasElseAndOperation)
-        ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
         {
-            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+            // 타이틀
+            if(mOperation.mWithElse)
+                RenderTitle(panel, "el" + mCompType, ChildType::None, true, mHasElseAndOperation, true, true);
+            else RenderTitle(panel, mCompType, ChildType::None, true, mHasElseAndOperation, true, true);
+
+            // 바디
+            if(mExpanded && mHasElseAndOperation)
+            ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
             {
-                // 연산에디터
-                ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
-                ZAY_INNER(panel, 4)
-                    mOperation.RenderOperationEditor(panel, UIOperation);
+                ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+                {
+                    // 연산에디터
+                    ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
+                    ZAY_INNER(panel, 4)
+                        mOperation.RenderOperationEditor(panel, UIOperation);
+                }
             }
         }
     }
@@ -3172,14 +3216,20 @@ void ZEZayBoxError::Render(ZayPanel& panel)
 {
     const String UIBody = String::Format("%d-body", mID);
     const String UIOperation = String::Format("%d-operation", mID);
+    const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight)
-    ZAY_INNER_SCISSOR(panel, -ScissorGap)
-    ZAY_INNER(panel, ScissorGap)
     {
-        panel.ninepatch(R("box_bg"));
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
+            panel.ninepatch(R("box_bg"));
+
+        // L로프(후크)
+        RenderHook(panel, UIHook);
 
         // 타이틀
-        RenderTitle(panel, mCompType, true, ChildType::Inner, true, false, true, true);
+        ZAY_INNER_SCISSOR(panel, -ScissorGap)
+        ZAY_INNER(panel, ScissorGap)
+            RenderTitle(panel, mCompType, ChildType::Inner, true, false, true, true);
     }
 }
 
