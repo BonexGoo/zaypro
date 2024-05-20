@@ -121,6 +121,7 @@ public:
     static const sint32 ValueHeight = 20;
     static const sint32 ValueAddWidth = 30;
     static const sint32 BallX = 15;
+    static const sint32 ScissorGap = 200;
 
 public:
     ////////////////////////////////////////////////////////////////////////////////

@@ -381,7 +381,8 @@ void ZEZayBox::RenderHook(ZayPanel& panel, chars uiname)
             RopeDots.AtAdding() = Point(-1, 0);
             RopeDots.AtAdding() = Point(mHookPos.x + mHookDrag.x + 6, mHookPos.y + mHookDrag.y);
             RopeDots.AtAdding() = Point(mHookPos.x + mHookDrag.x, mHookPos.y + mHookDrag.y);
-            panel.polybezier(RopeDots, 2, true, false);
+            ZAY_SCISSOR_CLEAR(panel)
+                panel.polybezier(RopeDots, 2, true, false);
         }
 
         ZAY_XYRR_UI(panel, mHookPos.x, panel.h() / 2 + mHookPos.y, 8, 8, (mHooked)? "" : uiname,
@@ -2395,6 +2396,8 @@ void ZEZayBoxStarter::Render(ZayPanel& panel)
     const String UIBody = String::Format("%d-body", mID);
     const String UIComment = String::Format("%d-comment", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
     {
         panel.ninepatch(R("box_bg"));
 
@@ -2500,6 +2503,8 @@ void ZEZayBoxContent::Render(ZayPanel& panel)
     const String UIBody = String::Format("%d-body", mID);
     const String UIComment = String::Format("%d-comment", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
     {
         panel.ninepatch(R("box_bg"));
 
@@ -2676,6 +2681,8 @@ void ZEZayBoxLayout::Render(ZayPanel& panel)
     const String UIBody = String::Format("%d-body", mID);
     const String UINameComment = String::Format("%d-namecomment", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
     {
         panel.ninepatch(R("box_bg"));
 
@@ -2810,6 +2817,8 @@ void ZEZayBoxCode::Render(ZayPanel& panel)
     const String UIBody = String::Format("%d-body", mID);
     const String UIComment = String::Format("%d-comment", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
     {
         panel.ninepatch(R("box_bg"));
 
@@ -2896,6 +2905,8 @@ void ZEZayBoxJumpOrGate::Render(ZayPanel& panel)
     const String UIBody = String::Format("%d-body", mID);
     const String UINameComment = String::Format("%d-namecomment", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
     {
         panel.ninepatch(R("box_bg"));
 
@@ -2973,6 +2984,8 @@ void ZEZayBoxLoop::Render(ZayPanel& panel)
     const String UINameComment = String::Format("%d-namecomment", mID);
     const String UIOperation = String::Format("%d-operation", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
     {
         panel.ninepatch(R("box_bg"));
 
@@ -3053,6 +3066,8 @@ void ZEZayBoxCondition::Render(ZayPanel& panel)
     const String UIBody = String::Format("%d-body", mID);
     const String UIOperation = String::Format("%d-operation", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded && mHasElseAndOperation)? mBodySize.h : 0))
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
     {
         panel.ninepatch(R("box_bg"));
 
@@ -3158,6 +3173,8 @@ void ZEZayBoxError::Render(ZayPanel& panel)
     const String UIBody = String::Format("%d-body", mID);
     const String UIOperation = String::Format("%d-operation", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight)
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
     {
         panel.ninepatch(R("box_bg"));
 

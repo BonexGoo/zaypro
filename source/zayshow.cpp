@@ -10,6 +10,8 @@ extern String gFirstPath;
 extern sint32 gPythonAppID;
 extern sint32 gPythonPort;
 
+extern void SetWindowRectSafety(sint32 x, sint32 y, sint32 w, sint32 h);
+
 ZAY_VIEW_API OnCommand(CommandType type, id_share in, id_cloned_share* out)
 {
     if(type == CT_Activate && !boolo(in).ConstValue())
@@ -501,7 +503,9 @@ void zayshowData::SetWidget(chars path)
     mWidget->Reload(path);
     mWidget->UpdateAtlas(R::PrintUpdatedAtlas(true));
     Platform::SetWindowName(CurTitle);
-    Platform::SetWindowSize(CurWidth * CurScale / 100, CurHeight * CurScale / 100 + 1);
+    const rect128 CurWindowRect = Platform::GetWindowRect();
+    SetWindowRectSafety(CurWindowRect.l, CurWindowRect.t,
+        CurWidth * CurScale / 100, CurHeight * CurScale / 100 + 1);
 }
 
 void zayshowData::InitWidget(ZayWidget& widget, chars name)

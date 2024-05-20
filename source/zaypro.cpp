@@ -445,9 +445,9 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                     {
                         const bool IsFocused = ((panel.state("NEW") & (PS_Focused | PS_Dropping)) == PS_Focused);
                         const bool IsPressed = ((panel.state("NEW") & (PS_Pressed | PS_Dragging)) != 0);
-                        if(IsPressed) panel.ninepatch(R("btn_new_p"));
-                        else if(IsFocused) panel.ninepatch(R("btn_new_o"));
-                        else panel.ninepatch(R("btn_new_n"));
+                        if(IsPressed) panel.stretch(R("btn_new_p"), Image::Build::Force);
+                        else if(IsFocused) panel.stretch(R("btn_new_o"), Image::Build::Force);
+                        else panel.stretch(R("btn_new_n"), Image::Build::Force);
                     }
 
                     // 빠른저장 버튼
@@ -462,17 +462,17 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                     {
                         if(const sint32 EasySaveAni = (sint32) (100 * m->mEasySaveEffect.value()))
                         {
-                            panel.ninepatch(R("btn_fsave_n"));
+                            panel.stretch(R("btn_fsave_n"), Image::Build::Force);
                             ZAY_RGBA(panel, 128, 128, 128, 128 * EasySaveAni / 100)
-                                panel.ninepatch(R("btn_fsave_o"));
+                                panel.stretch(R("btn_fsave_o"), Image::Build::Force);
                         }
                         else
                         {
                             const bool IsFocused = ((panel.state("FSAVE") & (PS_Focused | PS_Dropping)) == PS_Focused);
                             const bool IsPressed = ((panel.state("FSAVE") & (PS_Pressed | PS_Dragging)) != 0);
-                            if(IsPressed) panel.ninepatch(R("btn_fsave_p"));
-                            else if(IsFocused) panel.ninepatch(R("btn_fsave_o"));
-                            else panel.ninepatch(R("btn_fsave_n"));
+                            if(IsPressed) panel.stretch(R("btn_fsave_p"), Image::Build::Force);
+                            else if(IsFocused) panel.stretch(R("btn_fsave_o"), Image::Build::Force);
+                            else panel.stretch(R("btn_fsave_n"), Image::Build::Force);
                         }
                     }
 
@@ -508,9 +508,9 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                     {
                         const bool IsFocused = ((panel.state("LOAD") & (PS_Focused | PS_Dropping)) == PS_Focused);
                         const bool IsPressed = ((panel.state("LOAD") & (PS_Pressed | PS_Dragging)) != 0);
-                        if(IsPressed) panel.ninepatch(R("btn_load_p"));
-                        else if(IsFocused) panel.ninepatch(R("btn_load_o"));
-                        else panel.ninepatch(R("btn_load_n"));
+                        if(IsPressed) panel.stretch(R("btn_load_p"), Image::Build::Force);
+                        else if(IsFocused) panel.stretch(R("btn_load_o"), Image::Build::Force);
+                        else panel.stretch(R("btn_load_n"), Image::Build::Force);
                     }
 
                     // 저장 버튼
@@ -540,9 +540,9 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                     {
                         const bool IsFocused = ((panel.state("SAVE") & (PS_Focused | PS_Dropping)) == PS_Focused);
                         const bool IsPressed = ((panel.state("SAVE") & (PS_Pressed | PS_Dragging)) != 0);
-                        if(IsPressed) panel.ninepatch(R("btn_save_p"));
-                        else if(IsFocused) panel.ninepatch(R("btn_save_o"));
-                        else panel.ninepatch(R("btn_save_n"));
+                        if(IsPressed) panel.stretch(R("btn_save_p"), Image::Build::Force);
+                        else if(IsFocused) panel.stretch(R("btn_save_o"), Image::Build::Force);
+                        else panel.stretch(R("btn_save_n"), Image::Build::Force);
                     }
                 }
 

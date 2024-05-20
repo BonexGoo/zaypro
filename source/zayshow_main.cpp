@@ -10,10 +10,12 @@ sint32 gFirstPosY = 0;
 sint32 gPythonAppID = -1;
 sint32 gPythonPort = 0;
 
+void SetWindowRectSafety(sint32 x, sint32 y, sint32 w, sint32 h);
+
 bool PlatformInit()
 {
     #if BOSS_WINDOWS
-        Platform::InitForGL(true);
+        Platform::InitForMDI(true); // MDI가 GL보다 더 빠름
         String DataPath = Platform::File::RootForData();
         Platform::File::ResetAssetsRemRoot(DataPath);
     #else
@@ -39,7 +41,7 @@ bool PlatformInit()
 
     Platform::SetViewCreator(ZayView::Creator);
     Platform::SetWindowName("ZayShow");
-    Platform::SetWindowRect(gFirstPosX, gFirstPosY, 800, 800);
+    SetWindowRectSafety(gFirstPosX, gFirstPosY, 800, 800);
     Platform::SetWindowView("zayshowView");
     return true;
 }
@@ -60,4 +62,55 @@ void PlatformQuit()
 
 void PlatformFree()
 {
+}
+
+void SetWindowRectSafety(sint32 x, sint32 y, sint32 w, sint32 h)
+{
+    // 가장 가까운 화면을 찾고
+    rect128 WindowRect{x, y, x + w, y + h};
+    sint32 NearScreenID = 0;
+    float BestDist = 0;
+    for(sint32 i = 0, iend = Platform::Utility::GetScreenCount(); i < iend; ++i)
+    {
+        rect128 CurRect;
+        Platform::Utility::GetScreenRect(CurRect, i);
+        const float CurDist = Math::Distance((CurRect.l + CurRect.r) * 0.5, (CurRect.t + CurRect.b) * 0.5,
+            (WindowRect.l + WindowRect.r) * 0.5, (WindowRect.t + WindowRect.b) * 0.5);
+        if(BestDist > CurDist || i == 0)
+        {
+            NearScreenID = i;
+            BestDist = CurDist;
+        }
+    }
+
+    // 화면을 나간 경우를 처리
+    rect128 ScreenRect;
+    Platform::Utility::GetScreenRect(ScreenRect, NearScreenID);
+    const sint32 InnerGap = 0;
+    if(ScreenRect.r - InnerGap < WindowRect.r)
+    {
+        const sint32 AddX = ScreenRect.r - InnerGap - WindowRect.r;
+        WindowRect.l += AddX;
+        WindowRect.r += AddX;
+    }
+    if(ScreenRect.b - InnerGap < WindowRect.b)
+    {
+        const sint32 AddY = ScreenRect.b - InnerGap - WindowRect.b;
+        WindowRect.t += AddY;
+        WindowRect.b += AddY;
+    }
+    if(WindowRect.l < ScreenRect.l + InnerGap)
+    {
+        const sint32 AddX = ScreenRect.l + InnerGap - WindowRect.l;
+        WindowRect.l += AddX;
+        WindowRect.r += AddX;
+    }
+    if(WindowRect.t < ScreenRect.t + InnerGap)
+    {
+        const sint32 AddY = ScreenRect.t + InnerGap - WindowRect.t;
+        WindowRect.t += AddY;
+        WindowRect.b += AddY;
+    }
+    Platform::SetWindowRect(WindowRect.l, WindowRect.t,
+        WindowRect.r - WindowRect.l, WindowRect.b - WindowRect.t);
 }
