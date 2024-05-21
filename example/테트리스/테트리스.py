@@ -59,6 +59,7 @@ def CheckTile():
                 full = False
                 break
         if full:
+            tetris.log("Clear!!!")
             for y2 in reversed(range(y)):
                 for x in range(tilew):
                     tiles[y2 + 1][x] = tiles[y2][x]
@@ -92,21 +93,25 @@ def PrintTile():
         tetris.set(f"d.tile_{y}_{x}", 1)
 
 def OnLeft(nouse):
+    tetris.log("Key:Left")
     if CanMove(-1, 0):
         runpos[0] -= 1
         PrintTile()
 
 def OnRight(nouse):
+    tetris.log("Key:Right")
     if CanMove(1, 0):
         runpos[0] += 1
         PrintTile()
 
 def OnDown(nouse):
+    tetris.log("Key:Down")
     while CanMove(0, 1):
         runpos[1] += 1
     PrintTile()
 
 def OnRotate(nouse):
+    tetris.log("Key:Up")
     for i in range(4):
         x = runtile[i][0]
         y = runtile[i][1]
@@ -135,6 +140,7 @@ def OnTimer():
     timer.start()
 
 def OnStart(nouse):
+    tetris.log("Start!!!")
     for y in range(tileh):
         for x in range(tilew):
             if y < tileh - 2:

@@ -51,6 +51,11 @@ class App(object):
             os.getcwd() + '/widget/' + appname + ".zay", str(appx), str(appy), self._appid, str(port)])
         print(f"App Start - [app{self._appid}:{appname}]")
 
+    def log(self, text):
+        if wspacket.get(self._appid) == None:
+            return
+        wspacket[self._appid].append(f"log,{text}#")
+
     def set(self, key, value):
         if wspacket.get(self._appid) == None:
             return

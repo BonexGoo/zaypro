@@ -20,10 +20,10 @@
     <ROW Property="AppLogoIcon" Value="applogoicon.bmp" MultiBuildValue="DefaultBuild:aether.jpg" Type="1" MsiKey="AppLogoIcon"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="AETHER"/>
-    <ROW Property="ProductCode" Value="1033:{2EC83BA6-1FE1-4B67-B753-7D11D60D6C69} 1041:{2EC83BA6-1FE1-4B67-B753-7D11D60D6C69} 1042:{2EC83BA6-1FE1-4B67-B753-7D11D60D6C69} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{8BB71C3D-6D73-4F11-9A5F-3B90E46971C2} 1041:{8BB71C3D-6D73-4F11-9A5F-3B90E46971C2} 1042:{8BB71C3D-6D73-4F11-9A5F-3B90E46971C2} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1042"/>
     <ROW Property="ProductName" Value="ZAYPRO"/>
-    <ROW Property="ProductVersion" Value="2024.05.14" Options="32"/>
+    <ROW Property="ProductVersion" Value="2024.05.21" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{C8B25A87-8550-4DB0-9113-961EC6633F68}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -63,9 +63,6 @@
     <ROW Directory="image_3_Dir" Directory_Parent="__2_Dir" DefaultDir="image"/>
     <ROW Directory="image_Dir" Directory_Parent="assets_Dir" DefaultDir="image"/>
     <ROW Directory="imageformats_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="IMAGEF~1|imageformats"/>
-    <ROW Directory="main_png_1_Dir" Directory_Parent="image_2_Dir" DefaultDir="main_png"/>
-    <ROW Directory="main_png_2_Dir" Directory_Parent="image_3_Dir" DefaultDir="main_png"/>
-    <ROW Directory="main_png_Dir" Directory_Parent="image_1_Dir" DefaultDir="main_png"/>
     <ROW Directory="mediaservice_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="MEDIAS~1|mediaservice"/>
     <ROW Directory="platforms_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="PLATFO~1|platforms"/>
     <ROW Directory="playlistformats_Dir" Directory_Parent="bin_Release64_Dir" DefaultDir="PLAYLI~1|playlistformats"/>
@@ -86,7 +83,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AETHER" ComponentId="{F4A3A5F4-C3FA-4A91-A35E-260AFF24E5FB}" Directory_="AETHER_Dir" Attributes="0"/>
-    <ROW Component="AI_CustomARPName" ComponentId="{5D269E7E-1A9D-4125-9155-B549488D369F}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
+    <ROW Component="AI_CustomARPName" ComponentId="{77B62E31-A431-4A58-90CB-AA59A06470E2}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{72D60A55-B413-4EF0-8664-572AE39A7EDE}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
     <ROW Component="APPDIR" ComponentId="{E3763F94-EE93-44E1-B772-A00DE159FBE5}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="D3Dcompiler_47.dll" ComponentId="{6362A4E7-49F9-4BDE-861D-8B84542517E9}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll"/>
@@ -115,9 +112,6 @@
     <ROW Component="Qt5WebSockets.dll" ComponentId="{125D892F-F6BA-43EC-8F56-FF14F30AE2F7}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5WebSockets.dll"/>
     <ROW Component="Qt5Widgets.dll" ComponentId="{DE947855-4988-40F1-B20A-FE1D456F391D}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="Qt5Widgets.dll"/>
     <ROW Component="QtWebEngineProcess.exe" ComponentId="{67C7F9C2-D2A5-42E5-A48E-75C40012EE9A}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="QtWebEngineProcess.exe"/>
-    <ROW Component="aether_logo.bmp" ComponentId="{0EA3E18F-98AA-4705-8B91-5513460472A6}" Directory_="main_png_Dir" Attributes="0" KeyPath="aether_logo.bmp" Type="0"/>
-    <ROW Component="aether_logo.bmp_1" ComponentId="{133733A4-C2FE-4B49-979E-7F2A2B4D1BCE}" Directory_="main_png_1_Dir" Attributes="0" KeyPath="aether_logo.bmp_1" Type="0"/>
-    <ROW Component="aether_logo.bmp_2" ComponentId="{AF052036-F366-424E-9266-670C26FF8B79}" Directory_="main_png_2_Dir" Attributes="0" KeyPath="aether_logo.bmp_2" Type="0"/>
     <ROW Component="am.pak" ComponentId="{0EC9FE1B-0B49-41BA-BD87-9E0B7FF92E1B}" Directory_="qtwebengine_locales_Dir" Attributes="0" KeyPath="am.pak" Type="0"/>
     <ROW Component="concrt140.dll" ComponentId="{7BBFB580-FE21-433D-AA27-87BB69F21125}" Directory_="bin_Release64_Dir" Attributes="256" KeyPath="concrt140.dll"/>
     <ROW Component="dsengine.dll" ComponentId="{4EC375E9-FB31-4E92-9F0A-5CB6A1B2A685}" Directory_="mediaservice_Dir" Attributes="256" KeyPath="dsengine.dll"/>
@@ -337,76 +331,6 @@
     <ROW File="RobotoBold.ttf" Component_="NotoSansKRBold.ttf" FileName="ROBOTO~1.TTF|Roboto-Bold.ttf" Attributes="0" SourcePath="zaypro\example\스네이크\font\Roboto-Bold.ttf" SelfReg="false"/>
     <ROW File="RobotoMedium.ttf" Component_="NotoSansKRBold.ttf" FileName="ROBOTO~2.TTF|Roboto-Medium.ttf" Attributes="0" SourcePath="zaypro\example\스네이크\font\Roboto-Medium.ttf" SelfReg="false"/>
     <ROW File="main.png" Component_="main.png" FileName="main.png" Attributes="0" SourcePath="zaypro\example\스네이크\image\main.png" SelfReg="false"/>
-    <ROW File="aether_logo.bmp" Component_="aether_logo.bmp" FileName="AETHER~1.BMP|aether_logo.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\aether_logo.bmp" SelfReg="false"/>
-    <ROW File="aether_logo.json" Component_="aether_logo.bmp" FileName="AETHER~1.JSO|aether_logo.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\aether_logo.json" SelfReg="false"/>
-    <ROW File="btn_close_h_p.bmp" Component_="aether_logo.bmp" FileName="BTN_CL~1.BMP|btn_close_h_p.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_close_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_close_h_p.json" Component_="aether_logo.bmp" FileName="BTN_CL~1.JSO|btn_close_h_p.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_close_h_p.json" SelfReg="false"/>
-    <ROW File="btn_close_n.bmp" Component_="aether_logo.bmp" FileName="BTN_CL~2.BMP|btn_close_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_close_n.bmp" SelfReg="false"/>
-    <ROW File="btn_close_n.json" Component_="aether_logo.bmp" FileName="BTN_CL~2.JSO|btn_close_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_close_n.json" SelfReg="false"/>
-    <ROW File="btn_down_h_p.bmp" Component_="aether_logo.bmp" FileName="BTN_DO~1.BMP|btn_down_h_p.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_down_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_down_h_p.json" Component_="aether_logo.bmp" FileName="BTN_DO~1.JSO|btn_down_h_p.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_down_h_p.json" SelfReg="false"/>
-    <ROW File="btn_down_n.bmp" Component_="aether_logo.bmp" FileName="BTN_DO~2.BMP|btn_down_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_down_n.bmp" SelfReg="false"/>
-    <ROW File="btn_down_n.json" Component_="aether_logo.bmp" FileName="BTN_DO~2.JSO|btn_down_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_down_n.json" SelfReg="false"/>
-    <ROW File="btn_minimimize_h_.bmp" Component_="aether_logo.bmp" FileName="BTN_MI~1.BMP|btn_minimimize_h_.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_minimimize_h_.bmp" SelfReg="false"/>
-    <ROW File="btn_minimimize_h_.json" Component_="aether_logo.bmp" FileName="BTN_MI~1.JSO|btn_minimimize_h_.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_minimimize_h_.json" SelfReg="false"/>
-    <ROW File="btn_minimimize_n.bmp" Component_="aether_logo.bmp" FileName="BTN_MI~2.BMP|btn_minimimize_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_minimimize_n.bmp" SelfReg="false"/>
-    <ROW File="btn_minimimize_n.json" Component_="aether_logo.bmp" FileName="BTN_MI~2.JSO|btn_minimimize_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_minimimize_n.json" SelfReg="false"/>
-    <ROW File="btn_pin_h.bmp" Component_="aether_logo.bmp" FileName="BTN_PI~1.BMP|btn_pin_h.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_h.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_h.json" Component_="aether_logo.bmp" FileName="BTN_PI~1.JSO|btn_pin_h.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_h.json" SelfReg="false"/>
-    <ROW File="btn_pin_n.bmp" Component_="aether_logo.bmp" FileName="BTN_PI~2.BMP|btn_pin_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_n.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_n.json" Component_="aether_logo.bmp" FileName="BTN_PI~2.JSO|btn_pin_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_n.json" SelfReg="false"/>
-    <ROW File="btn_pin_p_s.bmp" Component_="aether_logo.bmp" FileName="BTN_PI~3.BMP|btn_pin_p_s.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_p_s.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_p_s.json" Component_="aether_logo.bmp" FileName="BTN_PI~3.JSO|btn_pin_p_s.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_pin_p_s.json" SelfReg="false"/>
-    <ROW File="btn_thumbnail_edit.bmp" Component_="aether_logo.bmp" FileName="BTN_TH~1.BMP|btn_thumbnail_edit.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_thumbnail_edit.bmp" SelfReg="false"/>
-    <ROW File="btn_thumbnail_edit.json" Component_="aether_logo.bmp" FileName="BTN_TH~1.JSO|btn_thumbnail_edit.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_thumbnail_edit.json" SelfReg="false"/>
-    <ROW File="btn_upsizing_h_p.bmp" Component_="aether_logo.bmp" FileName="BTN_UP~1.BMP|btn_upsizing_h_p.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_upsizing_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_upsizing_h_p.json" Component_="aether_logo.bmp" FileName="BTN_UP~1.JSO|btn_upsizing_h_p.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_upsizing_h_p.json" SelfReg="false"/>
-    <ROW File="btn_upsizing_n.bmp" Component_="aether_logo.bmp" FileName="BTN_UP~2.BMP|btn_upsizing_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_upsizing_n.bmp" SelfReg="false"/>
-    <ROW File="btn_upsizing_n.json" Component_="aether_logo.bmp" FileName="BTN_UP~2.JSO|btn_upsizing_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_upsizing_n.json" SelfReg="false"/>
-    <ROW File="btn_up_h_p.bmp" Component_="aether_logo.bmp" FileName="BTN_UP~3.BMP|btn_up_h_p.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_up_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_up_h_p.json" Component_="aether_logo.bmp" FileName="BTN_UP~3.JSO|btn_up_h_p.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_up_h_p.json" SelfReg="false"/>
-    <ROW File="btn_up_n.bmp" Component_="aether_logo.bmp" FileName="btn_up_n.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_up_n.bmp" SelfReg="false"/>
-    <ROW File="btn_up_n.json" Component_="aether_logo.bmp" FileName="BTN_UP~4.JSO|btn_up_n.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\btn_up_n.json" SelfReg="false"/>
-    <ROW File="icon_add.bmp" Component_="aether_logo.bmp" FileName="icon_add.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_add.bmp" SelfReg="false"/>
-    <ROW File="icon_add.json" Component_="aether_logo.bmp" FileName="ICON_A~1.JSO|icon_add.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_add.json" SelfReg="false"/>
-    <ROW File="icon_add_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_A~1.BMP|icon_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_add_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_add_colored.json" Component_="aether_logo.bmp" FileName="ICON_A~2.JSO|icon_add_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_add_colored.json" SelfReg="false"/>
-    <ROW File="icon_check.bmp" Component_="aether_logo.bmp" FileName="ICON_C~1.BMP|icon_check.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_check.bmp" SelfReg="false"/>
-    <ROW File="icon_check.json" Component_="aether_logo.bmp" FileName="ICON_C~1.JSO|icon_check.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_check.json" SelfReg="false"/>
-    <ROW File="icon_edit.bmp" Component_="aether_logo.bmp" FileName="ICON_E~1.BMP|icon_edit.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_edit.bmp" SelfReg="false"/>
-    <ROW File="icon_edit.json" Component_="aether_logo.bmp" FileName="ICON_E~1.JSO|icon_edit.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_edit.json" SelfReg="false"/>
-    <ROW File="icon_edit_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_E~2.BMP|icon_edit_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_edit_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_edit_colored.json" Component_="aether_logo.bmp" FileName="ICON_E~2.JSO|icon_edit_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_edit_colored.json" SelfReg="false"/>
-    <ROW File="icon_eraser.bmp" Component_="aether_logo.bmp" FileName="ICON_E~3.BMP|icon_eraser.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_eraser.bmp" SelfReg="false"/>
-    <ROW File="icon_eraser.json" Component_="aether_logo.bmp" FileName="ICON_E~3.JSO|icon_eraser.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_eraser.json" SelfReg="false"/>
-    <ROW File="icon_eraser_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_E~4.BMP|icon_eraser_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_eraser_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_eraser_colored.json" Component_="aether_logo.bmp" FileName="ICON_E~4.JSO|icon_eraser_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_eraser_colored.json" SelfReg="false"/>
-    <ROW File="icon_gear.bmp" Component_="aether_logo.bmp" FileName="ICON_G~1.BMP|icon_gear.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_gear.bmp" SelfReg="false"/>
-    <ROW File="icon_gear.json" Component_="aether_logo.bmp" FileName="ICON_G~1.JSO|icon_gear.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_gear.json" SelfReg="false"/>
-    <ROW File="icon_gear_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_G~2.BMP|icon_gear_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_gear_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_gear_colored.json" Component_="aether_logo.bmp" FileName="ICON_G~2.JSO|icon_gear_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_gear_colored.json" SelfReg="false"/>
-    <ROW File="icon_humbnail_add.bmp" Component_="aether_logo.bmp" FileName="ICON_H~1.BMP|icon_humbnail_add.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_humbnail_add.bmp" SelfReg="false"/>
-    <ROW File="icon_humbnail_add.json" Component_="aether_logo.bmp" FileName="ICON_H~1.JSO|icon_humbnail_add.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_humbnail_add.json" SelfReg="false"/>
-    <ROW File="icon_rocket.bmp" Component_="aether_logo.bmp" FileName="ICON_R~1.BMP|icon_rocket.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_rocket.bmp" SelfReg="false"/>
-    <ROW File="icon_rocket.json" Component_="aether_logo.bmp" FileName="ICON_R~1.JSO|icon_rocket.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_rocket.json" SelfReg="false"/>
-    <ROW File="icon_rocket_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_R~2.BMP|icon_rocket_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_rocket_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_rocket_colored.json" Component_="aether_logo.bmp" FileName="ICON_R~2.JSO|icon_rocket_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_rocket_colored.json" SelfReg="false"/>
-    <ROW File="icon_thumbmail_add_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_T~1.BMP|icon_thumbmail_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbmail_add_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbmail_add_colored.json" Component_="aether_logo.bmp" FileName="ICON_T~1.JSO|icon_thumbmail_add_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbmail_add_colored.json" SelfReg="false"/>
-    <ROW File="icon_thumbnail.bmp" Component_="aether_logo.bmp" FileName="ICON_T~2.BMP|icon_thumbnail.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbnail.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbnail.json" Component_="aether_logo.bmp" FileName="ICON_T~2.JSO|icon_thumbnail.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbnail.json" SelfReg="false"/>
-    <ROW File="icon_thumbnail_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_T~3.BMP|icon_thumbnail_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbnail_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbnail_colored.json" Component_="aether_logo.bmp" FileName="ICON_T~3.JSO|icon_thumbnail_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_thumbnail_colored.json" SelfReg="false"/>
-    <ROW File="icon_trash.bmp" Component_="aether_logo.bmp" FileName="ICON_T~4.BMP|icon_trash.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_trash.bmp" SelfReg="false"/>
-    <ROW File="icon_trash.json" Component_="aether_logo.bmp" FileName="ICON_T~4.JSO|icon_trash.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_trash.json" SelfReg="false"/>
-    <ROW File="icon_trash_colored.bmp" Component_="aether_logo.bmp" FileName="ICON_T~5.BMP|icon_trash_colored.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_trash_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_trash_colored.json" Component_="aether_logo.bmp" FileName="ICON_T~5.JSO|icon_trash_colored.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_trash_colored.json" SelfReg="false"/>
-    <ROW File="icon_zoom.bmp" Component_="aether_logo.bmp" FileName="ICON_Z~1.BMP|icon_zoom.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_zoom.bmp" SelfReg="false"/>
-    <ROW File="icon_zoom.json" Component_="aether_logo.bmp" FileName="ICON_Z~1.JSO|icon_zoom.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\icon_zoom.json" SelfReg="false"/>
-    <ROW File="python_logo.bmp" Component_="aether_logo.bmp" FileName="PYTHON~1.BMP|python_logo.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\python_logo.bmp" SelfReg="false"/>
-    <ROW File="python_logo.json" Component_="aether_logo.bmp" FileName="PYTHON~1.JSO|python_logo.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\python_logo.json" SelfReg="false"/>
-    <ROW File="zaypro_logo.bmp" Component_="aether_logo.bmp" FileName="ZAYPRO~1.BMP|zaypro_logo.bmp" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\zaypro_logo.bmp" SelfReg="false"/>
-    <ROW File="zaypro_logo.json" Component_="aether_logo.bmp" FileName="ZAYPRO~1.JSO|zaypro_logo.json" Attributes="0" SourcePath="zaypro\example\스네이크\image\main_png\zaypro_logo.json" SelfReg="false"/>
     <ROW File="lovelee.mp3" Component_="lovelee.mp3" FileName="lovelee.mp3" Attributes="0" SourcePath="zaypro\example\스네이크\sound\lovelee.mp3" SelfReg="false"/>
     <ROW File="zayshow.json" Component_="zayshow.json" FileName="ZAYSHO~1.JSO|zayshow.json" Attributes="0" SourcePath="zaypro\example\스네이크\widget\zayshow.json" SelfReg="false"/>
     <ROW File="zay" Component_="zayshow.json" FileName="스네이크.zay" Attributes="0" SourcePath="zaypro\example\스네이크\widget\스네이크.zay" SelfReg="false"/>
@@ -415,76 +339,6 @@
     <ROW File="NotoSansKRBold.ttf_1" Component_="NotoSansKRBold.ttf_1" FileName="NOTOSA~1.TTF|NotoSansKR-Bold.ttf" Attributes="0" SourcePath="zaypro\example\오셀로\font\NotoSansKR-Bold.ttf" SelfReg="false"/>
     <ROW File="RobotoMedium.ttf_1" Component_="NotoSansKRBold.ttf_1" FileName="ROBOTO~1.TTF|Roboto-Medium.ttf" Attributes="0" SourcePath="zaypro\example\오셀로\font\Roboto-Medium.ttf" SelfReg="false"/>
     <ROW File="main.png_1" Component_="main.png_1" FileName="main.png" Attributes="0" SourcePath="zaypro\example\오셀로\image\main.png" SelfReg="false"/>
-    <ROW File="aether_logo.bmp_1" Component_="aether_logo.bmp_1" FileName="AETHER~1.BMP|aether_logo.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\aether_logo.bmp" SelfReg="false"/>
-    <ROW File="aether_logo.json_1" Component_="aether_logo.bmp_1" FileName="AETHER~1.JSO|aether_logo.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\aether_logo.json" SelfReg="false"/>
-    <ROW File="btn_close_h_p.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_CL~1.BMP|btn_close_h_p.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_close_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_close_h_p.json_1" Component_="aether_logo.bmp_1" FileName="BTN_CL~1.JSO|btn_close_h_p.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_close_h_p.json" SelfReg="false"/>
-    <ROW File="btn_close_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_CL~2.BMP|btn_close_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_close_n.bmp" SelfReg="false"/>
-    <ROW File="btn_close_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_CL~2.JSO|btn_close_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_close_n.json" SelfReg="false"/>
-    <ROW File="btn_down_h_p.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_DO~1.BMP|btn_down_h_p.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_down_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_down_h_p.json_1" Component_="aether_logo.bmp_1" FileName="BTN_DO~1.JSO|btn_down_h_p.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_down_h_p.json" SelfReg="false"/>
-    <ROW File="btn_down_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_DO~2.BMP|btn_down_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_down_n.bmp" SelfReg="false"/>
-    <ROW File="btn_down_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_DO~2.JSO|btn_down_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_down_n.json" SelfReg="false"/>
-    <ROW File="btn_minimimize_h_.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_MI~1.BMP|btn_minimimize_h_.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_minimimize_h_.bmp" SelfReg="false"/>
-    <ROW File="btn_minimimize_h_.json_1" Component_="aether_logo.bmp_1" FileName="BTN_MI~1.JSO|btn_minimimize_h_.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_minimimize_h_.json" SelfReg="false"/>
-    <ROW File="btn_minimimize_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_MI~2.BMP|btn_minimimize_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_minimimize_n.bmp" SelfReg="false"/>
-    <ROW File="btn_minimimize_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_MI~2.JSO|btn_minimimize_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_minimimize_n.json" SelfReg="false"/>
-    <ROW File="btn_pin_h.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~1.BMP|btn_pin_h.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_h.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_h.json_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~1.JSO|btn_pin_h.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_h.json" SelfReg="false"/>
-    <ROW File="btn_pin_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~2.BMP|btn_pin_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_n.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~2.JSO|btn_pin_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_n.json" SelfReg="false"/>
-    <ROW File="btn_pin_p_s.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~3.BMP|btn_pin_p_s.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_p_s.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_p_s.json_1" Component_="aether_logo.bmp_1" FileName="BTN_PI~3.JSO|btn_pin_p_s.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_pin_p_s.json" SelfReg="false"/>
-    <ROW File="btn_thumbnail_edit.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_TH~1.BMP|btn_thumbnail_edit.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_thumbnail_edit.bmp" SelfReg="false"/>
-    <ROW File="btn_thumbnail_edit.json_1" Component_="aether_logo.bmp_1" FileName="BTN_TH~1.JSO|btn_thumbnail_edit.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_thumbnail_edit.json" SelfReg="false"/>
-    <ROW File="btn_upsizing_h_p.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~1.BMP|btn_upsizing_h_p.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_upsizing_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_upsizing_h_p.json_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~1.JSO|btn_upsizing_h_p.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_upsizing_h_p.json" SelfReg="false"/>
-    <ROW File="btn_upsizing_n.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~2.BMP|btn_upsizing_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_upsizing_n.bmp" SelfReg="false"/>
-    <ROW File="btn_upsizing_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~2.JSO|btn_upsizing_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_upsizing_n.json" SelfReg="false"/>
-    <ROW File="btn_up_h_p.bmp_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~3.BMP|btn_up_h_p.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_up_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_up_h_p.json_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~3.JSO|btn_up_h_p.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_up_h_p.json" SelfReg="false"/>
-    <ROW File="btn_up_n.bmp_1" Component_="aether_logo.bmp_1" FileName="btn_up_n.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_up_n.bmp" SelfReg="false"/>
-    <ROW File="btn_up_n.json_1" Component_="aether_logo.bmp_1" FileName="BTN_UP~4.JSO|btn_up_n.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\btn_up_n.json" SelfReg="false"/>
-    <ROW File="icon_add.bmp_1" Component_="aether_logo.bmp_1" FileName="icon_add.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_add.bmp" SelfReg="false"/>
-    <ROW File="icon_add.json_1" Component_="aether_logo.bmp_1" FileName="ICON_A~1.JSO|icon_add.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_add.json" SelfReg="false"/>
-    <ROW File="icon_add_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_A~1.BMP|icon_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_add_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_add_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_A~2.JSO|icon_add_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_add_colored.json" SelfReg="false"/>
-    <ROW File="icon_check.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_C~1.BMP|icon_check.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_check.bmp" SelfReg="false"/>
-    <ROW File="icon_check.json_1" Component_="aether_logo.bmp_1" FileName="ICON_C~1.JSO|icon_check.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_check.json" SelfReg="false"/>
-    <ROW File="icon_edit.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_E~1.BMP|icon_edit.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_edit.bmp" SelfReg="false"/>
-    <ROW File="icon_edit.json_1" Component_="aether_logo.bmp_1" FileName="ICON_E~1.JSO|icon_edit.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_edit.json" SelfReg="false"/>
-    <ROW File="icon_edit_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_E~2.BMP|icon_edit_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_edit_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_edit_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_E~2.JSO|icon_edit_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_edit_colored.json" SelfReg="false"/>
-    <ROW File="icon_eraser.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_E~3.BMP|icon_eraser.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_eraser.bmp" SelfReg="false"/>
-    <ROW File="icon_eraser.json_1" Component_="aether_logo.bmp_1" FileName="ICON_E~3.JSO|icon_eraser.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_eraser.json" SelfReg="false"/>
-    <ROW File="icon_eraser_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_E~4.BMP|icon_eraser_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_eraser_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_eraser_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_E~4.JSO|icon_eraser_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_eraser_colored.json" SelfReg="false"/>
-    <ROW File="icon_gear.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_G~1.BMP|icon_gear.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_gear.bmp" SelfReg="false"/>
-    <ROW File="icon_gear.json_1" Component_="aether_logo.bmp_1" FileName="ICON_G~1.JSO|icon_gear.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_gear.json" SelfReg="false"/>
-    <ROW File="icon_gear_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_G~2.BMP|icon_gear_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_gear_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_gear_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_G~2.JSO|icon_gear_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_gear_colored.json" SelfReg="false"/>
-    <ROW File="icon_humbnail_add.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_H~1.BMP|icon_humbnail_add.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_humbnail_add.bmp" SelfReg="false"/>
-    <ROW File="icon_humbnail_add.json_1" Component_="aether_logo.bmp_1" FileName="ICON_H~1.JSO|icon_humbnail_add.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_humbnail_add.json" SelfReg="false"/>
-    <ROW File="icon_rocket.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_R~1.BMP|icon_rocket.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_rocket.bmp" SelfReg="false"/>
-    <ROW File="icon_rocket.json_1" Component_="aether_logo.bmp_1" FileName="ICON_R~1.JSO|icon_rocket.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_rocket.json" SelfReg="false"/>
-    <ROW File="icon_rocket_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_R~2.BMP|icon_rocket_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_rocket_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_rocket_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_R~2.JSO|icon_rocket_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_rocket_colored.json" SelfReg="false"/>
-    <ROW File="icon_thumbmail_add_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~1.BMP|icon_thumbmail_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbmail_add_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbmail_add_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~1.JSO|icon_thumbmail_add_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbmail_add_colored.json" SelfReg="false"/>
-    <ROW File="icon_thumbnail.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~2.BMP|icon_thumbnail.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbnail.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbnail.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~2.JSO|icon_thumbnail.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbnail.json" SelfReg="false"/>
-    <ROW File="icon_thumbnail_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~3.BMP|icon_thumbnail_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbnail_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbnail_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~3.JSO|icon_thumbnail_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_thumbnail_colored.json" SelfReg="false"/>
-    <ROW File="icon_trash.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~4.BMP|icon_trash.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_trash.bmp" SelfReg="false"/>
-    <ROW File="icon_trash.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~4.JSO|icon_trash.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_trash.json" SelfReg="false"/>
-    <ROW File="icon_trash_colored.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_T~5.BMP|icon_trash_colored.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_trash_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_trash_colored.json_1" Component_="aether_logo.bmp_1" FileName="ICON_T~5.JSO|icon_trash_colored.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_trash_colored.json" SelfReg="false"/>
-    <ROW File="icon_zoom.bmp_1" Component_="aether_logo.bmp_1" FileName="ICON_Z~1.BMP|icon_zoom.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_zoom.bmp" SelfReg="false"/>
-    <ROW File="icon_zoom.json_1" Component_="aether_logo.bmp_1" FileName="ICON_Z~1.JSO|icon_zoom.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\icon_zoom.json" SelfReg="false"/>
-    <ROW File="python_logo.bmp_1" Component_="aether_logo.bmp_1" FileName="PYTHON~1.BMP|python_logo.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\python_logo.bmp" SelfReg="false"/>
-    <ROW File="python_logo.json_1" Component_="aether_logo.bmp_1" FileName="PYTHON~1.JSO|python_logo.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\python_logo.json" SelfReg="false"/>
-    <ROW File="zaypro_logo.bmp_1" Component_="aether_logo.bmp_1" FileName="ZAYPRO~1.BMP|zaypro_logo.bmp" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\zaypro_logo.bmp" SelfReg="false"/>
-    <ROW File="zaypro_logo.json_1" Component_="aether_logo.bmp_1" FileName="ZAYPRO~1.JSO|zaypro_logo.json" Attributes="0" SourcePath="zaypro\example\오셀로\image\main_png\zaypro_logo.json" SelfReg="false"/>
     <ROW File="lovelee.mp3_1" Component_="lovelee.mp3_1" FileName="lovelee.mp3" Attributes="0" SourcePath="zaypro\example\오셀로\sound\lovelee.mp3" SelfReg="false"/>
     <ROW File="zayshow.json_1" Component_="zayshow.json_1" FileName="ZAYSHO~1.JSO|zayshow.json" Attributes="0" SourcePath="zaypro\example\오셀로\widget\zayshow.json" SelfReg="false"/>
     <ROW File="zay_1" Component_="zayshow.json_1" FileName="오셀로.zay" Attributes="0" SourcePath="zaypro\example\오셀로\widget\오셀로.zay" SelfReg="false"/>
@@ -496,76 +350,6 @@
     <ROW File="RobotoBold.ttf_1" Component_="NotoSansKRBold.ttf_2" FileName="ROBOTO~1.TTF|Roboto-Bold.ttf" Attributes="0" SourcePath="zaypro\example\테트리스\font\Roboto-Bold.ttf" SelfReg="false"/>
     <ROW File="RobotoMedium.ttf_2" Component_="NotoSansKRBold.ttf_2" FileName="ROBOTO~2.TTF|Roboto-Medium.ttf" Attributes="0" SourcePath="zaypro\example\테트리스\font\Roboto-Medium.ttf" SelfReg="false"/>
     <ROW File="main.png_2" Component_="main.png_2" FileName="main.png" Attributes="0" SourcePath="zaypro\example\테트리스\image\main.png" SelfReg="false"/>
-    <ROW File="aether_logo.bmp_2" Component_="aether_logo.bmp_2" FileName="AETHER~1.BMP|aether_logo.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\aether_logo.bmp" SelfReg="false"/>
-    <ROW File="aether_logo.json_2" Component_="aether_logo.bmp_2" FileName="AETHER~1.JSO|aether_logo.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\aether_logo.json" SelfReg="false"/>
-    <ROW File="btn_close_h_p.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_CL~1.BMP|btn_close_h_p.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_close_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_close_h_p.json_2" Component_="aether_logo.bmp_2" FileName="BTN_CL~1.JSO|btn_close_h_p.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_close_h_p.json" SelfReg="false"/>
-    <ROW File="btn_close_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_CL~2.BMP|btn_close_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_close_n.bmp" SelfReg="false"/>
-    <ROW File="btn_close_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_CL~2.JSO|btn_close_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_close_n.json" SelfReg="false"/>
-    <ROW File="btn_down_h_p.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_DO~1.BMP|btn_down_h_p.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_down_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_down_h_p.json_2" Component_="aether_logo.bmp_2" FileName="BTN_DO~1.JSO|btn_down_h_p.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_down_h_p.json" SelfReg="false"/>
-    <ROW File="btn_down_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_DO~2.BMP|btn_down_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_down_n.bmp" SelfReg="false"/>
-    <ROW File="btn_down_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_DO~2.JSO|btn_down_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_down_n.json" SelfReg="false"/>
-    <ROW File="btn_minimimize_h_.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_MI~1.BMP|btn_minimimize_h_.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_minimimize_h_.bmp" SelfReg="false"/>
-    <ROW File="btn_minimimize_h_.json_2" Component_="aether_logo.bmp_2" FileName="BTN_MI~1.JSO|btn_minimimize_h_.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_minimimize_h_.json" SelfReg="false"/>
-    <ROW File="btn_minimimize_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_MI~2.BMP|btn_minimimize_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_minimimize_n.bmp" SelfReg="false"/>
-    <ROW File="btn_minimimize_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_MI~2.JSO|btn_minimimize_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_minimimize_n.json" SelfReg="false"/>
-    <ROW File="btn_pin_h.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~1.BMP|btn_pin_h.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_h.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_h.json_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~1.JSO|btn_pin_h.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_h.json" SelfReg="false"/>
-    <ROW File="btn_pin_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~2.BMP|btn_pin_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_n.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~2.JSO|btn_pin_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_n.json" SelfReg="false"/>
-    <ROW File="btn_pin_p_s.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~3.BMP|btn_pin_p_s.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_p_s.bmp" SelfReg="false"/>
-    <ROW File="btn_pin_p_s.json_2" Component_="aether_logo.bmp_2" FileName="BTN_PI~3.JSO|btn_pin_p_s.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_pin_p_s.json" SelfReg="false"/>
-    <ROW File="btn_thumbnail_edit.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_TH~1.BMP|btn_thumbnail_edit.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_thumbnail_edit.bmp" SelfReg="false"/>
-    <ROW File="btn_thumbnail_edit.json_2" Component_="aether_logo.bmp_2" FileName="BTN_TH~1.JSO|btn_thumbnail_edit.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_thumbnail_edit.json" SelfReg="false"/>
-    <ROW File="btn_upsizing_h_p.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~1.BMP|btn_upsizing_h_p.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_upsizing_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_upsizing_h_p.json_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~1.JSO|btn_upsizing_h_p.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_upsizing_h_p.json" SelfReg="false"/>
-    <ROW File="btn_upsizing_n.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~2.BMP|btn_upsizing_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_upsizing_n.bmp" SelfReg="false"/>
-    <ROW File="btn_upsizing_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~2.JSO|btn_upsizing_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_upsizing_n.json" SelfReg="false"/>
-    <ROW File="btn_up_h_p.bmp_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~3.BMP|btn_up_h_p.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_up_h_p.bmp" SelfReg="false"/>
-    <ROW File="btn_up_h_p.json_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~3.JSO|btn_up_h_p.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_up_h_p.json" SelfReg="false"/>
-    <ROW File="btn_up_n.bmp_2" Component_="aether_logo.bmp_2" FileName="btn_up_n.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_up_n.bmp" SelfReg="false"/>
-    <ROW File="btn_up_n.json_2" Component_="aether_logo.bmp_2" FileName="BTN_UP~4.JSO|btn_up_n.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\btn_up_n.json" SelfReg="false"/>
-    <ROW File="icon_add.bmp_2" Component_="aether_logo.bmp_2" FileName="icon_add.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_add.bmp" SelfReg="false"/>
-    <ROW File="icon_add.json_2" Component_="aether_logo.bmp_2" FileName="ICON_A~1.JSO|icon_add.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_add.json" SelfReg="false"/>
-    <ROW File="icon_add_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_A~1.BMP|icon_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_add_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_add_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_A~2.JSO|icon_add_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_add_colored.json" SelfReg="false"/>
-    <ROW File="icon_check.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_C~1.BMP|icon_check.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_check.bmp" SelfReg="false"/>
-    <ROW File="icon_check.json_2" Component_="aether_logo.bmp_2" FileName="ICON_C~1.JSO|icon_check.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_check.json" SelfReg="false"/>
-    <ROW File="icon_edit.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_E~1.BMP|icon_edit.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_edit.bmp" SelfReg="false"/>
-    <ROW File="icon_edit.json_2" Component_="aether_logo.bmp_2" FileName="ICON_E~1.JSO|icon_edit.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_edit.json" SelfReg="false"/>
-    <ROW File="icon_edit_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_E~2.BMP|icon_edit_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_edit_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_edit_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_E~2.JSO|icon_edit_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_edit_colored.json" SelfReg="false"/>
-    <ROW File="icon_eraser.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_E~3.BMP|icon_eraser.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_eraser.bmp" SelfReg="false"/>
-    <ROW File="icon_eraser.json_2" Component_="aether_logo.bmp_2" FileName="ICON_E~3.JSO|icon_eraser.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_eraser.json" SelfReg="false"/>
-    <ROW File="icon_eraser_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_E~4.BMP|icon_eraser_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_eraser_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_eraser_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_E~4.JSO|icon_eraser_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_eraser_colored.json" SelfReg="false"/>
-    <ROW File="icon_gear.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_G~1.BMP|icon_gear.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_gear.bmp" SelfReg="false"/>
-    <ROW File="icon_gear.json_2" Component_="aether_logo.bmp_2" FileName="ICON_G~1.JSO|icon_gear.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_gear.json" SelfReg="false"/>
-    <ROW File="icon_gear_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_G~2.BMP|icon_gear_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_gear_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_gear_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_G~2.JSO|icon_gear_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_gear_colored.json" SelfReg="false"/>
-    <ROW File="icon_humbnail_add.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_H~1.BMP|icon_humbnail_add.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_humbnail_add.bmp" SelfReg="false"/>
-    <ROW File="icon_humbnail_add.json_2" Component_="aether_logo.bmp_2" FileName="ICON_H~1.JSO|icon_humbnail_add.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_humbnail_add.json" SelfReg="false"/>
-    <ROW File="icon_rocket.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_R~1.BMP|icon_rocket.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_rocket.bmp" SelfReg="false"/>
-    <ROW File="icon_rocket.json_2" Component_="aether_logo.bmp_2" FileName="ICON_R~1.JSO|icon_rocket.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_rocket.json" SelfReg="false"/>
-    <ROW File="icon_rocket_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_R~2.BMP|icon_rocket_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_rocket_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_rocket_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_R~2.JSO|icon_rocket_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_rocket_colored.json" SelfReg="false"/>
-    <ROW File="icon_thumbmail_add_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~1.BMP|icon_thumbmail_add_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbmail_add_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbmail_add_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~1.JSO|icon_thumbmail_add_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbmail_add_colored.json" SelfReg="false"/>
-    <ROW File="icon_thumbnail.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~2.BMP|icon_thumbnail.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbnail.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbnail.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~2.JSO|icon_thumbnail.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbnail.json" SelfReg="false"/>
-    <ROW File="icon_thumbnail_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~3.BMP|icon_thumbnail_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbnail_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_thumbnail_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~3.JSO|icon_thumbnail_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_thumbnail_colored.json" SelfReg="false"/>
-    <ROW File="icon_trash.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~4.BMP|icon_trash.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_trash.bmp" SelfReg="false"/>
-    <ROW File="icon_trash.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~4.JSO|icon_trash.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_trash.json" SelfReg="false"/>
-    <ROW File="icon_trash_colored.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_T~5.BMP|icon_trash_colored.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_trash_colored.bmp" SelfReg="false"/>
-    <ROW File="icon_trash_colored.json_2" Component_="aether_logo.bmp_2" FileName="ICON_T~5.JSO|icon_trash_colored.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_trash_colored.json" SelfReg="false"/>
-    <ROW File="icon_zoom.bmp_2" Component_="aether_logo.bmp_2" FileName="ICON_Z~1.BMP|icon_zoom.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_zoom.bmp" SelfReg="false"/>
-    <ROW File="icon_zoom.json_2" Component_="aether_logo.bmp_2" FileName="ICON_Z~1.JSO|icon_zoom.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\icon_zoom.json" SelfReg="false"/>
-    <ROW File="python_logo.bmp_2" Component_="aether_logo.bmp_2" FileName="PYTHON~1.BMP|python_logo.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\python_logo.bmp" SelfReg="false"/>
-    <ROW File="python_logo.json_2" Component_="aether_logo.bmp_2" FileName="PYTHON~1.JSO|python_logo.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\python_logo.json" SelfReg="false"/>
-    <ROW File="zaypro_logo.bmp_2" Component_="aether_logo.bmp_2" FileName="ZAYPRO~1.BMP|zaypro_logo.bmp" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\zaypro_logo.bmp" SelfReg="false"/>
-    <ROW File="zaypro_logo.json_2" Component_="aether_logo.bmp_2" FileName="ZAYPRO~1.JSO|zaypro_logo.json" Attributes="0" SourcePath="zaypro\example\테트리스\image\main_png\zaypro_logo.json" SelfReg="false"/>
     <ROW File="lovelee.mp3_2" Component_="lovelee.mp3_2" FileName="lovelee.mp3" Attributes="0" SourcePath="zaypro\example\테트리스\sound\lovelee.mp3" SelfReg="false"/>
     <ROW File="zayshow.json_2" Component_="zayshow.json_2" FileName="ZAYSHO~1.JSO|zayshow.json" Attributes="0" SourcePath="zaypro\example\테트리스\widget\zayshow.json" SelfReg="false"/>
     <ROW File="zay_2" Component_="zayshow.json_2" FileName="테트리스.zay" Attributes="0" SourcePath="zaypro\example\테트리스\widget\테트리스.zay" SelfReg="false"/>
@@ -811,19 +595,16 @@
     <ROW Feature_="MainFeature" Component_="zayproexamples"/>
     <ROW Feature_="MainFeature" Component_="NotoSansKRBold.ttf"/>
     <ROW Feature_="MainFeature" Component_="main.png"/>
-    <ROW Feature_="MainFeature" Component_="aether_logo.bmp"/>
     <ROW Feature_="MainFeature" Component_="lovelee.mp3"/>
     <ROW Feature_="MainFeature" Component_="zayshow.json"/>
     <ROW Feature_="MainFeature" Component_="zayshow.py"/>
     <ROW Feature_="MainFeature" Component_="NotoSansKRBold.ttf_1"/>
     <ROW Feature_="MainFeature" Component_="main.png_1"/>
-    <ROW Feature_="MainFeature" Component_="aether_logo.bmp_1"/>
     <ROW Feature_="MainFeature" Component_="lovelee.mp3_1"/>
     <ROW Feature_="MainFeature" Component_="zayshow.json_1"/>
     <ROW Feature_="MainFeature" Component_="zayshow.py_1"/>
     <ROW Feature_="MainFeature" Component_="NotoSansKRBold.ttf_2"/>
     <ROW Feature_="MainFeature" Component_="main.png_2"/>
-    <ROW Feature_="MainFeature" Component_="aether_logo.bmp_2"/>
     <ROW Feature_="MainFeature" Component_="lovelee.mp3_2"/>
     <ROW Feature_="MainFeature" Component_="zayshow.json_2"/>
     <ROW Feature_="MainFeature" Component_="zayshow.py_2"/>

@@ -170,12 +170,50 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
 {
     ZAY_XYWH(panel, 0, 0, panel.w(), panel.h() - 1)
     {
+        // 위젯
         if(m->mWidget)
             m->mWidget->Render(panel);
         else
         {
             ZAY_RGB(panel, 255, 255, 255)
                 panel.fill();
+        }
+
+        // 로그
+        for(sint32 i = 0, iend = m->mLogs.Count(); i < iend; ++i)
+        {
+            const sint32 Index = iend - 1 - i;
+            const String& CurText = m->mLogs[Index];
+            const sint32 TextWidth = Platform::Graphics::GetStringWidth(CurText);
+            const sint32 PosY = 5 + 25 * i;
+            if(panel.h() <= PosY)
+            {
+                m->mLogs.SubtractionSection(0, Index + 1);
+                break;
+            }
+
+            const String& UIName = String::Format("ui_sys_log%d", i);
+            ZAY_XYWH_UI(panel, 5, PosY, TextWidth + 10, 25, UIName,
+                ZAY_GESTURE_T(t, i)
+                {
+                    if(t == GT_Pressed)
+                    {
+                        const sint32 Index = m->mLogs.Count() - 1 - i;
+                        if(0 <= Index && Index < m->mLogs.Count())
+                        {
+                            const String& CurText = m->mLogs[Index];
+                            Platform::Utility::SendToTextClipboard(CurText);
+                            m->mLogs.SubtractionSection(Index);
+                        }
+                    }
+                })
+            {
+                ZAY_RGBA(panel, 255, 255, 255, 224)
+                ZAY_RGBA_IF(panel, 128, 128, 64, 128, panel.state(UIName) & PS_Focused)
+                    panel.fill();
+                ZAY_RGB(panel, 0, 0, 0)
+                    panel.text(5, panel.h() / 2, CurText, UIFA_LeftMiddle);
+            }
         }
 
         // 아웃라인
@@ -654,6 +692,7 @@ void zayshowData::TryPythonRecvOnce()
                     {
                         const String Type = Params[0];
                         branch;
+                        jump(!Type.Compare("log")) OnPython_log(Params);
                         jump(!Type.Compare("set")) OnPython_set(Params);
                         jump(!Type.Compare("get")) OnPython_get(Params);
                         jump(!Type.Compare("call")) OnPython_call(Params);
@@ -664,6 +703,27 @@ void zayshowData::TryPythonRecvOnce()
         }
         if(0 < QueueEndPos)
             mPythonQueue.SubtractionSection(0, QueueEndPos);
+    }
+}
+
+void zayshowData::OnPython_log(const Strings& params)
+{
+    if(1 < params.Count())
+    {
+        const sint32 ColonPos = params[1].Find(0, ":");
+        if(ColonPos != -1)
+        {
+            const String HeadText = params[1].Left(ColonPos + 1);
+            for(sint32 i = 0, iend = mLogs.Count(); i < iend; ++i)
+                if(!String::Compare(mLogs[i], HeadText, HeadText.Length()))
+                {
+                    mLogs.At(i) = params[1];
+                    invalidate();
+                    return;
+                }
+        }
+        mLogs.AtAdding() = params[1];
+        invalidate();
     }
 }
 

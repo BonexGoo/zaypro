@@ -27,6 +27,7 @@ public:
 
 public: // 파이썬
     void TryPythonRecvOnce();
+    void OnPython_log(const Strings& params);
     void OnPython_set(const Strings& params);
     void OnPython_get(const Strings& params);
     void OnPython_call(const Strings& params);
@@ -51,6 +52,9 @@ public: // 위젯
     uint64 mWidgetUpdater {0};
     id_sound mSounds[4] {nullptr, nullptr, nullptr, nullptr};
     sint32 mSoundFocus {0};
+
+public: // 로그
+    Strings mLogs;
 
 public: // 파이썬통신
     id_socket mPython {nullptr};
