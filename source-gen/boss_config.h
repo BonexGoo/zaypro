@@ -43,5 +43,7 @@
 #define BOSS_NEED_NATIVE_OPENGL    0
 #define BOSS_NEED_EMBEDDED_ASSET   (BOSS_WASM | BOSS_WINDOWS_MINGW)
 #define BOSS_NEED_EMBEDDED_CACHE   (BOSS_WASM | BOSS_WINDOWS_MINGW)
+#define BOSS_NEED_BUILD_RESIZING   1
+#define BOSS_NEED_BUILD_COLORING   1
 #define BOSS_ASSET_IGNORES         {".json.pipe", ".json.old", ".json.f5"}
 #define BOSS_SUMMIT_DOMAIN         "summit.zaylab.com:8109"
