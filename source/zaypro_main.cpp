@@ -12,7 +12,7 @@ bool PlatformInit()
     #if BOSS_WASM
         Platform::InitForMDI(true);
     #else
-        Platform::InitForMDI(true); // MDI가 GL보다 더 빠름
+        Platform::InitForMDI(true);
         if(Asset::RebuildForEmbedded())
             return false;
         String DataPath = Platform::File::RootForData();

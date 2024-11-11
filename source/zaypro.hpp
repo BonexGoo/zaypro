@@ -32,7 +32,9 @@ public:
 
 public:
     void ResetBoxInfo();
+    void SetViewAndDom(chars viewname, chars domheader) override;
     const String& ViewName() const override;
+    const String& DomHeader() const override;
     ZaySonInterface& AddComponent(ZayExtend::ComponentType type, chars name,
         ZayExtend::ComponentCB cb, chars comments = nullptr, chars samples = nullptr) override;
     ZaySonInterface& AddGlue(chars name, ZayExtend::GlueCB cb) override;

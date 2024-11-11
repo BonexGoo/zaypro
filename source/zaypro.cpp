@@ -716,9 +716,19 @@ void ZEFakeZaySon::ResetBoxInfo()
     mDraggingComponentRect = Rect();
 }
 
+void ZEFakeZaySon::SetViewAndDom(chars viewname, chars domheader)
+{
+}
+
 const String& ZEFakeZaySon::ViewName() const
 {
-    static String _("FakeZaySon");
+    static String _("FakeViewName");
+    return _;
+}
+
+const String& ZEFakeZaySon::DomHeader() const
+{
+    static String _("FakeDomHeader");
     return _;
 }
 
@@ -1371,7 +1381,7 @@ void zayproData::RenderComponent(ZayPanel& panel, sint32 i, bool enable, bool bl
     const String UIName = String::Format("%d-component", i);
     const Rect UIRect = Rect(panel.toview(0, 0), Size(panel.w(), panel.h()));
 
-    ZAY_INNER_UI(panel, 0, (enable)? UIName : "",
+    ZAY_INNER_UI(panel, 0, (enable)? UIName : String(),
         ZAY_GESTURE_VNTXY(v, n, t, x, y, this, i, UIRect)
         {
             static Point OldPos;
@@ -1602,7 +1612,7 @@ void zayproData::RenderDomTab(ZayPanel& panel)
                                 const String VariableText = &Variable[0];
                                 const String FormulaTextFront = String::Format("%s = %s", (chars) VariableText, (chars) doc->mResult);
                                 const String FormulaTextRear = (doc->mResult.Compare(doc->mFormula) && doc->mResult.Compare('\'' + doc->mFormula + '\''))?
-                                    " ← " + doc->mFormula : "";
+                                    " ← " + doc->mFormula : String();
                                 const sint32 FormulaTextRearSize = Platform::Graphics::GetStringWidth(FormulaTextRear);
                                 const String FormulaText = FormulaTextFront + FormulaTextRear;
                                 const String FullTextFront = " ● " + FormulaTextFront;

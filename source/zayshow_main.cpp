@@ -15,7 +15,7 @@ void SetWindowRectSafety(sint32 x, sint32 y, sint32 w, sint32 h);
 bool PlatformInit()
 {
     #if BOSS_WINDOWS
-        Platform::InitForMDI(true); // MDI가 GL보다 더 빠름
+        Platform::InitForMDI(true);
         String DataPath = Platform::File::RootForData();
         Platform::File::ResetAssetsRemRoot(DataPath);
     #else
