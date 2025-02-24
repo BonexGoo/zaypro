@@ -38,22 +38,6 @@ ZAY_VIEW_API OnCommand(CommandType type, id_share in, id_cloned_share* out)
             m->invalidate();
         }
         else m->mWorkViewDrag = Point();
-
-        // 윈도우드래그 애니메이션(화면배율이 달라졌을때 복원되는 연출)
-        if(m->mIsWindowDragging)
-        {
-            const rect128 NewWindowRect = Platform::GetWindowRect();
-            sint32 NewWindowWidth = NewWindowRect.r - NewWindowRect.l;
-            sint32 NewWindowHeight = NewWindowRect.b - NewWindowRect.t;
-            if(NewWindowWidth != m->mWindowDraggingSize.w || NewWindowHeight != m->mWindowDraggingSize.h)
-            {
-                NewWindowWidth += (NewWindowWidth < m->mWindowDraggingSize.w)? 1 : ((NewWindowWidth > m->mWindowDraggingSize.w)? -1 : 0);
-                NewWindowHeight += (NewWindowHeight < m->mWindowDraggingSize.h)? 1 : ((NewWindowHeight > m->mWindowDraggingSize.h)? -1 : 0);
-                Platform::SetWindowRect(m->mWindowDraggingPos.x, m->mWindowDraggingPos.y,
-                    (NewWindowWidth * 9 + m->mWindowDraggingSize.w * 1) / 10,
-                    (NewWindowHeight * 9 + m->mWindowDraggingSize.h * 1) / 10);
-            }
-        }
     }
     else if(type == CT_Activate)
     {
@@ -1210,12 +1194,12 @@ zayproData::zayproData() : mEasySaveEffect(updater()), mCapturedEffect(updater()
     // 시스템폰트 등록
     if(buffer NewFontData = Asset::ToBuffer("font/Jalnan.ttf"))
     {
-        gTitleFont = Platform::Utility::CreateSystemFont((bytes) NewFontData, Buffer::CountOf(NewFontData));
+        gTitleFont = Platform::Utility::CreateSystemFont((bytes) NewFontData, Buffer::CountOf(NewFontData))[0];
         Buffer::Free(NewFontData);
     }
     if(buffer NewFontData = Asset::ToBuffer("font/NanumGothicCoding.ttf"))
     {
-        gBasicFont = Platform::Utility::CreateSystemFont((bytes) NewFontData, Buffer::CountOf(NewFontData));
+        gBasicFont = Platform::Utility::CreateSystemFont((bytes) NewFontData, Buffer::CountOf(NewFontData))[0];
         Platform::Popup::SetTrackerFont(gBasicFont, 10);
         Buffer::Free(NewFontData);
     }
@@ -1243,7 +1227,6 @@ zayproData::zayproData() : mEasySaveEffect(updater()), mCapturedEffect(updater()
     mNcTopBorder = false;
     mNcRightBorder = false;
     mNcBottomBorder = false;
-    mIsWindowDragging = false;
 }
 
 zayproData::~zayproData()
@@ -1539,11 +1522,13 @@ void zayproData::RenderDomTab(ZayPanel& panel)
 
             // 바디
             if(mPipe.expanddom())
-            ZAY_LTRB_SCISSOR(panel, 0, TitleHeight, panel.w(), Math::Max(TitleHeight + 40, panel.h()))
+            ZAY_LTRB(panel, 0, TitleHeight, panel.w(), Math::Max(TitleHeight + 40, panel.h()))
             {
                 ZAY_RGBA(panel, 0, 0, 0, 160)
                     panel.fill();
 
+                sint32 ContentSize = 0;
+                ZAY_INNER_SCISSOR(panel, 0)
                 ZAY_SCROLL_UI(panel, 0, ViewHeight, "dom-body-scroll",
                     ZAY_GESTURE_VNTXY(v, n, t, x, y)
                     {
@@ -1604,7 +1589,7 @@ void zayproData::RenderDomTab(ZayPanel& panel)
                             }
 
                             // 한줄처리
-                            ZAY_XYWH_SCISSOR(*Data.panel, 0, Data.count * ElementHeight, Data.panel->w(), ElementHeight)
+                            ZAY_XYWH_SCISSOR(*Data.panel, 0, ElementHeight * Data.count, Data.panel->w(), ElementHeight)
                             {
                                 if(!Data.filter)
                                     Variable = path->GetPath();
@@ -1680,6 +1665,7 @@ void zayproData::RenderDomTab(ZayPanel& panel)
                         ZAY_RGB(panel, 255, 0, 0)
                             panel.text("(No results for filtering)", UIFA_CenterMiddle, UIFE_Right);
                     }
+                    ContentSize = ElementHeight * NewPayload.count;
 
                     // Dom갱신
                     if(mPipe.domcount() != NewPayload.count)
@@ -1690,8 +1676,8 @@ void zayproData::RenderDomTab(ZayPanel& panel)
                     if(NewPayload.needupdate)
                         invalidate();
                 }
+                RenderScrollBar(panel, "dom-body-scroll", ContentSize);
             }
-
             ZAY_RGB(panel, 0, 0, 0)
                 panel.rect(1);
         }
@@ -1794,11 +1780,13 @@ void zayproData::RenderAtlasTab(ZayPanel& panel)
 
             // 바디
             if(mPipe.expandatlas())
-            ZAY_LTRB_SCISSOR(panel, 0, Math::Min(0, panel.h() - TitleHeight - 40), panel.w(), panel.h() - TitleHeight)
+            ZAY_LTRB(panel, 0, Math::Min(0, panel.h() - TitleHeight - 40), panel.w(), panel.h() - TitleHeight)
             {
                 ZAY_RGBA(panel, 0, 0, 0, 160)
                     panel.fill();
 
+                sint32 ContentSize = 0;
+                ZAY_INNER_SCISSOR(panel, 0)
                 ZAY_SCROLL_UI(panel, 0, ViewHeight, "atlas-body-scroll",
                     ZAY_GESTURE_VNTXY(v, n, t, x, y)
                     {
@@ -1860,7 +1848,7 @@ void zayproData::RenderAtlasTab(ZayPanel& panel)
                             }
 
                             // 한칸처리
-                            ZAY_XYWH_SCISSOR(*Data.panel, 0, Data.count * ElementHeight, Data.panel->w(), ElementHeight)
+                            ZAY_XYWH_SCISSOR(*Data.panel, 0, ElementHeight * Data.count, Data.panel->w(), ElementHeight)
                             {
                                 if(!Data.filter)
                                     Variable = path->GetPath();
@@ -1964,6 +1952,7 @@ void zayproData::RenderAtlasTab(ZayPanel& panel)
                         ZAY_RGB(panel, 255, 0, 0)
                             panel.text("(No results for filtering)", UIFA_CenterMiddle, UIFE_Right);
                     }
+                    ContentSize = ElementHeight * NewPayload.count;
 
                     // Atlas갱신
                     if(mPipe.atlascount() != NewPayload.count)
@@ -1974,8 +1963,8 @@ void zayproData::RenderAtlasTab(ZayPanel& panel)
                     if(NewPayload.needupdate)
                         invalidate();
                 }
+                RenderScrollBar(panel, "atlas-body-scroll", ContentSize);
             }
-
             ZAY_RGB(panel, 0, 0, 0)
                 panel.rect(1);
         }
@@ -2214,6 +2203,44 @@ void zayproData::RenderLogTab(ZayPanel& panel)
     }
 }
 
+void zayproData::RenderScrollBar(ZayPanel& panel, chars name, sint32 content)
+{
+    if(panel.h() < content)
+    {
+        const String ScrollName = name;
+        const sint32 ScrollBarHalf = 6;
+        const sint32 ScrollSize = panel.h() * panel.h() / content;
+        const sint32 ScrollRadius = Math::Max(ScrollBarHalf, ScrollSize / 2);
+        const sint32 ScrollMidPos = panel.h() * -scrollpos(name).y / content + ScrollSize / 2;
+        const float ScrollRate = content / panel.h();
+        ZAY_XYWH_UI(panel, panel.w() + 6, ScrollMidPos - ScrollRadius, ScrollBarHalf * 2, ScrollRadius * 2, ScrollName + "-bar",
+            ZAY_GESTURE_VNTXY(v, n, t, x, y, ScrollName, ScrollRate)
+            {
+                static sint32 FirstY = 0;
+                static sint32 OldY;
+                if(t == GT_Pressed)
+                {
+                    FirstY = v->scrollpos(ScrollName).y;
+                    OldY = y;
+                }
+                else if(t == GT_InDragging || t == GT_OutDragging)
+                {
+                    const sint32 ScrollTarget = FirstY + (OldY - y) * ScrollRate;
+                    v->moveScroll(ScrollName, 0, ScrollTarget, 0, ScrollTarget, 0.1, true);
+                }
+                else if(t == GT_InReleased || t == GT_OutReleased)
+                    v->clearScrollTouch(ScrollName);
+            }
+        )
+        {
+            ZAY_RGBA(panel, 0, 0, 0, (panel.state(ScrollName + "-bar") & PS_Focused)? 180 : 140)
+                panel.fill();
+            ZAY_RGB(panel, 0, 0, 0)
+                panel.rect(1);
+        }
+    }
+}
+
 void zayproData::RenderTitleBar(ZayPanel& panel)
 {
     ZAY_LTRB_UI(panel, 0, 0, panel.w(), mTitleHeight + 1, "ui_title",
@@ -2221,6 +2248,7 @@ void zayproData::RenderTitleBar(ZayPanel& panel)
         {
             static point64 OldCursorPos;
             static rect128 OldWindowRect;
+            static size64 OldWindowSize;
             if(!Platform::Utility::IsFullScreen())
             {
                 if(t == GT_Moving || t == GT_MovingIdle)
@@ -2231,28 +2259,18 @@ void zayproData::RenderTitleBar(ZayPanel& panel)
                 {
                     Platform::Utility::GetCursorPos(OldCursorPos);
                     OldWindowRect = Platform::GetWindowRect();
-                    mWindowDraggingPos.x = OldWindowRect.l;
-                    mWindowDraggingPos.y = OldWindowRect.t;
-                    mWindowDraggingSize.w = OldWindowRect.r - OldWindowRect.l;
-                    mWindowDraggingSize.h = OldWindowRect.b - OldWindowRect.t;
+                    OldWindowSize.w = OldWindowRect.r - OldWindowRect.l;
+                    OldWindowSize.h = OldWindowRect.b - OldWindowRect.t;
                     clearCapture();
                 }
                 else if(t == GT_InDragging || t == GT_OutDragging)
                 {
-                    mIsWindowDragging = true;
                     point64 CurCursorPos;
                     Platform::Utility::GetCursorPos(CurCursorPos);
-                    mWindowDraggingPos.x = OldWindowRect.l + CurCursorPos.x - OldCursorPos.x;
-                    mWindowDraggingPos.y = OldWindowRect.t + CurCursorPos.y - OldCursorPos.y;
-                    Platform::SetWindowPos(mWindowDraggingPos.x, mWindowDraggingPos.y);
+                    const sint32 X = OldWindowRect.l + CurCursorPos.x - OldCursorPos.x;
+                    const sint32 Y = OldWindowRect.t + CurCursorPos.y - OldCursorPos.y;
+                    Platform::SetWindowRect(X, Y, OldWindowSize.w, OldWindowSize.h);
                     invalidate();
-                }
-                else if(t == GT_InReleased || t == GT_OutReleased)
-                {
-                    mIsWindowDragging = false;
-                    Platform::SetWindowRect(
-                        mWindowDraggingPos.x, mWindowDraggingPos.y,
-                        mWindowDraggingSize.w, mWindowDraggingSize.h);
                 }
             }
         })

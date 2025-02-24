@@ -24,7 +24,7 @@ SOURCES += ../source/zaybox.cpp
 HEADERS += ../source/zaybox.hpp
 SOURCES += ../source/zaypro.cpp
 HEADERS += ../source/zaypro.hpp
-SOURCES += ../source/main.cpp
+SOURCES += ../source/zaypro_main.cpp
 SOURCES += ../source/resource.cpp
 HEADERS += ../source/resource.hpp
 

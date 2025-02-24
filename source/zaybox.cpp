@@ -1831,10 +1831,11 @@ void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, 
     const String UIKey = String::Format("%s-key", uiname);
     const String UIValue = String::Format("%s-value", uiname);
     const String UIRemove = String::Format("%s-remove", uiname);
+    const sint32 KeyWidth = Math::Min(200, panel.w() * 0.4);
     const sint32 ButtonWidth = panel.h();
 
     // 키에디터
-    ZAY_LTRB(panel, 0, 0, panel.w() * 0.4 - 2, panel.h())
+    ZAY_LTRB(panel, 0, 0, KeyWidth - 2, panel.h())
     {
         ZAY_RGB_IF(panel, 255, 255, 255, extmode == 0)
         ZAY_RGB_IF(panel, 224, 240, 255, extmode == 1)
@@ -1854,7 +1855,7 @@ void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, 
     }
 
     // 밸류에디터
-    ZAY_LTRB(panel, panel.w() * 0.4 + 2, 0, panel.w(), panel.h())
+    ZAY_LTRB(panel, KeyWidth + 2, 0, panel.w(), panel.h())
     {
         ZAY_RGB_IF(panel, 255, 255, 255, extmode == 0)
         ZAY_RGB_IF(panel, 224, 240, 255, extmode == 1)

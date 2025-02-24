@@ -264,6 +264,7 @@ public:
     void RenderAtlasTab(ZayPanel& panel);
     void RenderMiniMap(ZayPanel& panel);
     void RenderLogTab(ZayPanel& panel);
+    void RenderScrollBar(ZayPanel& panel, chars name, sint32 content);
     void RenderTitleBar(ZayPanel& panel);
     void RenderOutline(ZayPanel& panel);
 
@@ -297,7 +298,4 @@ public: // 윈도우상태
     bool mNcTopBorder;
     bool mNcRightBorder;
     bool mNcBottomBorder;
-    bool mIsWindowDragging;
-    point64 mWindowDraggingPos;
-    size64 mWindowDraggingSize;
 };

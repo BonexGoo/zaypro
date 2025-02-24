@@ -502,7 +502,7 @@ void zayshowData::SetWidget(chars path)
             auto& FontPath = *((const String*) data);
             if(buffer NewFont = Asset::ToBuffer(String::Format("%s/%s", (chars) FontPath, itemname)))
             {
-                auto CurFontName = Platform::Utility::CreateSystemFont((bytes) NewFont, Buffer::CountOf(NewFont));
+                auto CurFontName = Platform::Utility::CreateSystemFont((bytes) NewFont, Buffer::CountOf(NewFont))[0];
                 Buffer::Free(NewFont);
                 ZayWidgetDOM::SetValue(String::Format("fonts.%s", itemname), "'" + CurFontName + "'");
             }

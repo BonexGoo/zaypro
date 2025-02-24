@@ -13,8 +13,10 @@ bool PlatformInit()
         Platform::InitForMDI(true);
     #else
         Platform::InitForMDI(true);
-        if(Asset::RebuildForEmbedded())
-            return false;
+        #if BOSS_WINDOW & !BOSS_WINDOW_MINGW
+            if(Asset::RebuildForEmbedded())
+                return false;
+        #endif
         String DataPath = Platform::File::RootForData();
         Platform::File::ResetAssetsRemRoot(DataPath);
     #endif
