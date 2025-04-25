@@ -285,6 +285,12 @@ public:
     Size mWorkViewSize;
     Point mWorkViewDrag;
     Point mWorkViewScroll;
+    sint32 mEditorDragBoxID;
+    sint32 mEditorDragGroupID;
+    sint32 mEditorDragParamID;
+    bool mEditorDropIsSwap;
+    sint32 mEditorDropBoxID;
+    sint32 mEditorDropParamID;
     Color mCapturedColor;
     Tween1D mCapturedEffect;
 

@@ -621,6 +621,133 @@ void ZEZayBox::RenderResizeButton(ZayPanel& panel, chars uiname)
     }
 }
 
+static sint32 gLastEditorDragBoxID = -1;
+static sint32 gLastEditorDragGroupID = -1;
+static sint32 gLastEditorDragParamID = -1;
+void ZEZayBox::RenderEditorDropArea(ZayPanel& panel, chars uiname, sint32 groupid, sint32 paramid, bool blanked)
+{
+    if(gLastEditorDragBoxID == -1 || gLastEditorDragGroupID != groupid
+        || (gLastEditorDragBoxID == mID && gLastEditorDragParamID == paramid))
+        return;
+
+    const bool IsHovered = !!(panel.state(uiname) & PS_Hovered);
+    if(IsHovered)
+    {
+        sint32s Values;
+        Values.AtAdding() = (blanked)? 1 : 0;
+        Values.AtAdding() = mID;
+        Values.AtAdding() = paramid;
+        Platform::BroadcastNotify("ZayBoxEditorDropHover", Values);
+    }
+
+    ZAY_INNER(panel, -1)
+    ZAY_INNER_UI(panel, 0, uiname)
+    ZAY_RGBA_IF(panel, 255, 128, 0, 96, blanked)
+    ZAY_RGBA_IF(panel, 0, 128, 255, 128, !blanked)
+    ZAY_RGBA_IF(panel, 128, 128, 128, 192, IsHovered)
+    {
+        panel.fill();
+        for(sint32 i = 5; 0 < i; --i)
+        {
+            ZAY_RGBA(panel, 128, 128, 128, -20)
+            ZAY_INNER(panel, i)
+                panel.rect(i);
+        }
+        // 앞쪽에 삽입된다는 표식
+        if(!blanked && IsHovered)
+        ZAY_XYWH(panel, 2, 2, panel.w() - 4, 5)
+        ZAY_RGBA(panel, 0, 0, 0, 96)
+            panel.fill();
+    }
+}
+
+void ZEZayBox::RenderEditorDragButton(ZayPanel& panel, chars uiname, sint32 groupid, sint32 paramid)
+{
+    if(gLastEditorDragBoxID != -1 && (gLastEditorDragBoxID != mID
+        || gLastEditorDragGroupID != groupid || gLastEditorDragParamID != paramid))
+        return;
+
+    const bool IsFocused = ((panel.state(uiname) & (PS_Focused | PS_Dropping)) == PS_Focused);
+    const bool IsPressed = ((panel.state(uiname) & (PS_Pressed | PS_Dragging)) != 0);
+    ZAY_SCISSOR_CLEAR(panel)
+    ZAY_INNER_UI(panel, 0, uiname,
+        ZAY_GESTURE_VNTXY(v, n, t, x, y, groupid, paramid, this)
+        {
+            static bool HasDragged;
+            static sint32 OldX, OldY;
+            static float FirstX, FirstY;
+            if(t == GT_Pressed)
+            {
+                HasDragged = false;
+                OldX = OldY = 0;
+                FirstX = x;
+                FirstY = y;
+                sint32s Values;
+                Values.AtAdding() = mID;
+                Values.AtAdding() = groupid;
+                Values.AtAdding() = paramid;
+                Platform::SendNotify(v->view(), "ZayBoxEditorPressed", Values);
+                v->clearCapture();
+                gLastEditorDragBoxID = mID;
+                gLastEditorDragGroupID = groupid;
+                gLastEditorDragParamID = paramid;
+            }
+            else if(t == GT_InDragging || t == GT_OutDragging)
+            {
+                HasDragged = true;
+                const sint32 NewX = sint32((x - FirstX) * 100 / gZoomPercent);
+                const sint32 NewY = sint32((y - FirstY) * 100 / gZoomPercent);
+                sint32s Values;
+                Values.AtAdding() = NewX - OldX;
+                Values.AtAdding() = NewY - OldY;
+                Platform::SendNotify(v->view(), "ZayBoxEditorDragAdd", Values);
+                Platform::SendNotify(v->view(), "ZayBoxEditorDropClear", nullptr);
+                OldX = NewX;
+                OldY = NewY;
+                v->invalidate();
+            }
+            else if(t == GT_InReleased || t == GT_OutReleased)
+            {
+                if(HasDragged)
+                    Platform::SendNotify(v->view(), "ZayBoxEditorDropCheck", nullptr);
+                else Platform::SendNotify(v->view(), "ZayBoxEditorDragCancel", nullptr);
+                Platform::SendNotify(v->view(), "ZayBoxEditorReleased", nullptr);
+                gLastEditorDragBoxID = -1;
+                gLastEditorDragGroupID = -1;
+                gLastEditorDragParamID = -1;
+            }
+        })
+    {
+        if(IsPressed)
+            panel.icon(R("cut_o"), UIA_CenterMiddle);
+        else if(IsFocused)
+            panel.icon(R("cut_n"), UIA_CenterMiddle);
+        else ZAY_RGBA(panel, 128, 128, 128, 20)
+            panel.icon(R("cut_n"), UIA_CenterMiddle);
+    }
+}
+
+void ZEZayBox::RenderEditorDragCell(ZayPanel& panel, sint32 groupid, sint32 paramid)
+{
+    // 에디터줄
+    const Point WireBegin(
+        panel.w() / 2 - mDraggingAdds[groupid][paramid].x,
+        panel.h() / 2 - mDraggingAdds[groupid][paramid].y);
+    ZAY_RGBA(panel, 16, 16, 16, 160)
+        panel.line(WireBegin, Point(panel.w() / 2, panel.h() / 2), 2);
+    ZAY_RGB(panel, 16, 16, 16)
+    ZAY_XYRR(panel, WireBegin.x, WireBegin.y, 4, 4)
+        panel.fill();
+    // 에디터배경
+    ZAY_INNER(panel, -3)
+    {
+        ZAY_RGB(panel, 64, 64, 64)
+            panel.fill();
+        ZAY_RGBA(panel, 64, 64, 64, 48)
+            panel.rect(1);
+    }
+}
+
 void ZEZayBox::RenderRemoveButton(ZayPanel& panel, chars uiname, bool group)
 {
     const sint32 AniCount = 50;
@@ -764,6 +891,54 @@ void ZEZayBox::Resize(sint32 add)
         for(sint32 j = 0, jend = CurChildren->Count(); j < jend; ++j)
             if(auto CurBox = TOP().Access((*CurChildren)[j]))
                 (*CurBox)->mHookPos.x += add;
+    }
+}
+
+void ZEZayBox::EditorDragAdd(sint32 groupid, sint32 paramid, sint32 addx, sint32 addy)
+{
+    hook(mDraggingAdds[groupid].AtWherever(paramid))
+    {
+        fish.x += addx;
+        fish.y += addy;
+    }
+}
+
+void ZEZayBox::EditorDragCancel(sint32 groupid, sint32 paramid)
+{
+    hook(mDraggingAdds[groupid].AtWherever(paramid))
+    {
+        fish.x = 0;
+        fish.y = 0;
+    }
+}
+
+void ZEZayBox::EditorDrop(bool swap, sint32 groupid, sint32 paramid, ZEZayBox& other, sint32 other_paramid)
+{
+    if(swap)
+    {
+        EditorDragCancel(groupid, paramid);
+        other.EditorDragCancel(groupid, other_paramid);
+        /*if(groupid == 0)
+        {
+            String TextA, TextB;
+            SubParam(paramid, &TextA);
+            other.SubParam(other_paramid, &TextB);
+            AddParam(TextB, paramid);
+            other.AddParam(TextA, other_paramid);
+        }
+        else
+        {
+            String TextA, TextB;
+            SubParam(paramid, &TextA);
+            other.SubParam(other_paramid, &TextB);
+            AddParam(TextB, paramid);
+            other.AddParam(TextA, other_paramid);
+        }*/
+    }
+    else
+    {
+        other.EditorDragCancel(groupid, other_paramid);
+        //////////////////////////////////////////////
     }
 }
 
@@ -1388,13 +1563,44 @@ void ZEZayBox::BodyParamGroup::RenderParamGroup(ZayPanel& panel)
         ZAY_COLOR(panel, mBox.mColor)
         ZAY_RGBA(panel, 128, 128, 128, 48)
             panel.fill();
+        ZAY_RGB(panel, 0, 0, 0)
+            panel.rect(1);
         ZAY_INNER(panel, 3)
         {
+            for(sint32 drag = 0; drag < 2; ++drag)
             for(sint32 i = 0, iend = mParams.Count(); i <= iend; ++i)
             {
-                ZAY_XYWH(panel, 0, (ParamHeight + 4) * i, panel.w(), ParamHeight)
+                const bool IsDragged = (i < mBox.mDraggingAdds[0].Count() && mBox.mDraggingAdds[0][i] != Point());
+                const Point& DragAdd = (drag == 1 && IsDragged)? mBox.mDraggingAdds[0][i] : Point();
+                ZAY_XYWH(panel, 0 + DragAdd.x, (ParamHeight + 4) * i + DragAdd.y, panel.w(), ParamHeight)
                 {
-                    if(i == iend)
+                    if(i < iend)
+                    {
+                        if(IsDragged == (drag == 1))
+                        {
+                            ZAY_SCISSOR_CLEAR_IF(panel, drag == 1)
+                            {
+                                // 드래그UI
+                                if(drag == 1)
+                                ZAY_COLOR(panel, mBox.mColor)
+                                    mBox.RenderEditorDragCell(panel, 0, i);
+
+                                // 에디터
+                                const String UIParam = String::Format("%d-param-%d", mBox.mID, i);
+                                RenderParamEditor(panel, UIParam, i, drag == 0);
+                            }
+                        }
+                        else if(drag == 0)
+                        {
+                            ZAY_RGBA(panel, 0, 0, 0, 48)
+                                panel.fill();
+
+                            // 빈자리 드롭영역
+                            const String UIDrop = String::Format("%d-blank-0-%d-drop", mBox.mID, i);
+                            mBox.RenderEditorDropArea(panel, UIDrop, 0, i, true);
+                        }
+                    }
+                    else if(drag == 0)
                     {
                         // 추가버튼
                         const String UIParamAdd = String::Format("%d-param-add", mBox.mID);
@@ -1424,23 +1630,22 @@ void ZEZayBox::BodyParamGroup::RenderParamGroup(ZayPanel& panel)
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        const String UIParam = String::Format("%d-param-%d", mBox.mID, i);
-                        RenderParamEditor(panel, UIParam, i);
+
+                        // 끝자리 드롭영역
+                        const String UIDrop = String::Format("%d-last-0-%d-drop", mBox.mID, i);
+                        mBox.RenderEditorDropArea(panel, UIDrop, 0, i, false);
                     }
                 }
             }
         }
-        ZAY_RGB(panel, 0, 0, 0)
-            panel.rect(1);
     }
 }
 
-void ZEZayBox::BodyParamGroup::RenderParamEditor(ZayPanel& panel, chars uiname, sint32 i)
+void ZEZayBox::BodyParamGroup::RenderParamEditor(ZayPanel& panel, chars uiname, sint32 i, bool usedrop)
 {
     const String UIRemove = String::Format("%s-remove", uiname);
+    const String UIDrop = String::Format("%s-drop", uiname);
+    const String UIDrag = String::Format("%s-drag", uiname);
     const sint32 ButtonWidth = panel.h();
 
     // 파라미터에디터
@@ -1461,6 +1666,14 @@ void ZEZayBox::BodyParamGroup::RenderParamEditor(ZayPanel& panel, chars uiname, 
     // 제거버튼
     ZAY_XYWH(panel, panel.w() - ButtonWidth, 0, ButtonWidth, panel.h())
         mBox.RenderRemoveButton(panel, UIRemove, false);
+
+    // 드롭영역
+    if(usedrop)
+        mBox.RenderEditorDropArea(panel, UIDrop, 0, i, false);
+
+    // 드래그버튼
+    ZAY_XYWH(panel, -ButtonWidth - 10, 3, ButtonWidth, panel.h())
+        mBox.RenderEditorDragButton(panel, UIDrag, 0, i);
 }
 
 void ZEZayBox::BodyParamGroup::RenderParamComments(ZayPanel& panel, chars uiname, chars comments) const
@@ -1701,13 +1914,59 @@ void ZEZayBox::BodyInputGroup::RenderValueGroup(ZayPanel& panel, chars name, Bod
     {
         ZAY_RGBA(panel, 128, 192, 128, 72)
             panel.fill();
+        ZAY_RGB(panel, 0, 0, 0)
+            panel.rect(1);
         ZAY_INNER(panel, 3)
         {
+            for(sint32 drag = 0; drag < 2; ++drag)
             for(sint32 i = 0, iend = ((sub)? sub->mInputs.Count() : 0) + mInputs.Count(); i <= iend; ++i)
             {
-                ZAY_XYWH(panel, 0, (ValueHeight + 4) * i, panel.w(), ValueHeight)
+                const sint32 DragGroupID = (!sub || sub->mInputs.Count() == 0)? 1 : ((i < sub->mInputs.Count())? 2 : 3);
+                const sint32 DragParamID = (DragGroupID == 3)? i - sub->mInputs.Count() : i;
+                const bool IsDragged = (DragParamID < mBox.mDraggingAdds[DragGroupID].Count() && mBox.mDraggingAdds[DragGroupID][DragParamID] != Point());
+                const Point& DragAdd = (drag == 1 && IsDragged)? mBox.mDraggingAdds[DragGroupID][DragParamID] : Point();
+                ZAY_XYWH(panel, 0 + DragAdd.x, (ValueHeight + 4) * i + DragAdd.y, panel.w(), ValueHeight)
                 {
-                    if(i == iend)
+                    if(i < iend)
+                    {
+                        if(IsDragged == (drag == 1))
+                        {
+                            ZAY_SCISSOR_CLEAR_IF(panel, drag == 1)
+                            {
+                                // 드래그UI
+                                if(drag == 1)
+                                ZAY_RGB(panel, 128, 192, 128)
+                                    mBox.RenderEditorDragCell(panel, DragGroupID, DragParamID);
+
+                                // 에디터
+                                if(!sub || sub->mInputs.Count() == 0)
+                                {
+                                    const String UIValue = String::Format("%d-value-%d", mBox.mID, i);
+                                    RenderValueEditor(panel, UIValue, i, 0, drag == 0);
+                                }
+                                else if(i < sub->mInputs.Count())
+                                {
+                                    const String UIValueExt = String::Format("%d-extvalue-%d", mBox.mID, i);
+                                    sub->RenderValueEditor(panel, UIValueExt, i, 1, drag == 0);
+                                }
+                                else
+                                {
+                                    const String UIValue = String::Format("%d-value-%d", mBox.mID, i - sub->mInputs.Count());
+                                    RenderValueEditor(panel, UIValue, i - sub->mInputs.Count(), 2, drag == 0);
+                                }
+                            }
+                        }
+                        else if(drag == 0)
+                        {
+                            ZAY_RGBA(panel, 0, 0, 0, 48)
+                                panel.fill();
+
+                            // 빈자리 드롭영역
+                            const String UIDrop = String::Format("%d-blank-1-%d-drop", mBox.mID, i);
+                            mBox.RenderEditorDropArea(panel, UIDrop, DragGroupID, DragParamID, true);
+                        }
+                    }
+                    else if(drag == 0)
                     {
                         const sint32 NameWidth = Platform::Graphics::GetStringWidth(name) + 2;
                         const sint32 NameHeight = Platform::Graphics::GetStringHeight() + 1;
@@ -1799,38 +2058,24 @@ void ZEZayBox::BodyInputGroup::RenderValueGroup(ZayPanel& panel, chars name, Bod
                                 }
                             }
                         }
-                    }
-                    else if(sub && 0 < sub->mInputs.Count())
-                    {
-                        if(i < sub->mInputs.Count())
-                        {
-                            const String UIValueExt = String::Format("%d-extvalue-%d", mBox.mID, i);
-                            sub->RenderValueEditor(panel, UIValueExt, i, 1);
-                        }
-                        else
-                        {
-                            const String UIValue = String::Format("%d-value-%d", mBox.mID, i - sub->mInputs.Count());
-                            RenderValueEditor(panel, UIValue, i - sub->mInputs.Count(), 2);
-                        }
-                    }
-                    else
-                    {
-                        const String UIValue = String::Format("%d-value-%d", mBox.mID, i);
-                        RenderValueEditor(panel, UIValue, i, 0);
+
+                        // 끝자리 드롭영역
+                        const String UIDrop = String::Format("%d-last-1-%d-drop", mBox.mID, i);
+                        mBox.RenderEditorDropArea(panel, UIDrop, DragGroupID, DragParamID, false);
                     }
                 }
             }
         }
-        ZAY_RGB(panel, 0, 0, 0)
-            panel.rect(1);
     }
 }
 
-void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, sint32 i, sint32 extmode)
+void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, sint32 i, sint32 extmode, bool usedrop)
 {
     const String UIKey = String::Format("%s-key", uiname);
     const String UIValue = String::Format("%s-value", uiname);
     const String UIRemove = String::Format("%s-remove", uiname);
+    const String UIDrop = String::Format("%s-drop", uiname);
+    const String UIDrag = String::Format("%s-drag", uiname);
     const sint32 KeyWidth = Math::Min(200, panel.w() * 0.4);
     const sint32 ButtonWidth = panel.h();
 
@@ -1877,6 +2122,14 @@ void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, 
     // 제거버튼
     ZAY_XYWH(panel, panel.w() - ButtonWidth, 0, ButtonWidth, panel.h())
         mBox.RenderRemoveButton(panel, UIRemove, false);
+
+    // 드롭영역
+    if(usedrop)
+        mBox.RenderEditorDropArea(panel, UIDrop, 1 + extmode, i, false);
+
+    // 드래그버튼
+    ZAY_XYWH(panel, -ButtonWidth - 10, 3, ButtonWidth, panel.h())
+        mBox.RenderEditorDragButton(panel, UIDrag, 1 + extmode, i);
 }
 
 chars ZEZayBox::BodyInputGroup::GetText(chars uiname) const

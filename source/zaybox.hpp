@@ -69,11 +69,17 @@ public:
     void RenderGroupCopyButton(ZayPanel& panel, chars uiname);
     void RenderExpandButton(ZayPanel& panel, chars uiname);
     void RenderResizeButton(ZayPanel& panel, chars uiname);
+    void RenderEditorDropArea(ZayPanel& panel, chars uiname, sint32 groupid, sint32 paramid, bool blanked);
+    void RenderEditorDragButton(ZayPanel& panel, chars uiname, sint32 groupid, sint32 paramid);
+    void RenderEditorDragCell(ZayPanel& panel, sint32 groupid, sint32 paramid);
     void RenderRemoveButton(ZayPanel& panel, chars uiname, bool group);
     void RenderHookRemoveButton(ZayPanel& panel, chars uiname);
 
 public:
     void Resize(sint32 add);
+    void EditorDragAdd(sint32 groupid, sint32 paramid, sint32 addx, sint32 addy);
+    void EditorDragCancel(sint32 groupid, sint32 paramid);
+    void EditorDrop(bool swap, sint32 groupid, sint32 paramid, ZEZayBox& other, sint32 other_paramid);
     void FlushTitleDrag();
     void FlushTitleDragWith(bool withhook);
     sint32 Copy();
@@ -110,6 +116,7 @@ protected: // UI정보
     Point mHookDrag;
     String mRemovingUIName;
     sint32 mRemovingCount;
+    Points mDraggingAdds[4]; // [groupid][paramid]
 
 public:
     static const sint32 TitleBarHeight = 30;
@@ -222,7 +229,7 @@ protected:
         void WriteJson(Context& json, bool makeid) const override;
         sint32 GetCalcedSize(const BodyElement* sub = nullptr) const override;
         void RenderParamGroup(ZayPanel& panel);
-        void RenderParamEditor(ZayPanel& panel, chars uiname, sint32 i);
+        void RenderParamEditor(ZayPanel& panel, chars uiname, sint32 i, bool usedrop);
         void RenderParamComments(ZayPanel& panel, chars uiname, chars comments) const;
     public:
         chars GetText(chars uiname) const override;
@@ -252,7 +259,7 @@ protected:
         void WriteJson(Context& json, bool makeid) const override;
         sint32 GetCalcedSize(const BodyElement* sub = nullptr) const override;
         void RenderValueGroup(ZayPanel& panel, chars name, BodyInputGroup* sub = nullptr, bool showmode = false);
-        void RenderValueEditor(ZayPanel& panel, chars uiname, sint32 i, sint32 extmode);
+        void RenderValueEditor(ZayPanel& panel, chars uiname, sint32 i, sint32 extmode, bool usedrop);
     public:
         chars GetText(chars uiname) const override;
         void SetText(chars uiname, chars text) override;
