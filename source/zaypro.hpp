@@ -286,18 +286,18 @@ public:
     Point mWorkViewDrag;
     Point mWorkViewScroll;
     sint32 mEditorDragBoxID;
-    sint32 mEditorDragGroupID;
-    sint32 mEditorDragParamID;
+    ZEZayBox::InputType mEditorDragInputType;
+    sint32 mEditorDragInputIdx;
     bool mEditorDropIsSwap;
     sint32 mEditorDropBoxID;
-    sint32 mEditorDropParamID;
+    sint32 mEditorDropInputIdx;
     Color mCapturedColor;
     Tween1D mCapturedEffect;
 
 public: // 윈도우상태
     static const sint32 mTitleHeight = 37;
-    static const sint32 mMinWindowWidth = 1200;
-    static const sint32 mMinWindowHeight = 800;
+    static const sint32 mMinWindowWidth = 1000;
+    static const sint32 mMinWindowHeight = 600;
     String mWindowName;
     CursorRole mNowCursor;
     bool mNcLeftBorder;

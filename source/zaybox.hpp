@@ -11,6 +11,7 @@ typedef Map<ZEZayBoxObject> ZEZayBoxMap;
 class ZEZayBox
 {
 public:
+    enum InputType {IT_None = -1, IT_Param, IT_Value, IT_ExtValue, IT_Max};
     enum class ChildType {None, Inner, Insider, Setter};
     enum class ClickMode {Click, Click_DoubleClick, Click_LongPress, Click_Swipe, Click_DoubleClick_LongPress, Touch, Error};
     typedef std::function<ZEZayBoxObject(chars compname)> CreatorCB;
@@ -39,9 +40,8 @@ public:
     virtual void RecalcSize();
     virtual sint32 GetChildrenGroupCount() const;
     virtual sint32s* GetChildrenGroup(sint32 group);
-    virtual void SubParam(sint32 i);
-    virtual void SubInput(sint32 i);
-    virtual void SubExtInput(sint32 i);
+    virtual void AddInput(InputType type, sint32 idx, const Strings& values);
+    virtual Strings SubInput(InputType type, sint32 idx);
     virtual void SubInsiderBall(sint32 group);
     virtual chars GetComment() const;
     virtual void OnClickMode();
@@ -69,17 +69,18 @@ public:
     void RenderGroupCopyButton(ZayPanel& panel, chars uiname);
     void RenderExpandButton(ZayPanel& panel, chars uiname);
     void RenderResizeButton(ZayPanel& panel, chars uiname);
-    void RenderEditorDropArea(ZayPanel& panel, chars uiname, sint32 groupid, sint32 paramid, bool blanked);
-    void RenderEditorDragButton(ZayPanel& panel, chars uiname, sint32 groupid, sint32 paramid);
-    void RenderEditorDragCell(ZayPanel& panel, sint32 groupid, sint32 paramid);
+    void RenderEditorDropArea(ZayPanel& panel, chars uiname, InputType type, sint32 idx, bool blanked);
+    void RenderEditorDragButton(ZayPanel& panel, chars uiname, InputType type, sint32 idx);
+    void RenderEditorDragBlank(ZayPanel& panel, chars uiname, InputType type, sint32 idx);
+    void RenderEditorDragCell(ZayPanel& panel, InputType type, sint32 idx);
     void RenderRemoveButton(ZayPanel& panel, chars uiname, bool group);
     void RenderHookRemoveButton(ZayPanel& panel, chars uiname);
 
 public:
     void Resize(sint32 add);
-    void EditorDragAdd(sint32 groupid, sint32 paramid, sint32 addx, sint32 addy);
-    void EditorDragCancel(sint32 groupid, sint32 paramid);
-    void EditorDrop(bool swap, sint32 groupid, sint32 paramid, ZEZayBox& other, sint32 other_paramid);
+    void EditorDragAdd(InputType type, sint32 idx, sint32 addx, sint32 addy);
+    void EditorDragCancel(InputType type, sint32 idx);
+    void EditorDrop(bool swap, InputType type, sint32 drop_idx, ZEZayBox& drag, sint32 drag_idx);
     void FlushTitleDrag();
     void FlushTitleDragWith(bool withhook);
     sint32 Copy();
@@ -116,7 +117,7 @@ protected: // UI정보
     Point mHookDrag;
     String mRemovingUIName;
     sint32 mRemovingCount;
-    Points mDraggingAdds[4]; // [groupid][paramid]
+    Points mDraggingPos[IT_Max]; // [inputtype][paramid]
 
 public:
     static const sint32 TitleBarHeight = 30;
@@ -222,14 +223,14 @@ protected:
         BodyParamGroup(ZEZayBox& box);
         ~BodyParamGroup() override;
     public:
-        void AddParam(chars param);
-        void SubParam(sint32 i);
+        void AddParam(chars param, sint32 idx = -1);
+        void SubParam(sint32 idx);
     public:
         void ReadJson(const Context& json) override;
         void WriteJson(Context& json, bool makeid) const override;
         sint32 GetCalcedSize(const BodyElement* sub = nullptr) const override;
         void RenderParamGroup(ZayPanel& panel);
-        void RenderParamEditor(ZayPanel& panel, chars uiname, sint32 i, bool usedrop);
+        void RenderParamEditor(ZayPanel& panel, chars uiname, sint32 idx, bool usedrop);
         void RenderParamComments(ZayPanel& panel, chars uiname, chars comments) const;
     public:
         chars GetText(chars uiname) const override;
@@ -251,15 +252,15 @@ protected:
         BodyInputGroup(ZEZayBox& box);
         ~BodyInputGroup() override;
     public:
-        void AddValue(chars key, chars value);
-        void SubValue(sint32 i);
+        void AddValue(chars key, chars value, sint32 idx = -1);
+        void SubValue(sint32 idx);
         void TurnClickMode();
     public:
         void ReadJson(const Context& json) override;
         void WriteJson(Context& json, bool makeid) const override;
         sint32 GetCalcedSize(const BodyElement* sub = nullptr) const override;
         void RenderValueGroup(ZayPanel& panel, chars name, BodyInputGroup* sub = nullptr, bool showmode = false);
-        void RenderValueEditor(ZayPanel& panel, chars uiname, sint32 i, sint32 extmode, bool usedrop);
+        void RenderValueEditor(ZayPanel& panel, chars uiname, InputType type, sint32 idx, sint32 colormode, bool usedrop);
     public:
         chars GetText(chars uiname) const override;
         void SetText(chars uiname, chars text) override;
@@ -336,7 +337,7 @@ protected:
         static ZEZayBox*& BOX() {static ZEZayBox* _ = nullptr; return _;}
     public:
         void AddBall();
-        void SubBall(sint32 i);
+        void SubBall(sint32 idx);
     public:
         void ReadJson(const Context& json) override;
         void WriteJson(Context& json, bool makeid) const override;
@@ -373,7 +374,8 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
-    void SubInput(sint32 i) override;
+    void AddInput(InputType type, sint32 idx, const Strings& values) override;
+    Strings SubInput(InputType type, sint32 idx) override;
     chars GetComment() const override;
 
 protected: // 데이터
@@ -398,10 +400,10 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
-    void SubInput(sint32 i) override;
     sint32 GetChildrenGroupCount() const override;
     sint32s* GetChildrenGroup(sint32 group) override;
-    void SubParam(sint32 i) override;
+    void AddInput(InputType type, sint32 idx, const Strings& values) override;
+    Strings SubInput(InputType type, sint32 idx) override;
     void SubInsiderBall(sint32 group) override;
     chars GetComment() const override;
     Point GetBallPos(sint32 group) const override;
@@ -432,9 +434,8 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
-    void SubParam(sint32 i) override;
-    void SubInput(sint32 i) override;
-    void SubExtInput(sint32 i) override;
+    void AddInput(InputType type, sint32 idx, const Strings& values) override;
+    Strings SubInput(InputType type, sint32 idx) override;
     chars GetComment() const override;
     void OnClickMode() override;
 
@@ -463,7 +464,8 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
-    void SubInput(sint32 i) override;
+    void AddInput(InputType type, sint32 idx, const Strings& values) override;
+    Strings SubInput(InputType type, sint32 idx) override;
     chars GetComment() const override;
 
 protected: // 데이터
@@ -559,7 +561,10 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    void AddInput(InputType type, sint32 idx, const Strings& values) override;
+    Strings SubInput(InputType type, sint32 idx) override;
     chars GetComment() const override;
+    void OnClickMode() override;
 
 protected: // 데이터보전
     BodyNameComment mNameComment;

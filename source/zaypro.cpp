@@ -118,14 +118,14 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
         {
             const sint32s Values(in);
             m->mEditorDragBoxID = Values[0];
-            m->mEditorDragGroupID = Values[1];
-            m->mEditorDragParamID = Values[2];
+            m->mEditorDragInputType = (ZEZayBox::InputType) Values[1];
+            m->mEditorDragInputIdx = Values[2];
         }
         jump(!String::Compare(topic, "ZayBoxEditorReleased"))
         {
             m->mEditorDragBoxID = -1;
-            m->mEditorDragGroupID = -1;
-            m->mEditorDragParamID = -1;
+            m->mEditorDragInputType = ZEZayBox::IT_None;
+            m->mEditorDragInputIdx = -1;
         }
         jump(!String::Compare(topic, "ZayBoxEditorDragAdd"))
         {
@@ -134,33 +134,33 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
             const sint32 AddValueY = Values[1];
             if(m->mEditorDragBoxID != -1)
                 ZEZayBox::TOP()[m->mEditorDragBoxID]->EditorDragAdd(
-                    m->mEditorDragGroupID, m->mEditorDragParamID, AddValueX, AddValueY);
+                    m->mEditorDragInputType, m->mEditorDragInputIdx, AddValueX, AddValueY);
         }
         jump(!String::Compare(topic, "ZayBoxEditorDragCancel"))
         {
             if(m->mEditorDragBoxID != -1)
                 ZEZayBox::TOP()[m->mEditorDragBoxID]->EditorDragCancel(
-                    m->mEditorDragGroupID, m->mEditorDragParamID);
+                    m->mEditorDragInputType, m->mEditorDragInputIdx);
         }
         jump(!String::Compare(topic, "ZayBoxEditorDropClear"))
         {
             m->mEditorDropIsSwap = false;
             m->mEditorDropBoxID = -1;
-            m->mEditorDropParamID = -1;
+            m->mEditorDropInputIdx = -1;
         }
         jump(!String::Compare(topic, "ZayBoxEditorDropHover"))
         {
             const sint32s Values(in);
             m->mEditorDropIsSwap = (Values[0] != 0);
             m->mEditorDropBoxID = Values[1];
-            m->mEditorDropParamID = Values[2];
+            m->mEditorDropInputIdx = Values[2];
         }
         jump(!String::Compare(topic, "ZayBoxEditorDropCheck"))
         {
             if(m->mEditorDragBoxID != -1 && m->mEditorDropBoxID != -1)
-                ZEZayBox::TOP()[m->mEditorDropBoxID]->EditorDrop(m->mEditorDropIsSwap,
-                    m->mEditorDragGroupID, m->mEditorDropParamID,
-                    ZEZayBox::TOP()[m->mEditorDragBoxID].Value(), m->mEditorDragParamID);
+                ZEZayBox::TOP()[m->mEditorDropBoxID]->EditorDrop(
+                    m->mEditorDropIsSwap, m->mEditorDragInputType, m->mEditorDropInputIdx,
+                    ZEZayBox::TOP()[m->mEditorDragBoxID].Value(), m->mEditorDragInputIdx);
         }
         jump(!String::Compare(topic, "ZayBoxCopy"))
         {
@@ -204,21 +204,21 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
             const sint32s Values(in);
             const sint32 CurZayBoxID = Values[0];
             const sint32 CurParamID = Values[1];
-            ZEZayBox::TOP()[CurZayBoxID]->SubParam(CurParamID);
+            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_Param, CurParamID);
         }
         jump(!String::Compare(topic, "ZayBoxValueRemove")) // 제이박스 밸류 삭제(0-value-0-remove)
         {
             const sint32s Values(in);
             const sint32 CurZayBoxID = Values[0];
             const sint32 CurValueID = Values[1];
-            ZEZayBox::TOP()[CurZayBoxID]->SubInput(CurValueID);
+            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_Value, CurValueID);
         }
         jump(!String::Compare(topic, "ZayBoxExtValueRemove")) // 제이박스 확장밸류 삭제(0-extvalue-0-remove)
         {
             const sint32s Values(in);
             const sint32 CurZayBoxID = Values[0];
             const sint32 CurExtValueID = Values[1];
-            ZEZayBox::TOP()[CurZayBoxID]->SubExtInput(CurExtValueID);
+            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_ExtValue, CurExtValueID);
         }
         jump(!String::Compare(topic, "ZayBoxInsiderRemove")) // 제이박스 확장밸류 삭제(0-insider-0-remove)
         {
@@ -1296,11 +1296,11 @@ void zayproData::ResetBoxes()
     mWorkViewDrag = Point(); // 드래그하던 것이 있다면 중지
     mWorkViewScroll = Point(); // 스크롤정위치
     mEditorDragBoxID = -1;
-    mEditorDragGroupID = -1;
-    mEditorDragParamID = -1;
+    mEditorDragInputType = ZEZayBox::IT_None;
+    mEditorDragInputIdx = -1;
     mEditorDropIsSwap = false;
     mEditorDropBoxID = -1;
-    mEditorDropParamID = -1;
+    mEditorDropInputIdx = -1;
 }
 
 void zayproData::NewProject()
