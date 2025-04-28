@@ -13,7 +13,7 @@ bool PlatformInit()
         Platform::InitForMDI(true);
     #else
         Platform::InitForMDI(true);
-        #if BOSS_WINDOW & !BOSS_WINDOW_MINGW
+        #if BOSS_NDEBUG | BOSS_WINDOWS_MINGW
             if(Asset::RebuildForEmbedded())
                 return false;
         #endif

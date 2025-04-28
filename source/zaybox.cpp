@@ -721,11 +721,21 @@ void ZEZayBox::RenderEditorDragButton(ZayPanel& panel, chars uiname, InputType t
         })
     {
         if(IsPressed)
-            panel.icon(R("cut_o"), UIA_CenterMiddle);
+        {
+            ZAY_RGBA(panel, 76, 97, 117, 192)
+                panel.circle();
+        }
         else if(IsFocused)
-            panel.icon(R("cut_n"), UIA_CenterMiddle);
-        else ZAY_RGBA(panel, 128, 128, 128, 20)
-            panel.icon(R("cut_n"), UIA_CenterMiddle);
+        {
+            ZAY_RGBA(panel, 76, 97, 117, 128)
+                panel.circle();
+        }
+        else
+        {
+            ZAY_INNER(panel, 3)
+            ZAY_RGBA(panel, 76, 97, 117, 40)
+                panel.circle();
+        }
     }
 }
 
@@ -764,7 +774,7 @@ void ZEZayBox::RenderEditorDragCell(ZayPanel& panel, InputType type, sint32 idx)
         panel.line(WireBegin, Point(panel.w() / 2, panel.h() / 2), 2);
     ZAY_RGB(panel, 16, 16, 16)
     ZAY_XYRR(panel, WireBegin.x, WireBegin.y, 4, 4)
-        panel.fill();
+        panel.circle();
     // 에디터배경
     ZAY_INNER(panel, -3)
     {
@@ -1706,7 +1716,7 @@ void ZEZayBox::BodyParamGroup::RenderParamEditor(ZayPanel& panel, chars uiname, 
         mBox.RenderEditorDropArea(panel, UIDrop, IT_Param, idx, false);
 
     // 드래그버튼
-    ZAY_XYWH(panel, -ButtonWidth - 10, 3, ButtonWidth, panel.h())
+    ZAY_XYWH(panel, -ButtonWidth - 10, 0, ButtonWidth, panel.h())
         mBox.RenderEditorDragButton(panel, UIDrag, IT_Param, idx);
 }
 
@@ -2161,7 +2171,7 @@ void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, 
         mBox.RenderEditorDropArea(panel, UIDrop, type, idx, false);
 
     // 드래그버튼
-    ZAY_XYWH(panel, -ButtonWidth - 10, 3, ButtonWidth, panel.h())
+    ZAY_XYWH(panel, -ButtonWidth - 10, 0, ButtonWidth, panel.h())
         mBox.RenderEditorDragButton(panel, UIDrag, type, idx);
 }
 
