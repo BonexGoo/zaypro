@@ -41,7 +41,7 @@ public:
     virtual sint32 GetChildrenGroupCount() const;
     virtual sint32s* GetChildrenGroup(sint32 group);
     virtual void AddInput(InputType type, sint32 idx, const Strings& values);
-    virtual Strings SubInput(InputType type, sint32 idx);
+    virtual Strings SubInput(InputType type, sint32 idx, bool copyonly);
     virtual void SubInsiderBall(sint32 group);
     virtual chars GetComment() const;
     virtual void OnClickMode();
@@ -117,7 +117,7 @@ protected: // UI정보
     Point mHookDrag;
     String mRemovingUIName;
     sint32 mRemovingCount;
-    Points mDraggingPos[IT_Max]; // [inputtype][paramid]
+    Points mDraggingEditorPos[IT_Max]; // [inputtype][paramid]
 
 public:
     static const sint32 TitleBarHeight = 30;
@@ -375,7 +375,7 @@ public:
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
-    Strings SubInput(InputType type, sint32 idx) override;
+    Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     chars GetComment() const override;
 
 protected: // 데이터
@@ -403,7 +403,7 @@ public:
     sint32 GetChildrenGroupCount() const override;
     sint32s* GetChildrenGroup(sint32 group) override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
-    Strings SubInput(InputType type, sint32 idx) override;
+    Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     void SubInsiderBall(sint32 group) override;
     chars GetComment() const override;
     Point GetBallPos(sint32 group) const override;
@@ -435,7 +435,7 @@ public:
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
-    Strings SubInput(InputType type, sint32 idx) override;
+    Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     chars GetComment() const override;
     void OnClickMode() override;
 
@@ -465,7 +465,7 @@ public:
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
-    Strings SubInput(InputType type, sint32 idx) override;
+    Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     chars GetComment() const override;
 
 protected: // 데이터
@@ -562,7 +562,7 @@ public:
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
-    Strings SubInput(InputType type, sint32 idx) override;
+    Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     chars GetComment() const override;
     void OnClickMode() override;
 

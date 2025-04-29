@@ -6,6 +6,7 @@
 
 sint32 gBgPercent = 100;
 sint32 gZoomPercent = 100;
+bool gCtrlPressing = false;
 
 bool PlatformInit()
 {
@@ -13,7 +14,7 @@ bool PlatformInit()
         Platform::InitForMDI(true);
     #else
         Platform::InitForMDI(true);
-        #if BOSS_NDEBUG | BOSS_WINDOWS_MINGW
+        #if BOSS_WINDOWS_MINGW & !BOSS_NDEBUG
             if(Asset::RebuildForEmbedded())
                 return false;
         #endif

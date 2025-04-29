@@ -10,6 +10,7 @@ String gTitleFont;
 String gBasicFont;
 extern sint32 gBgPercent;
 extern sint32 gZoomPercent;
+extern bool gCtrlPressing;
 
 ZAY_VIEW_API OnCommand(CommandType type, id_share in, id_cloned_share* out)
 {
@@ -204,21 +205,21 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
             const sint32s Values(in);
             const sint32 CurZayBoxID = Values[0];
             const sint32 CurParamID = Values[1];
-            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_Param, CurParamID);
+            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_Param, CurParamID, false);
         }
         jump(!String::Compare(topic, "ZayBoxValueRemove")) // 제이박스 밸류 삭제(0-value-0-remove)
         {
             const sint32s Values(in);
             const sint32 CurZayBoxID = Values[0];
             const sint32 CurValueID = Values[1];
-            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_Value, CurValueID);
+            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_Value, CurValueID, false);
         }
         jump(!String::Compare(topic, "ZayBoxExtValueRemove")) // 제이박스 확장밸류 삭제(0-extvalue-0-remove)
         {
             const sint32s Values(in);
             const sint32 CurZayBoxID = Values[0];
             const sint32 CurExtValueID = Values[1];
-            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_ExtValue, CurExtValueID);
+            ZEZayBox::TOP()[CurZayBoxID]->SubInput(ZEZayBox::IT_ExtValue, CurExtValueID, false);
         }
         jump(!String::Compare(topic, "ZayBoxInsiderRemove")) // 제이박스 확장밸류 삭제(0-insider-0-remove)
         {
@@ -247,6 +248,11 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
     {
         const sint32 KeyCode = sint32o(in).ConstValue();
         branch;
+        jump(KeyCode == 17) // L-Ctrl
+        {
+            gCtrlPressing = true;
+            m->invalidate();
+        }
         jump(KeyCode == 37) // Left
             m->mWorkViewDrag = Point(300, 0);
         jump(KeyCode == 38) // Up
@@ -285,6 +291,16 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
         }
         jump(KeyCode == 116) // F5: 간단세이브
             m->FastSave();
+    }
+    else if(type == NT_KeyRelease)
+    {
+        const sint32 KeyCode = sint32o(in).ConstValue();
+        branch;
+        jump(KeyCode == 17) // L-Ctrl
+        {
+            gCtrlPressing = false;
+            m->invalidate();
+        }
     }
     else if(type == NT_FileContent)
     {
@@ -441,11 +457,26 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                     if(2 < RSize)
                     ZAY_XYRR(panel, 10 + 30, 10 + 30, RSize, RSize)
                     {
-                        ZAY_INNER(panel, -2)
-                        ZAY_RGB(panel, 0, 0, 0)
-                            panel.circle();
                         ZAY_COLOR(panel, m->mCapturedColor)
                             panel.circle();
+                        ZAY_INNER(panel, 1)
+                        ZAY_RGB(panel, 0, 0, 0)
+                            panel.circleline(2);
+                    }
+                }
+
+                // 컨트롤키 프레싱
+                if(gCtrlPressing)
+                ZAY_XYRR(panel, 10 + 30, panel.h() - 10 - 30, 25, 25)
+                {
+                    ZAY_RGBA(panel, 128, 192, 255, 192)
+                        panel.circle();
+                    ZAY_INNER(panel, 1)
+                    ZAY_RGB(panel, 0, 0, 0)
+                    {
+                        panel.circleline(2);
+                        ZAY_FONT(panel, 1.2)
+                            panel.text("CTRL");
                     }
                 }
             }

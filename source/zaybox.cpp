@@ -7,6 +7,7 @@
 extern String gTitleFont;
 extern String gBasicFont;
 extern sint32 gZoomPercent;
+extern bool gCtrlPressing;
 
 ////////////////////////////////////////////////////////////////////////////////
 // ZEZayBox
@@ -142,12 +143,13 @@ sint32s* ZEZayBox::GetChildrenGroup(sint32 group)
 void ZEZayBox::AddInput(InputType type, sint32 idx, const Strings& values)
 {
     Point NewPos;
-    mDraggingPos[type].DeliveryOne(idx, ToReference(NewPos));
+    mDraggingEditorPos[type].DeliveryOne(idx, ToReference(NewPos));
 }
 
-Strings ZEZayBox::SubInput(InputType type, sint32 idx)
+Strings ZEZayBox::SubInput(InputType type, sint32 idx, bool copyonly)
 {
-    mDraggingPos[type].SubtractionSection(idx);
+    if(!copyonly)
+        mDraggingEditorPos[type].SubtractionSection(idx);
     return Strings();
 }
 
@@ -640,7 +642,8 @@ void ZEZayBox::RenderEditorDropArea(ZayPanel& panel, chars uiname, InputType typ
     ZAY_INNER(panel, -1)
     ZAY_INNER_UI(panel, 0, uiname)
     ZAY_RGBA_IF(panel, 255, 128, 0, 80, blanked)
-    ZAY_RGBA_IF(panel, 0, 128, 255, 80, !blanked)
+    ZAY_RGBA_IF(panel, 0, 128, 255, 80, !blanked && !gCtrlPressing)
+    ZAY_RGBA_IF(panel, 255, 128, 255, 80, !blanked && gCtrlPressing)
     ZAY_RGBA_IF(panel, 128, 128, 128, 160, IsHovered)
     {
         panel.fill();
@@ -654,7 +657,8 @@ void ZEZayBox::RenderEditorDropArea(ZayPanel& panel, chars uiname, InputType typ
         {
             // 타이틀
             ZAY_FONT(panel, 1.0, gTitleFont)
-                panel.text((blanked)? "SWAP " : "MOVE      ", UIFA_RightMiddle, UIFE_Left);
+                panel.text((blanked)? "SWAP " : ((gCtrlPressing)? "COPY      " : "MOVE      "),
+                    UIFA_RightMiddle, UIFE_Left);
             // 앞쪽에 삽입된다는 표식
             if(!blanked && IsHovered)
             ZAY_XYWH(panel, 2, 2, panel.w() - 4, 2)
@@ -768,8 +772,8 @@ void ZEZayBox::RenderEditorDragCell(ZayPanel& panel, InputType type, sint32 idx)
 {
     // 에디터줄
     const Point WireBegin(
-        panel.w() / 2 - mDraggingPos[type][idx].x,
-        panel.h() / 2 - mDraggingPos[type][idx].y);
+        panel.w() / 2 - mDraggingEditorPos[type][idx].x,
+        panel.h() / 2 - mDraggingEditorPos[type][idx].y);
     ZAY_RGBA(panel, 16, 16, 16, 64)
         panel.line(WireBegin, Point(panel.w() / 2, panel.h() / 2), 2);
     ZAY_RGB(panel, 16, 16, 16)
@@ -933,7 +937,7 @@ void ZEZayBox::Resize(sint32 add)
 
 void ZEZayBox::EditorDragAdd(InputType type, sint32 idx, sint32 addx, sint32 addy)
 {
-    hook(mDraggingPos[type].AtWherever(idx))
+    hook(mDraggingEditorPos[type].AtWherever(idx))
     {
         fish.x += addx;
         fish.y += addy;
@@ -942,7 +946,7 @@ void ZEZayBox::EditorDragAdd(InputType type, sint32 idx, sint32 addx, sint32 add
 
 void ZEZayBox::EditorDragCancel(InputType type, sint32 idx)
 {
-    hook(mDraggingPos[type].AtWherever(idx))
+    hook(mDraggingEditorPos[type].AtWherever(idx))
     {
         fish.x = 0;
         fish.y = 0;
@@ -955,14 +959,14 @@ void ZEZayBox::EditorDrop(bool swap, InputType type, sint32 drop_idx, ZEZayBox& 
     {
         if(swap)
         {
-            const Strings DropValues = SubInput(type, drop_idx);
-            const Strings DragValues = drag.SubInput(type, drag_idx);
+            const Strings DropValues = SubInput(type, drop_idx, false);
+            const Strings DragValues = drag.SubInput(type, drag_idx, false);
             AddInput(type, drop_idx, DragValues);
             drag.AddInput(type, drag_idx, DropValues);
         }
         else
         {
-            const Strings DragValues = drag.SubInput(type, drag_idx);
+            const Strings DragValues = drag.SubInput(type, drag_idx, gCtrlPressing);
             AddInput(type, drop_idx, DragValues);
         }
     }
@@ -972,14 +976,14 @@ void ZEZayBox::EditorDrop(bool swap, InputType type, sint32 drop_idx, ZEZayBox& 
         {
             const sint32 MinIdx = (drop_idx < drag_idx)? drop_idx : drag_idx;
             const sint32 MaxIdx = (drop_idx > drag_idx)? drop_idx : drag_idx;
-            const Strings MaxValues = SubInput(type, MaxIdx);
-            const Strings MinValues = SubInput(type, MinIdx);
+            const Strings MaxValues = SubInput(type, MaxIdx, false);
+            const Strings MinValues = SubInput(type, MinIdx, false);
             AddInput(type, MinIdx, MaxValues);
             AddInput(type, MaxIdx, MinValues);
         }
         else
         {
-            const Strings DragValues = SubInput(type, drag_idx);
+            const Strings DragValues = SubInput(type, drag_idx, gCtrlPressing);
             AddInput(type, (drag_idx < drop_idx)? drop_idx - 1 : drop_idx, DragValues);
         }
     }
@@ -1028,6 +1032,10 @@ sint32 ZEZayBox::Copy()
     // 새로 만든 것이 기존의 컴포넌트가 되어야 함
     // 따라서 입장이 바뀌므로 자신의 컴포넌트ID를 초기화
     mCompID = -2;
+
+    // 드래그중인 에디터위치도 정리
+    for(sint32 i = 0; i < IT_Max; ++i)
+        mDraggingEditorPos[i].Clear();
 
     sint32 NewID = -1;
     if(Json("compname").HasValue())
@@ -1622,8 +1630,8 @@ void ZEZayBox::BodyParamGroup::RenderParamGroup(ZayPanel& panel)
             for(sint32 drag = 0; drag < 2; ++drag)
             for(sint32 i = 0, iend = mParams.Count(); i <= iend; ++i)
             {
-                const bool IsDragged = (i < mBox.mDraggingPos[0].Count() && mBox.mDraggingPos[0][i] != Point());
-                const Point& DragAdd = (drag == 1 && IsDragged)? mBox.mDraggingPos[0][i] : Point();
+                const bool IsDragged = (i < mBox.mDraggingEditorPos[0].Count() && mBox.mDraggingEditorPos[0][i] != Point());
+                const Point& DragAdd = (drag == 1 && IsDragged)? mBox.mDraggingEditorPos[0][i] : Point();
                 ZAY_XYWH(panel, 0 + DragAdd.x, (ParamHeight + 4) * i + DragAdd.y, panel.w(), ParamHeight)
                 {
                     if(i < iend)
@@ -1979,8 +1987,8 @@ void ZEZayBox::BodyInputGroup::RenderValueGroup(ZayPanel& panel, chars name, Bod
                 const bool NowExtLoop = (sub && i < sub->mInputs.Count());
                 const InputType DragInputType = (NowExtLoop)? IT_ExtValue : IT_Value;
                 const sint32 DragInputIdx = (HasExtInput && !NowExtLoop)? i - sub->mInputs.Count() : i;
-                const bool IsDragged = (DragInputIdx < mBox.mDraggingPos[DragInputType].Count() && mBox.mDraggingPos[DragInputType][DragInputIdx] != Point());
-                const Point& DragAdd = (drag == 1 && IsDragged)? mBox.mDraggingPos[DragInputType][DragInputIdx] : Point();
+                const bool IsDragged = (DragInputIdx < mBox.mDraggingEditorPos[DragInputType].Count() && mBox.mDraggingEditorPos[DragInputType][DragInputIdx] != Point());
+                const Point& DragAdd = (drag == 1 && IsDragged)? mBox.mDraggingEditorPos[DragInputType][DragInputIdx] : Point();
                 ZAY_XYWH(panel, 0 + DragAdd.x, (ValueHeight + 4) * i + DragAdd.y, panel.w(), ValueHeight)
                 {
                     if(i < iend)
@@ -2727,14 +2735,14 @@ void ZEZayBoxStarter::AddInput(InputType type, sint32 idx, const Strings& values
         mCreateGroup.AddValue(values[0], values[1], idx);
 }
 
-Strings ZEZayBoxStarter::SubInput(InputType type, sint32 idx)
+Strings ZEZayBoxStarter::SubInput(InputType type, sint32 idx, bool copyonly)
 {
-    Strings OldValues = ZEZayBox::SubInput(type, idx);
+    Strings OldValues = ZEZayBox::SubInput(type, idx, copyonly);
     if(type == IT_Value)
     {
         OldValues.AtAdding() = mCreateGroup.mInputs[idx].mKey;
         OldValues.AtAdding() = mCreateGroup.mInputs[idx].mValue;
-        mCreateGroup.SubValue(idx);
+        if(!copyonly) mCreateGroup.SubValue(idx);
     }
     return OldValues;
 }
@@ -2892,19 +2900,19 @@ void ZEZayBoxContent::AddInput(InputType type, sint32 idx, const Strings& values
     }
 }
 
-Strings ZEZayBoxContent::SubInput(InputType type, sint32 idx)
+Strings ZEZayBoxContent::SubInput(InputType type, sint32 idx, bool copyonly)
 {
-    Strings OldValues = ZEZayBox::SubInput(type, idx);
+    Strings OldValues = ZEZayBox::SubInput(type, idx, copyonly);
     switch(type)
     {
     case IT_Param:
         OldValues.AtAdding() = mParamGroup.mParams[idx];
-        mParamGroup.SubParam(idx);
+        if(!copyonly) mParamGroup.SubParam(idx);
         break;
     case IT_Value:
         OldValues.AtAdding() = mSetGroup.mInputs[idx].mKey;
         OldValues.AtAdding() = mSetGroup.mInputs[idx].mValue;
-        mSetGroup.SubValue(idx);
+        if(!copyonly) mSetGroup.SubValue(idx);
         break;
     }
     return OldValues;
@@ -3101,24 +3109,24 @@ void ZEZayBoxLayout::AddInput(InputType type, sint32 idx, const Strings& values)
     }
 }
 
-Strings ZEZayBoxLayout::SubInput(InputType type, sint32 idx)
+Strings ZEZayBoxLayout::SubInput(InputType type, sint32 idx, bool copyonly)
 {
-    Strings OldValues = ZEZayBox::SubInput(type, idx);
+    Strings OldValues = ZEZayBox::SubInput(type, idx, copyonly);
     switch(type)
     {
     case IT_Param:
         OldValues.AtAdding() = mParamGroup.mParams[idx];
-        mParamGroup.SubParam(idx);
+        if(!copyonly) mParamGroup.SubParam(idx);
         break;
     case IT_Value:
         OldValues.AtAdding() = mClickGroup.mInputs[idx].mKey;
         OldValues.AtAdding() = mClickGroup.mInputs[idx].mValue;
-        mClickGroup.SubValue(idx);
+        if(!copyonly) mClickGroup.SubValue(idx);
         break;
     case IT_ExtValue:
         OldValues.AtAdding() = mTouchGroup.mInputs[idx].mKey;
         OldValues.AtAdding() = mTouchGroup.mInputs[idx].mValue;
-        mTouchGroup.SubValue(idx);
+        if(!copyonly) mTouchGroup.SubValue(idx);
         break;
     }
     return OldValues;
@@ -3233,14 +3241,14 @@ void ZEZayBoxCode::AddInput(InputType type, sint32 idx, const Strings& values)
         mCodeGroup.AddValue(values[0], values[1], idx);
 }
 
-Strings ZEZayBoxCode::SubInput(InputType type, sint32 idx)
+Strings ZEZayBoxCode::SubInput(InputType type, sint32 idx, bool copyonly)
 {
-    Strings OldValues = ZEZayBox::SubInput(type, idx);
+    Strings OldValues = ZEZayBox::SubInput(type, idx, copyonly);
     if(type == IT_Value)
     {
         OldValues.AtAdding() = mCodeGroup.mInputs[idx].mKey;
         OldValues.AtAdding() = mCodeGroup.mInputs[idx].mValue;
-        mCodeGroup.SubValue(idx);
+        if(!copyonly) mCodeGroup.SubValue(idx);
     }
     return OldValues;
 }
@@ -3627,24 +3635,24 @@ void ZEZayBoxError::AddInput(InputType type, sint32 idx, const Strings& values)
     }
 }
 
-Strings ZEZayBoxError::SubInput(InputType type, sint32 idx)
+Strings ZEZayBoxError::SubInput(InputType type, sint32 idx, bool copyonly)
 {
-    Strings OldValues = ZEZayBox::SubInput(type, idx);
+    Strings OldValues = ZEZayBox::SubInput(type, idx, copyonly);
     switch(type)
     {
     case IT_Param:
         OldValues.AtAdding() = mParamGroup.mParams[idx];
-        mParamGroup.SubParam(idx);
+        if(!copyonly) mParamGroup.SubParam(idx);
         break;
     case IT_Value:
         OldValues.AtAdding() = mClickGroup.mInputs[idx].mKey;
         OldValues.AtAdding() = mClickGroup.mInputs[idx].mValue;
-        mClickGroup.SubValue(idx);
+        if(!copyonly) mClickGroup.SubValue(idx);
         break;
     case IT_ExtValue:
         OldValues.AtAdding() = mTouchGroup.mInputs[idx].mKey;
         OldValues.AtAdding() = mTouchGroup.mInputs[idx].mValue;
-        mTouchGroup.SubValue(idx);
+        if(!copyonly) mTouchGroup.SubValue(idx);
         break;
     }
     return OldValues;
