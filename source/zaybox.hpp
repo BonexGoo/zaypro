@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <service/boss_zay.hpp>
+#include <service/boss_zayson.hpp>
 
 class ZEZayBox;
 typedef Object<ZEZayBox> ZEZayBoxObject;
@@ -238,7 +239,21 @@ protected:
         void ShowTip(chars uiname) const override;
         bool RenderInsider(chars uiname, chars rendername, ZayPanel& panel, sint32 pv) const override;
     public:
-        Strings mParams;
+        class Param
+        {
+        public:
+            String mArg;
+            sint32 mArgType {0};
+            void SetArg(chars arg)
+            {
+                mArg = arg;
+                if(ZaySonUtility::ToCondition(arg) != ZaySonInterface::ConditionType::Unknown)
+                    mArgType = 1;
+                else mArgType = 0;
+            }
+        };
+        typedef Array<Param> Params;
+        Params mParams;
         String mComments;
         mutable sint32s mParamCommentDefaults;
     };
@@ -272,6 +287,16 @@ protected:
         public:
             String mKey;
             String mValue;
+            sint32 mValueType {0};
+            void SetValue(chars value)
+            {
+                mValue = value;
+                if(ZaySonUtility::ToCondition(value) != ZaySonInterface::ConditionType::Unknown)
+                    mValueType = 1;
+                else if(ZaySonUtility::IsFunctionCall(value))
+                    mValueType = 2;
+                else mValueType = 0;
+            }
         };
         typedef Array<Input> Inputs;
         Inputs mInputs;

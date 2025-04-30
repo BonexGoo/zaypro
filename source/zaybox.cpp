@@ -1552,11 +1552,12 @@ void ZEZayBox::BodyParamGroup::AddParam(chars param, sint32 idx)
     if(idx == -1)
     {
         auto& NewParam = mParams.AtAdding();
-        NewParam = param;
+        NewParam.SetArg(param);
     }
     else
     {
-        String NewParam = param;
+        Param NewParam;
+        NewParam.SetArg(param);
         mParams.DeliveryOne(idx, ToReference(NewParam));
     }
     mBox.RecalcSize();
@@ -1584,9 +1585,9 @@ void ZEZayBox::BodyParamGroup::ReadJson(const Context& json)
                     if(j < ParamLength - 1)
                         ParamCollector += ", ";
                 }
-                mParams.AtAdding() = ParamCollector;
+                mParams.AtAdding().SetArg(ParamCollector);
             }
-            else mParams.AtAdding() = fish.GetText();
+            else mParams.AtAdding().SetArg(fish.GetText());
         }
     }
     mBox.RecalcSize();
@@ -1598,11 +1599,11 @@ void ZEZayBox::BodyParamGroup::WriteJson(Context& json, bool makeid) const
     {
         hook(json.At("compvalues").AtAdding())
         {
-            if(ZaySonUtility::ToCondition(mParams[i]) != ZaySonInterface::ConditionType::Unknown)
-                fish.Set(mParams[i]);
+            if(mParams[i].mArgType != 0)
+                fish.Set(mParams[i].mArg);
             else
             {
-                Strings SubParams = ZaySonUtility::GetCommaStrings(mParams[i]);
+                Strings SubParams = ZaySonUtility::GetCommaStrings(mParams[i].mArg);
                 for(sint32 j = 0; j < SubParams.Count(); ++j)
                     fish.AtAdding().Set(SubParams[j]);
             }
@@ -1693,6 +1694,7 @@ void ZEZayBox::BodyParamGroup::RenderParamGroup(ZayPanel& panel)
     }
 }
 
+static sint32 gLastParamArgType = 0;
 void ZEZayBox::BodyParamGroup::RenderParamEditor(ZayPanel& panel, chars uiname, sint32 idx, bool usedrop)
 {
     const String UIRemove = String::Format("%s-remove", uiname);
@@ -1707,9 +1709,11 @@ void ZEZayBox::BodyParamGroup::RenderParamEditor(ZayPanel& panel, chars uiname, 
     ZAY_INNER_SCISSOR(panel, 0)
     ZAY_LTRB(panel, 3, 0, panel.w() - ButtonWidth - 4, panel.h())
     {
+        gLastParamArgType = mParams[idx].mArgType;
         ZAY_RGB(panel, 0, 0, 0)
         if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, false, this))
             panel.repaint(2);
+        gLastParamArgType = 0;
     }
 
     ZAY_RGB(panel, 0, 0, 0)
@@ -1839,21 +1843,21 @@ chars ZEZayBox::BodyParamGroup::GetText(chars uiname) const
 {
     const sint32 Pos = String(uiname).Find(0, "-param-");
     const sint32 Index = (Pos != -1)? Parser::GetInt(&uiname[Pos + 7]) : 0;
-    return mParams[Index];
+    return mParams[Index].mArg;
 }
 
 void ZEZayBox::BodyParamGroup::SetText(chars uiname, chars text)
 {
     const sint32 Pos = String(uiname).Find(0, "-param-");
     const sint32 Index = (Pos != -1)? Parser::GetInt(&uiname[Pos + 7]) : 0;
-    mParams.At(Index) = ZaySonUtility::GetSafetyString(text);
+    mParams.At(Index).SetArg(ZaySonUtility::GetSafetyString(text));
 }
 
 void ZEZayBox::BodyParamGroup::ShowTip(chars uiname) const
 {
     const sint32 Pos = String(uiname).Find(0, "-param-");
     const sint32 Index = (Pos != -1)? Parser::GetInt(&uiname[Pos + 7]) : 0;
-    Platform::Popup::ShowToolTip(mParams[Index]);
+    Platform::Popup::ShowToolTip(mParams[Index].mArg);
 }
 
 bool ZEZayBox::BodyParamGroup::RenderInsider(chars uiname, chars rendername, ZayPanel& panel, sint32 pv) const
@@ -1864,8 +1868,9 @@ bool ZEZayBox::BodyParamGroup::RenderInsider(chars uiname, chars rendername, Zay
     {
         if(!String::Compare(rendername, "content"))
         {
-            ZAY_RGB(panel, 0, 0, 0)
-                panel.text(mParams[Index], UIFA_LeftMiddle, UIFE_Right);
+            ZAY_RGB_IF(panel, 0, 0, 0, gLastParamArgType == 0)
+            ZAY_RGB_IF(panel, 200, 0, 0, gLastParamArgType == 1)
+                panel.text(mParams[Index].mArg, UIFA_LeftMiddle, UIFE_Right);
             return true;
         }
         else if(!String::Compare(rendername, "default"))
@@ -1901,13 +1906,13 @@ void ZEZayBox::BodyInputGroup::AddValue(chars key, chars value, sint32 idx)
     {
         auto& NewInput = mInputs.AtAdding();
         NewInput.mKey = key;
-        NewInput.mValue = value;
+        NewInput.SetValue(value);
     }
     else
     {
         Input NewInput;
         NewInput.mKey = key;
-        NewInput.mValue = value;
+        NewInput.SetValue(value);
         mInputs.DeliveryOne(idx, ToReference(NewInput));
     }
     mBox.RecalcSize();
@@ -1938,10 +1943,10 @@ void ZEZayBox::BodyInputGroup::ReadJson(const Context& json)
                 hook(fish(0, &OneKey))
                 {
                     NewInput.mKey = &OneKey[0];
-                    NewInput.mValue = fish.GetText();
+                    NewInput.SetValue(fish.GetText());
                 }
             }
-            else NewInput.mValue = fish.GetText();
+            else NewInput.SetValue(fish.GetText());
         }
     }
     mBox.RecalcSize();
@@ -1953,9 +1958,7 @@ void ZEZayBox::BodyInputGroup::WriteJson(Context& json, bool makeid) const
     {
         hook(json.AtAdding())
         {
-            if(ZaySonUtility::ToCondition(mInputs[i].mValue) != ZaySonInterface::ConditionType::Unknown)
-                fish.Set(mInputs[i].mValue);
-            else if(ZaySonUtility::IsFunctionCall(mInputs[i].mValue))
+            if(mInputs[i].mValueType != 0)
                 fish.Set(mInputs[i].mValue);
             else if(mInputs[i].mKey.Length() == 0)
                 fish.Set(mInputs[i].mValue);
@@ -2120,6 +2123,7 @@ void ZEZayBox::BodyInputGroup::RenderValueGroup(ZayPanel& panel, chars name, Bod
     }
 }
 
+static sint32 gLastInputValueType = 0;
 void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, InputType type, sint32 idx, sint32 colormode, bool usedrop)
 {
     const String UIKey = String::Format("%s-key", uiname);
@@ -2161,9 +2165,11 @@ void ZEZayBox::BodyInputGroup::RenderValueEditor(ZayPanel& panel, chars uiname, 
         ZAY_INNER_SCISSOR(panel, 0)
         ZAY_LTRB(panel, 3, 0, panel.w() - ButtonWidth - 4, panel.h())
         {
+            gLastInputValueType = mInputs[idx].mValueType;
             ZAY_RGB(panel, 0, 0, 0)
             if(ZayControl::RenderEditBox(panel, UIValue, DomName(UIValue), 1, true, false, false, this))
                 panel.repaint(2);
+            gLastInputValueType = 0;
         }
 
         ZAY_RGB(panel, 0, 0, 0)
@@ -2196,9 +2202,13 @@ void ZEZayBox::BodyInputGroup::SetText(chars uiname, chars text)
 {
     const sint32 Pos = String(uiname).Find(0, "value-");
     const sint32 Index = (Pos != -1)? Parser::GetInt(&uiname[Pos + 6]) : 0;
-    const bool IsKey = (!String(uiname).Right(4).Compare("-key"));
-    if(IsKey) mInputs.At(Index).mKey = ZaySonUtility::GetSafetyString(text);
-    else mInputs.At(Index).mValue = ZaySonUtility::GetSafetyString(text);
+    hook(mInputs.At(Index))
+    {
+        const String SafetyText = ZaySonUtility::GetSafetyString(text);
+        const bool IsKey = (!String(uiname).Right(4).Compare("-key"));
+        if(IsKey) fish.mKey = SafetyText;
+        else fish.SetValue(SafetyText);
+    }
 }
 
 void ZEZayBox::BodyInputGroup::ShowTip(chars uiname) const
@@ -2219,7 +2229,9 @@ bool ZEZayBox::BodyInputGroup::RenderInsider(chars uiname, chars rendername, Zay
     {
         if(!String::Compare(rendername, "content"))
         {
-            ZAY_RGB(panel, 0, 0, 0)
+            ZAY_RGB_IF(panel, 0, 0, 0, gLastInputValueType == 0)
+            ZAY_RGB_IF(panel, 200, 0, 0, gLastInputValueType == 1)
+            ZAY_RGB_IF(panel, 0, 0, 200, gLastInputValueType == 2)
                 panel.text((IsKey)? mInputs[Index].mKey : mInputs[Index].mValue, UIFA_LeftMiddle, UIFE_Right);
             return true;
         }
@@ -2906,7 +2918,7 @@ Strings ZEZayBoxContent::SubInput(InputType type, sint32 idx, bool copyonly)
     switch(type)
     {
     case IT_Param:
-        OldValues.AtAdding() = mParamGroup.mParams[idx];
+        OldValues.AtAdding() = mParamGroup.mParams[idx].mArg;
         if(!copyonly) mParamGroup.SubParam(idx);
         break;
     case IT_Value:
@@ -3115,7 +3127,7 @@ Strings ZEZayBoxLayout::SubInput(InputType type, sint32 idx, bool copyonly)
     switch(type)
     {
     case IT_Param:
-        OldValues.AtAdding() = mParamGroup.mParams[idx];
+        OldValues.AtAdding() = mParamGroup.mParams[idx].mArg;
         if(!copyonly) mParamGroup.SubParam(idx);
         break;
     case IT_Value:
@@ -3641,7 +3653,7 @@ Strings ZEZayBoxError::SubInput(InputType type, sint32 idx, bool copyonly)
     switch(type)
     {
     case IT_Param:
-        OldValues.AtAdding() = mParamGroup.mParams[idx];
+        OldValues.AtAdding() = mParamGroup.mParams[idx].mArg;
         if(!copyonly) mParamGroup.SubParam(idx);
         break;
     case IT_Value:
