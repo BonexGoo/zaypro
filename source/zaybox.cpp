@@ -1958,9 +1958,7 @@ void ZEZayBox::BodyInputGroup::WriteJson(Context& json, bool makeid) const
     {
         hook(json.AtAdding())
         {
-            if(mInputs[i].mValueType != 0)
-                fish.Set(mInputs[i].mValue);
-            else if(mInputs[i].mKey.Length() == 0)
+            if(mInputs[i].mKey.Length() == 0)
                 fish.Set(mInputs[i].mValue);
             else fish.At(mInputs[i].mKey).Set(mInputs[i].mValue);
         }
