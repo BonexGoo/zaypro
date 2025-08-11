@@ -14,20 +14,20 @@ void SetWindowRectSafety(sint32 x, sint32 y, sint32 w, sint32 h);
 
 bool PlatformInit()
 {
+    // Rem폴더 설정
     #if BOSS_WINDOWS
-        Platform::InitForMDI(true);
         String DataPath = Platform::File::RootForData();
         Platform::File::ResetAssetsRemRoot(DataPath);
     #else
         return false;
     #endif
 
+    // 윈도우 불러오기
     String ZayShowInfoJson = String::FromAsset("zayshowinfo.json");
     Context ZayShowInfo(ST_Json, SO_OnlyReference, ZayShowInfoJson, ZayShowInfoJson.Length());
     gFirstPath = ZayShowInfo("path").GetText();
     gFirstPosX = ZayShowInfo("posx").GetInt();
     gFirstPosY = ZayShowInfo("posy").GetInt();
-
     sint32 ArgCount = 0;
     chars ZayPath = Platform::Utility::GetArgument(1, &ArgCount);
     if(ZayPath != nullptr && 1 < ArgCount)
@@ -39,6 +39,8 @@ bool PlatformInit()
         if(5 < ArgCount) gPythonPort = Parser::GetInt(Platform::Utility::GetArgument(5));
     }
 
+    // 윈도우 설정
+    Platform::InitForMDI(true);
     Platform::SetViewCreator(ZayView::Creator);
     Platform::SetWindowName("ZayShow");
     SetWindowRectSafety(gFirstPosX, gFirstPosY, 800, 800);
@@ -48,6 +50,7 @@ bool PlatformInit()
 
 void PlatformQuit()
 {
+    // 윈도우 저장하기
     const rect128 WindowRect = Platform::GetWindowRect(true);
     Context ZayShowInfo;
     ZayShowInfo.At("path").Set(gFirstPath);
@@ -55,6 +58,7 @@ void PlatformQuit()
     ZayShowInfo.At("posy").Set(String::FromInteger(WindowRect.t));
     ZayShowInfo.SaveJson().ToAsset("zayshowinfo.json");
 
+    // 아틀라스 저장하기
     Context ZayShowAtlas;
     R::SaveAtlas(ZayShowAtlas);
     ZayShowAtlas.SaveJson().ToAsset("zayshowatlas.json");

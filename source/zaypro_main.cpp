@@ -10,14 +10,8 @@ bool gCtrlPressing = false;
 
 bool PlatformInit()
 {
-    #if BOSS_WASM
-        Platform::InitForMDI(true);
-    #else
-        Platform::InitForMDI(true);
-        #if BOSS_WINDOWS_MINGW & !BOSS_NDEBUG
-            if(Asset::RebuildForEmbedded())
-                return false;
-        #endif
+    // Rem폴더 설정
+    #if !BOSS_WASM
         String DataPath = Platform::File::RootForData();
         Platform::File::ResetAssetsRemRoot(DataPath);
     #endif
@@ -26,10 +20,7 @@ bool PlatformInit()
     Platform::Utility::BindExtProgram(".zay", "Zay.Show",
         Platform::Utility::GetProgramPath(true) + "zayshow.exe");
 
-    Platform::SetViewCreator(ZayView::Creator);
-    Platform::SetWindowName("ZAYPRO");
-
-    // 윈도우 위치설정
+    // 윈도우 불러오기
     String WindowInfoString = String::FromAsset("windowinfo.json");
     Context WindowInfo(ST_Json, SO_OnlyReference, WindowInfoString, WindowInfoString.Length());
     const sint32 ScreenID = WindowInfo("screen").GetInt(0);
@@ -45,7 +36,7 @@ bool PlatformInit()
     const sint32 WindowY = Math::Clamp(WindowInfo("y").GetInt((ScreenHeight - WindowHeight) / 2), 30, ScreenHeight - WindowHeight);
     Platform::SetWindowRect(ScreenRect.l + WindowX, ScreenRect.t + WindowY, WindowWidth, WindowHeight);
 
-    // 아틀라스 동적로딩
+    // 아틀라스 불러오기
     const String AtlasInfoString = String::FromAsset("atlasinfo.json");
     Context AtlasInfo(ST_Json, SO_OnlyReference, AtlasInfoString, AtlasInfoString.Length());
     R::SetAtlasDir("image");
@@ -62,13 +53,17 @@ bool PlatformInit()
             }
         });
 
+    // 윈도우 설정
+    Platform::InitForMDI(true);
+    Platform::SetViewCreator(ZayView::Creator);
+    Platform::SetWindowName("ZAYPRO");
     Platform::SetWindowView("zayproView");
     return true;
 }
 
 void PlatformQuit()
 {
-    // 윈도우
+    // 윈도우 저장하기
     const rect128 WindowRect = Platform::GetWindowRect(true);
     const sint32 ScreenID = Platform::Utility::GetScreenID({(WindowRect.l + WindowRect.r) / 2, (WindowRect.t + WindowRect.b) / 2});
     rect128 ScreenRect = {};
@@ -83,7 +78,7 @@ void PlatformQuit()
     WindowInfo.At("h").Set(String::FromInteger(WindowRect.b - WindowRect.t));
     WindowInfo.SaveJson().ToAsset("windowinfo.json");
 
-    // 아틀라스
+    // 아틀라스 저장하기
     Context AtlasInfo;
     R::SaveAtlas(AtlasInfo);
     AtlasInfo.SaveJson().ToAsset("atlasinfo.json");

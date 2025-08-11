@@ -807,7 +807,7 @@ ZaySonInterface& ZEFakeZaySon::AddComponent(ZayExtend::ComponentType type, chars
     return *this;
 }
 
-ZaySonInterface& ZEFakeZaySon::AddGlue(chars name, ZayExtend::GlueCB cb)
+ZaySonInterface& ZEFakeZaySon::AddGlue(chars name, ZayExtend::GlueCB cb, chars param_comments, chars document)
 {
     return *this;
 }
