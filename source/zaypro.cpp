@@ -2478,6 +2478,7 @@ void zayproData::RenderOutline(ZayPanel& panel)
                 mNcRightBorder = false; \
                 mNcBottomBorder = false; \
                 BORDER = true; \
+                invalidate(); \
             } \
             else if(t == GT_MovingLosed) \
             { \
