@@ -40,6 +40,7 @@ public:
     ZaySonInterface& AddGlue(chars name, ZayExtend::GlueCB cb,
         chars param_comments = nullptr, chars document = nullptr) override;
     void JumpCall(chars gatename, sint32 runcount) override;
+    void JumpCallDirectly(chars gatename, ZayPanel* panel) override;
     void JumpCallWithArea(chars gatename, sint32 runcount, float x, float y, float w, float h) override;
     void JumpClear() override;
 

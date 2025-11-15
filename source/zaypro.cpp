@@ -816,6 +816,10 @@ void ZEFakeZaySon::JumpCall(chars gatename, sint32 runcount)
 {
 }
 
+void ZEFakeZaySon::JumpCallDirectly(chars gatename, ZayPanel* panel)
+{
+}
+
 void ZEFakeZaySon::JumpCallWithArea(chars gatename, sint32 runcount, float x, float y, float w, float h)
 {
 }
