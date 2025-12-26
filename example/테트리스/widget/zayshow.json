@@ -1,8 +1,0 @@
-﻿{
-	"atlas":["image/main.png"],
-	"flexible":0,
-	"scale":100,
-	"sizex":500,
-	"sizey":800,
-	"title":"테트리스"
-}
