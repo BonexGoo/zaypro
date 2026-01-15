@@ -23,7 +23,7 @@ public:
     void UpdateDom(chars key, chars value);
     void PlaySound(chars filename);
     void StopSound();
-    void CallGate(chars gatename);
+    void CallGate(chars gatename, chars uiname);
 
 public: // 파이썬
     void TryPythonRecvOnce();

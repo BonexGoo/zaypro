@@ -629,7 +629,7 @@ void zayshowData::InitWidget(ZayWidget& widget, chars name)
             if(params.ParamCount() == 1)
             {
                 const String GateName = params.Param(0).ToText();
-                CallGate(GateName);
+                CallGate(GateName, params.UIName());
                 invalidate();
             }
         });
@@ -660,10 +660,10 @@ void zayshowData::StopSound()
     mSoundFocus = 0;
 }
 
-void zayshowData::CallGate(chars gatename)
+void zayshowData::CallGate(chars gatename, chars uiname)
 {
     if(mWidget)
-        mWidget->JumpCall(gatename);
+        mWidget->JumpCall(gatename, uiname);
 }
 
 void zayshowData::TryPythonRecvOnce()
@@ -754,7 +754,7 @@ void zayshowData::OnPython_call(const Strings& params)
     if(1 < params.Count())
     {
         if(mWidget)
-            mWidget->JumpCall(params[1]);
+            mWidget->JumpCall(params[1], "Python");
     }
 }
 

@@ -807,20 +807,20 @@ ZaySonInterface& ZEFakeZaySon::AddComponent(ZayExtend::ComponentType type, chars
     return *this;
 }
 
-ZaySonInterface& ZEFakeZaySon::AddGlue(chars name, ZayExtend::GlueCB cb, chars param_comments, chars document)
+ZaySonInterface& ZEFakeZaySon::AddGlue(chars gluename, ZayExtend::GlueCB cb, chars param_comments, chars document)
 {
     return *this;
 }
 
-void ZEFakeZaySon::JumpCall(chars gatename, sint32 runcount)
+void ZEFakeZaySon::JumpCall(chars gatename, chars uiname, sint32 runcount)
 {
 }
 
-void ZEFakeZaySon::JumpCallDirectly(chars gatename, ZayPanel* panel)
+void ZEFakeZaySon::JumpCallDirectly(chars gatename, chars uiname, ZayPanel* panel)
 {
 }
 
-void ZEFakeZaySon::JumpCallWithArea(chars gatename, sint32 runcount, float x, float y, float w, float h)
+void ZEFakeZaySon::JumpCallWithArea(chars gatename, chars uiname, sint32 runcount, float x, float y, float w, float h)
 {
 }
 
