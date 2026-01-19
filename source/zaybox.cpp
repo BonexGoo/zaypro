@@ -16,6 +16,7 @@ ZEZayBox::ZEZayBox()
 {
     mCompType = "null";
     mCompID = -2;
+    mStableMode = false;
     mParent = -1;
     mDebugOrder = -1;
     mExpanded = true;
@@ -236,9 +237,10 @@ void ZEZayBox::ChangeChild(ZEZayBox& oldchild, ZEZayBox& newchild)
     }
 }
 
-void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool copy, bool expand, bool resize, bool remove)
+void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool stable, bool copy, bool expand, bool resize, bool remove)
 {
     const String UITitle = String::Format("%d-title", mID);
+    const String UIStatle = String::Format("%d-stable", mID);
     const String UIGroupMove = String::Format("%d-groupmove", mID);
     const String UIGroupCopy = String::Format("%d-groupcopy", mID);
     const String UIExpand = String::Format("%d-expand", mID);
@@ -303,7 +305,7 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
             {
                 TitleEndX -= ButtonWidth;
                 ZAY_XYWH(panel, TitleEndX, 0, ButtonWidth, panel.h())
-                ZAY_RGBA(panel, 128, 128, 128, 20)
+                ZAY_RGBA(panel, 128, 128, 128, 60)
                     panel.icon(R("wid_x_n"), UIA_CenterMiddle);
             }
             // 그룹복사버튼
@@ -337,18 +339,19 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
 
             // 타이틀
             ZAY_LTRB(panel, 5 + 3, 0, TitleEndX + 3, panel.h())
-            ZAY_FONT(panel, 1.0, gTitleFont)
             {
                 String TitleText((IsFocusing && mDebugOrder != -1)?
                     (chars) String::Format("[%d] %s", mDebugOrder, title) : title);
+                ZAY_FONT(panel, 1.0, gTitleFont)
+                ZAY_RGB(panel, 255, 255, 255)
+                    panel.text(TitleText, UIFA_LeftMiddle, UIFE_Right);
 
                 // 디버그용 자기ID 표시
                 #if !BOSS_NDEBUG
-                    TitleText += String::Format((mCompID == -2)? " <id%d>" : " <id%d/comp%d>", mID, mCompID);
+                    ZAY_RGB(panel, 0, 0, 0)
+                        panel.text((stable)? 50 : -10, -10,
+                            String::Format((mCompID == -2)? " <id%d>" : " <id%d/comp%d>", mID, mCompID), UIFA_LeftBottom);
                 #endif
-
-                ZAY_RGB(panel, 255, 255, 255)
-                    panel.text(TitleText, UIFA_LeftMiddle, UIFE_Right);
             }
         }
 
@@ -356,6 +359,26 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
         if(mHooked)
         ZAY_XYWH(panel, -ButtonWidth - 6, 3, ButtonWidth, panel.h())
             RenderHookRemoveButton(panel, UIHookRemove);
+    }
+
+    if(stable)
+    {
+        const bool IsStableFocusing = !!(panel.state(UIStatle) & (PS_Focused | PS_Dragging));
+        const bool IsStablePressed = ((panel.state(UIStatle) & (PS_Pressed | PS_Dragging)) != 0);
+        ZAY_LTRB_UI(panel, 5, -25, 60, -5, UIStatle,
+            ZAY_GESTURE_T(t, this)
+            {
+                if(t == GT_InReleased || t == GT_OutReleased)
+                    mStableMode ^= true;
+            })
+        ZAY_MOVE_IF(panel, 1, 1, IsStablePressed)
+        {
+            ZAY_RGBA(panel, 128, 128, 128, (mStableMode)? 255 : ((IsStableFocusing)? 50 : 10))
+                panel.ninepatch(R("box_slot_inner_select"));
+            ZAY_FONT(panel, 1.0, gTitleFont)
+            ZAY_RGBA(panel, 222, 252, 11, (mStableMode)? 255 : ((IsStableFocusing)? 100 : 20))
+                panel.text("stable");
+        }
     }
 }
 
@@ -487,7 +510,7 @@ void ZEZayBox::RenderBall(ZayPanel& panel, chars uiname)
     #if !BOSS_NDEBUG
         ZAY_RGB(panel, 0, 0, 0)
         for(sint32 i = 0, iend = mChildren.Count(); i < iend; ++i)
-            panel.text(panel.w(), 20 + 15 * i, String::Format(" <id%d>", mChildren[i]), UIFA_LeftTop);
+            panel.text(panel.w(), 30 + 15 * i, String::Format(" <id%d>", mChildren[i]), UIFA_LeftTop);
     #endif
 }
 
@@ -916,7 +939,7 @@ void ZEZayBox::RenderHookRemoveButton(ZayPanel& panel, chars uiname)
             panel.icon(R("cut_o"), UIA_CenterMiddle);
         else if(IsFocused)
             panel.icon(R("cut_n"), UIA_CenterMiddle);
-        else ZAY_RGBA(panel, 128, 128, 128, 20)
+        else ZAY_RGBA(panel, 128, 128, 128, 40)
             panel.icon(R("cut_n"), UIA_CenterMiddle);
     }
 }
@@ -2579,9 +2602,8 @@ void ZEZayBox::BodyInsideGroup::RenderBalls(ZayPanel& panel)
         ZAY_RGB_IF(panel, 160, 160, 160, !IsDropping && IsFocused)
             panel.fill();
         ZAY_RGB(panel, 0, 0, 0)
-        for(sint32 y = 0; y < 2; ++y)
-        for(sint32 x = 0; x < 2; ++x)
-            panel.text(panel.w() / 2 - 1 + x, panel.h() / 2 - 2 + y, "＋");
+        ZAY_FONT(panel, 1.0, gTitleFont)
+            panel.text("+");
     }
 
     // 인사이더들
@@ -2712,7 +2734,7 @@ void ZEZayBoxStarter::Render(ZayPanel& panel)
         panel.ninepatch(R("box_bg"));
 
         // 타이틀
-        RenderTitle(panel, mCompType, ChildType::Inner, false, true, true, false);
+        RenderTitle(panel, mCompType, ChildType::Inner, false, false, true, true, false);
 
         // 바디
         if(mExpanded)
@@ -2792,6 +2814,7 @@ void ZEZayBoxContent::ReadJson(const Context& json)
     if(json("compid").HasValue())
         mCompID = ValidLastID(json("compid").GetInt());
 
+    mStableMode = json("stable").GetInt();
     mComment.ReadJson(json);
     mParamGroup.ReadJson(json("compvalues"));
 
@@ -2815,6 +2838,7 @@ void ZEZayBoxContent::WriteJson(Context& json, bool makeid) const
     if(mCompID < 0 && makeid) mCompID = MakeLastID();
     json.At("compid").Set(String::FromInteger(mCompID));
 
+    json.At("stable").Set(String::FromInteger(mStableMode));
     mComment.WriteJson(json, makeid);
     mParamGroup.WriteJson(json, makeid);
     mInsideGroup.WriteJson(json, makeid);
@@ -2845,7 +2869,7 @@ void ZEZayBoxContent::Render(ZayPanel& panel)
                 mInsideGroup.RenderBalls(panel);
 
             // 타이틀
-            RenderTitle(panel, mCompType, mChildType, true, true, true, true);
+            RenderTitle(panel, mCompType, mChildType, mHasParam, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -2980,6 +3004,7 @@ void ZEZayBoxLayout::ReadJson(const Context& json)
     if(json("compid").HasValue())
         mCompID = ValidLastID(json("compid").GetInt());
 
+    mStableMode = json("stable").GetInt();
     mNameComment.ReadJson(json);
     mParamGroup.ReadJson(json("compvalues"));
     mTouchGroup.ReadJson(json("ontouch"));
@@ -3011,6 +3036,7 @@ void ZEZayBoxLayout::WriteJson(Context& json, bool makeid) const
     if(mCompID < 0 && makeid) mCompID = MakeLastID();
     json.At("compid").Set(String::FromInteger(mCompID));
 
+    json.At("stable").Set(String::FromInteger(mStableMode));
     mNameComment.WriteJson(json, makeid);
     mParamGroup.WriteJson(json, makeid);
     if(0 < mTouchGroup.mInputs.Count())
@@ -3050,7 +3076,7 @@ void ZEZayBoxLayout::Render(ZayPanel& panel)
         ZAY_INNER(panel, ScissorGap)
         {
             // 타이틀
-            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true);
+            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -3185,6 +3211,7 @@ void ZEZayBoxCode::ReadJson(const Context& json)
     if(json("compid").HasValue())
         mCompID = ValidLastID(json("compid").GetInt());
 
+    mStableMode = json("stable").GetInt();
     mComment.ReadJson(json);
     mCodeGroup.ReadJson(json("compinputs"));
 }
@@ -3199,6 +3226,7 @@ void ZEZayBoxCode::WriteJson(Context& json, bool makeid) const
     if(mCompID < 0 && makeid) mCompID = MakeLastID();
     json.At("compid").Set(String::FromInteger(mCompID));
 
+    json.At("stable").Set(String::FromInteger(mStableMode));
     mComment.WriteJson(json, makeid);
     if(0 < mCodeGroup.mInputs.Count())
         mCodeGroup.WriteJson(json.At("compinputs"), makeid);
@@ -3222,7 +3250,7 @@ void ZEZayBoxCode::Render(ZayPanel& panel)
         ZAY_INNER(panel, ScissorGap)
         {
             // 타이틀
-            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true);
+            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -3333,7 +3361,7 @@ void ZEZayBoxJumpOrGate::Render(ZayPanel& panel)
         ZAY_INNER(panel, ScissorGap)
         {
             // 타이틀
-            RenderTitle(panel, mCompType, (mIsGate)? ChildType::Inner : ChildType::None, true, true, true, true);
+            RenderTitle(panel, mCompType, (mIsGate)? ChildType::Inner : ChildType::None, false, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -3420,7 +3448,7 @@ void ZEZayBoxLoop::Render(ZayPanel& panel)
         ZAY_INNER(panel, ScissorGap)
         {
             // 타이틀
-            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true);
+            RenderTitle(panel, mCompType, ChildType::Inner, false, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -3511,8 +3539,8 @@ void ZEZayBoxCondition::Render(ZayPanel& panel)
         {
             // 타이틀
             if(mOperation.mWithElse)
-                RenderTitle(panel, "el" + mCompType, ChildType::None, true, mHasElseAndOperation, true, true);
-            else RenderTitle(panel, mCompType, ChildType::None, true, mHasElseAndOperation, true, true);
+                RenderTitle(panel, "el" + mCompType, ChildType::None, false, true, mHasElseAndOperation, true, true);
+            else RenderTitle(panel, mCompType, ChildType::None, false, true, mHasElseAndOperation, true, true);
 
             // 바디
             if(mExpanded && mHasElseAndOperation)
@@ -3626,7 +3654,7 @@ void ZEZayBoxError::Render(ZayPanel& panel)
         // 타이틀
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            RenderTitle(panel, mCompType, ChildType::Inner, true, false, true, true);
+            RenderTitle(panel, mCompType, ChildType::Inner, false, true, false, true, true);
     }
 }
 

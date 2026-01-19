@@ -63,7 +63,7 @@ public:
     inline Point hookpos() const {return mHookPos;}
 
 public:
-    void RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool copy, bool expand, bool resize, bool remove);
+    void RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool stable, bool copy, bool expand, bool resize, bool remove);
     void RenderHook(ZayPanel& panel, chars uiname);
     void RenderBall(ZayPanel& panel, chars uiname);
     void RenderGroupMoveButton(ZayPanel& panel, chars uiname);
@@ -100,6 +100,7 @@ protected: // 데이터
     sint32 mID; // 나의 인스턴스ID
     String mCompType;
     mutable sint32 mCompID;
+    bool mStableMode;
     sint32 mParent; // 부모의 인스턴스ID
     sint32 mDebugOrder; // 디버깅시 보여질 나의 순번
     sint32s mChildren;
