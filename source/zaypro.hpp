@@ -39,8 +39,8 @@ public:
         ZayExtend::ComponentCB cb, chars comments = nullptr, chars samples = nullptr) override;
     ZaySonInterface& AddGlue(chars gluename, ZayExtend::GlueCB cb,
         chars param_comments = nullptr, chars document = nullptr) override;
-    void JumpCall(chars gatename, chars uiname, sint32 runcount) override;
-    void JumpCallDirectly(chars gatename, chars uiname, ZayPanel* panel) override;
+    void JumpCall(chars gatename, chars uiname, sint32 runcount, sint32 intervalms) override;
+    bool JumpCallDirectly(chars gatename, chars uiname, ZayPanel* panel) override;
     void JumpCallWithArea(chars gatename, chars uiname, sint32 runcount, float x, float y, float w, float h) override;
     void JumpClear() override;
 

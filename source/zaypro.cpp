@@ -812,12 +812,13 @@ ZaySonInterface& ZEFakeZaySon::AddGlue(chars gluename, ZayExtend::GlueCB cb, cha
     return *this;
 }
 
-void ZEFakeZaySon::JumpCall(chars gatename, chars uiname, sint32 runcount)
+void ZEFakeZaySon::JumpCall(chars gatename, chars uiname, sint32 runcount, sint32 intervalms)
 {
 }
 
-void ZEFakeZaySon::JumpCallDirectly(chars gatename, chars uiname, ZayPanel* panel)
+bool ZEFakeZaySon::JumpCallDirectly(chars gatename, chars uiname, ZayPanel* panel)
 {
+    return false;
 }
 
 void ZEFakeZaySon::JumpCallWithArea(chars gatename, chars uiname, sint32 runcount, float x, float y, float w, float h)
