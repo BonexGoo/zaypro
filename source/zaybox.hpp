@@ -39,6 +39,7 @@ public:
     virtual void WriteJson(Context& json, bool makeid) const;
     virtual void Render(ZayPanel& panel);
     virtual void RecalcSize();
+    virtual ChildType GetChildType() const;
     virtual sint32 GetChildrenGroupCount() const;
     virtual sint32s* GetChildrenGroup(sint32 group);
     virtual void AddInput(InputType type, sint32 idx, const Strings& values);
@@ -63,6 +64,7 @@ public:
     inline Point hookpos() const {return mHookPos;}
 
 public:
+    bool IsSelected() const;
     void RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool stable, bool copy, bool expand, bool resize, bool remove);
     void RenderHook(ZayPanel& panel, chars uiname);
     void RenderBall(ZayPanel& panel, chars uiname);
@@ -95,6 +97,9 @@ public:
     void ClearChildrenHookAll();
     void ClearMyHook();
     void MoveMyHook(sint32 addx, sint32 addy);
+    sint32 LoadTreeFromClipboard();
+    sint32 FindLowestDirectChild();
+    void MoveTreeTo(double x, double y);
 
 protected: // 데이터
     sint32 mID; // 나의 인스턴스ID
@@ -400,6 +405,7 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    ChildType GetChildType() const override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
     Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     chars GetComment() const override;
@@ -426,6 +432,7 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    ChildType GetChildType() const override;
     sint32 GetChildrenGroupCount() const override;
     sint32s* GetChildrenGroup(sint32 group) override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
@@ -460,6 +467,7 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    ChildType GetChildType() const override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
     Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     chars GetComment() const override;
@@ -490,6 +498,7 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    ChildType GetChildType() const override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
     Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     chars GetComment() const override;
@@ -516,6 +525,7 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    ChildType GetChildType() const override;
     chars GetComment() const override;
 
 protected: // 데이터
@@ -540,6 +550,7 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    ChildType GetChildType() const override;
     chars GetComment() const override;
 
 protected: // 데이터
@@ -564,6 +575,7 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    ChildType GetChildType() const override;
 
 protected: // 데이터
     BodyConditionOperation mOperation;
@@ -587,6 +599,7 @@ public:
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
     void RecalcSize() override;
+    ChildType GetChildType() const override;
     void AddInput(InputType type, sint32 idx, const Strings& values) override;
     Strings SubInput(InputType type, sint32 idx, bool copyonly) override;
     chars GetComment() const override;

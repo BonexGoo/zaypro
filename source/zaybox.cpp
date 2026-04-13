@@ -6,6 +6,7 @@
 
 extern String gTitleFont;
 extern String gBasicFont;
+extern sint32 gSelectedZayBoxID;
 extern sint32 gZoomPercent;
 extern bool gCtrlPressing;
 
@@ -27,6 +28,8 @@ ZEZayBox::ZEZayBox()
 
 ZEZayBox::~ZEZayBox()
 {
+    if(gSelectedZayBoxID == mID)
+        gSelectedZayBoxID = -1;
 }
 
 static sint32 gLastZayBoxID = -1;
@@ -128,6 +131,11 @@ void ZEZayBox::Render(ZayPanel& panel)
 void ZEZayBox::RecalcSize()
 {
     BOSS_ASSERT("잘못된 시나리오입니다", false);
+}
+
+ZEZayBox::ChildType ZEZayBox::GetChildType() const
+{
+    return ChildType::None;
 }
 
 sint32 ZEZayBox::GetChildrenGroupCount() const
@@ -237,10 +245,17 @@ void ZEZayBox::ChangeChild(ZEZayBox& oldchild, ZEZayBox& newchild)
     }
 }
 
+bool ZEZayBox::IsSelected() const
+{
+    return (gSelectedZayBoxID == mID);
+}
+
 void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool stable, bool copy, bool expand, bool resize, bool remove)
 {
     const String UITitle = String::Format("%d-title", mID);
     const String UIStatle = String::Format("%d-stable", mID);
+    const String UICopy = String::Format("%d-copy", mID);
+    const String UIPaste = String::Format("%d-paste", mID);
     const String UIGroupMove = String::Format("%d-groupmove", mID);
     const String UIGroupCopy = String::Format("%d-groupcopy", mID);
     const String UIExpand = String::Format("%d-expand", mID);
@@ -257,6 +272,7 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
         ZAY_GESTURE_VNTXY(v, n, t, x, y, this)
         {
             static Point OldPos;
+            static bool WasDragged;
             if(t == GT_Moving)
                 Platform::SendNotify(v->view(), "Pipe:CompFocusIn", String::FromInteger(mCompID));
             else if(t == GT_MovingLosed)
@@ -264,17 +280,24 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
             else if(t == GT_Pressed)
             {
                 OldPos = Point(x, y);
+                WasDragged = false;
                 v->clearCapture();
             }
             else if(t == GT_InDragging || t == GT_OutDragging)
             {
+                WasDragged = true;
                 mTitleDrag += Point(x - OldPos.x, y - OldPos.y) * 100 / gZoomPercent;
                 Platform::SendNotify(v->view(), "ZayBoxMove", sint32o(mID));
                 OldPos = Point(x, y);
                 v->invalidate();
             }
-            else if((t == GT_InReleased || t == GT_OutReleased) && mParent != -1)
-                Platform::SendNotify(v->view(), "ZayBoxSort", sint32o(mParent));
+            else if(t == GT_InReleased || t == GT_OutReleased)
+            {
+                if(!WasDragged)
+                    Platform::SendNotify(v->view(), "ZayBoxSelect", sint32o(mID));
+                if(mParent != -1)
+                    Platform::SendNotify(v->view(), "ZayBoxSort", sint32o(mParent));
+            }
         })
     ZAY_LTRB(panel, 0, -2, panel.w() + 4, panel.h() + 2)
     {
@@ -365,7 +388,7 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
     {
         const bool IsStableFocusing = !!(panel.state(UIStatle) & (PS_Focused | PS_Dragging));
         const bool IsStablePressed = ((panel.state(UIStatle) & (PS_Pressed | PS_Dragging)) != 0);
-        ZAY_LTRB_UI(panel, 5, -25, 60, -5, UIStatle,
+        ZAY_XYWH_UI(panel, 5, -25, 55, 20, UIStatle,
             ZAY_GESTURE_T(t, this)
             {
                 if(t == GT_InReleased || t == GT_OutReleased)
@@ -373,11 +396,89 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
             })
         ZAY_MOVE_IF(panel, 1, 1, IsStablePressed)
         {
-            ZAY_RGBA(panel, 128, 128, 128, (mStableMode)? 255 : ((IsStableFocusing)? 50 : 10))
+            ZAY_RGBA(panel, 128, 128, 128, (mStableMode)? 128 : ((IsStableFocusing)? 80 : 40))
                 panel.ninepatch(R("box_slot_inner_select"));
             ZAY_FONT(panel, 1.0, gTitleFont)
-            ZAY_RGBA(panel, 222, 252, 11, (mStableMode)? 255 : ((IsStableFocusing)? 100 : 20))
+            ZAY_RGBA(panel, 222, 252, 11, (mStableMode)? 255 : ((IsStableFocusing)? 120 : 40))
                 panel.text("stable");
+        }
+    }
+
+    if(IsSelected())
+    {
+        if(mID != 0)
+        {
+            // 클립보드로 복사
+            const bool IsCopyFocusing = !!(panel.state(UICopy) & (PS_Focused | PS_Dragging));
+            const bool IsCopyPressed = ((panel.state(UICopy) & (PS_Pressed | PS_Dragging)) != 0);
+            ZAY_XYWH_UI(panel, panel.w() - 120, -25, 55, 20, UICopy,
+                ZAY_GESTURE_T(t, this)
+                {
+                    if(t == GT_InReleased || t == GT_OutReleased)
+                    {
+                        Context Json;
+                        WriteJson(Json, false);
+                        Json.At("expanded").Set(String::FromInteger((mExpanded)? 1 : 0));
+                        Json.At("posx").Set(String::FromInteger((sint32) Math::Round(mPosX)));
+                        Json.At("posy").Set(String::FromInteger((sint32) Math::Round(mPosY)));
+                        Json.At("addw").Set(String::FromInteger(mAddW));
+                        if(0 < children().Count())
+                            ZEZayBox::Save(children(), Json.At("ui"), false);
+                        Platform::Utility::SendToTextClipboard(Json.SaveJson());
+                    }
+                })
+            ZAY_MOVE_IF(panel, 1, 1, IsCopyPressed)
+            {
+                ZAY_RGBA(panel, 128, 128, 128, (IsCopyFocusing)? 128 : 80)
+                    panel.ninepatch(R("box_slot_inner_select"));
+                ZAY_FONT(panel, 1.0, gTitleFont)
+                ZAY_RGBA(panel, 222, 252, 11, (IsCopyFocusing)? 255 : 120)
+                    panel.text("copy");
+            }
+        }
+
+        // 클립보드에서 붙여넣기
+        const bool IsPasteFocusing = !!(panel.state(UIPaste) & (PS_Focused | PS_Dragging));
+        const bool IsPastePressed = ((panel.state(UIPaste) & (PS_Pressed | PS_Dragging)) != 0);
+        ZAY_XYWH_UI(panel, panel.w() - 60, -25, 55, 20, UIPaste,
+            ZAY_GESTURE_T(t, this)
+            {
+                if(t == GT_InReleased || t == GT_OutReleased)
+                {
+                    const sint32 NewRootID = LoadTreeFromClipboard();
+                    if(NewRootID != -1)
+                    if(auto NewRootBox = TOP().Access(NewRootID))
+                    {
+                        double PasteX = 0;
+                        double PasteY = 0;
+                        const sint32 LowestChildID = FindLowestDirectChild();
+                        if(LowestChildID == -1)
+                        {
+                            PasteX = mPosX + mBodySize.w + mAddW + 200;
+                            PasteY = mPosY;
+                        }
+                        else if(auto LowestChildBox = TOP().Access(LowestChildID))
+                        {
+                            const Rect LowestRect = LowestChildBox->ConstValue().GetRect();
+                            PasteX = LowestRect.l;
+                            PasteY = LowestRect.b + 100;
+                        }
+                        NewRootBox->Value().MoveTreeTo(PasteX, PasteY);
+                        if(GetChildType() == ChildType::Inner && NewRootBox->ConstValue().mCompType != "gate")
+                        {
+                            AddChild(NewRootBox->Value(), 0);
+                            Sort();
+                        }
+                    }
+                }
+            })
+        ZAY_MOVE_IF(panel, 1, 1, IsPastePressed)
+        {
+            ZAY_RGBA(panel, 128, 128, 128, (IsPasteFocusing)? 128 : 80)
+                panel.ninepatch(R("box_slot_inner_select"));
+            ZAY_FONT(panel, 1.0, gTitleFont)
+            ZAY_RGBA(panel, 222, 252, 11, (IsPasteFocusing)? 255 : 120)
+                panel.text("paste");
         }
     }
 }
@@ -1073,6 +1174,9 @@ sint32 ZEZayBox::Copy()
         // 박스추가
         NewID = NewParentBox->mID;
         TOP()[NewID] = NewParentBox;
+        // 선택이관
+        if(gSelectedZayBoxID == mID)
+            gSelectedZayBoxID = NewID;
     }
 
     // 자식재귀
@@ -1209,6 +1313,59 @@ void ZEZayBox::ClearMyHook()
 void ZEZayBox::MoveMyHook(sint32 addx, sint32 addy)
 {
     mHookPos += Point(addx, addy);
+}
+
+sint32 ZEZayBox::LoadTreeFromClipboard()
+{
+    const String JsonText = Platform::Utility::RecvFromTextClipboard();
+    if(JsonText.Length() == 0)
+        return -1;
+
+    const Context Json(ST_Json, SO_OnlyReference, (chars) JsonText);
+    if(!Json("compname").HasValue())
+        return -1;
+
+    auto NewRootObject = ZEZayBox::CREATOR()(Json("compname").GetText());
+    auto& NewRoot = NewRootObject.Value();
+    NewRoot.mExpanded = (Json("expanded").GetInt(1) != 0);
+    NewRoot.mPosX = Json("posx").GetInt(0);
+    NewRoot.mPosY = Json("posy").GetInt(0);
+    NewRoot.mAddW = Json("addw").GetInt(0);
+    NewRoot.mParent = -1;
+    NewRoot.mDebugOrder = -1;
+    NewRoot.mHooked = false;
+    NewRoot.mHookPos = Point(-BallX, 0);
+    NewRoot.ReadJson(Json);
+
+    const sint32 NewRootID = NewRoot.mID;
+    ZEZayBox::TOP()[NewRootID] = NewRootObject;
+    NewRoot.Load(NewRoot.children(), Json("ui"), &NewRoot, 0);
+    NewRoot.ClearCompID();
+    return NewRootID;
+}
+
+sint32 ZEZayBox::FindLowestDirectChild()
+{
+    sint32 Result = -1;
+    sint32 MaxBottom = -0x7FFFFFFF;
+    if(auto CurChildren = GetChildrenGroup(0))
+    for(sint32 i = 0, iend = CurChildren->Count(); i < iend; ++i)
+        if(auto CurBox = TOP().Access((*CurChildren)[i]))
+        {
+            const Rect CurRect = CurBox->ConstValue().GetRect();
+            if(MaxBottom < CurRect.b)
+            {
+                MaxBottom = CurRect.b;
+                Result = (*CurChildren)[i];
+            }
+        }
+    return Result;
+}
+
+void ZEZayBox::MoveTreeTo(double x, double y)
+{
+    mTitleDrag = Point(x - mPosX, y - mPosY);
+    FlushTitleDragWith(true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2731,10 +2888,10 @@ void ZEZayBoxStarter::Render(ZayPanel& panel)
     ZAY_INNER_SCISSOR(panel, -ScissorGap)
     ZAY_INNER(panel, ScissorGap)
     {
-        panel.ninepatch(R("box_bg"));
+        panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
 
         // 타이틀
-        RenderTitle(panel, mCompType, ChildType::Inner, false, false, true, true, false);
+        RenderTitle(panel, mCompType, GetChildType(), false, false, true, true, false);
 
         // 바디
         if(mExpanded)
@@ -2758,6 +2915,11 @@ void ZEZayBoxStarter::Render(ZayPanel& panel)
 void ZEZayBoxStarter::RecalcSize()
 {
     mBodySize.h = 8 + mComment.GetCalcedSize() + mCreateGroup.GetCalcedSize();
+}
+
+ZEZayBox::ChildType ZEZayBoxStarter::GetChildType() const
+{
+    return ChildType::Inner;
 }
 
 void ZEZayBoxStarter::AddInput(InputType type, sint32 idx, const Strings& values)
@@ -2855,7 +3017,7 @@ void ZEZayBoxContent::Render(ZayPanel& panel)
     {
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R("box_bg"));
+            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
 
         // L로프(후크)
         RenderHook(panel, UIHook);
@@ -2869,7 +3031,7 @@ void ZEZayBoxContent::Render(ZayPanel& panel)
                 mInsideGroup.RenderBalls(panel);
 
             // 타이틀
-            RenderTitle(panel, mCompType, mChildType, mHasParam, true, true, true, true);
+            RenderTitle(panel, mCompType, GetChildType(), mHasParam, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -2906,6 +3068,11 @@ void ZEZayBoxContent::RecalcSize()
     mBodySize.h = 8 + mComment.GetCalcedSize()
         + ((mHasParam)? mParamGroup.GetCalcedSize() : 0)
         + ((mChildType == ChildType::Setter)? mSetGroup.GetCalcedSize() : 0);
+}
+
+ZEZayBox::ChildType ZEZayBoxContent::GetChildType() const
+{
+    return mChildType;
 }
 
 sint32 ZEZayBoxContent::GetChildrenGroupCount() const
@@ -3067,7 +3234,7 @@ void ZEZayBoxLayout::Render(ZayPanel& panel)
     {
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R("box_bg"));
+            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
 
         // L로프(후크)
         RenderHook(panel, UIHook);
@@ -3076,7 +3243,7 @@ void ZEZayBoxLayout::Render(ZayPanel& panel)
         ZAY_INNER(panel, ScissorGap)
         {
             // 타이틀
-            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true, true);
+            RenderTitle(panel, mCompType, GetChildType(), true, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -3130,6 +3297,11 @@ void ZEZayBoxLayout::RecalcSize()
         mClickMode = ClickMode::Touch;
     else if(mClickMode == ClickMode::Touch)
         mClickMode = ClickMode::Click;
+}
+
+ZEZayBox::ChildType ZEZayBoxLayout::GetChildType() const
+{
+    return ChildType::Inner;
 }
 
 void ZEZayBoxLayout::AddInput(InputType type, sint32 idx, const Strings& values)
@@ -3241,7 +3413,7 @@ void ZEZayBoxCode::Render(ZayPanel& panel)
     {
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R("box_bg"));
+            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
 
         // L로프(후크)
         RenderHook(panel, UIHook);
@@ -3250,7 +3422,7 @@ void ZEZayBoxCode::Render(ZayPanel& panel)
         ZAY_INNER(panel, ScissorGap)
         {
             // 타이틀
-            RenderTitle(panel, mCompType, ChildType::Inner, true, true, true, true, true);
+            RenderTitle(panel, mCompType, GetChildType(), true, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -3275,6 +3447,11 @@ void ZEZayBoxCode::Render(ZayPanel& panel)
 void ZEZayBoxCode::RecalcSize()
 {
     mBodySize.h = 8 + mComment.GetCalcedSize() + mCodeGroup.GetCalcedSize();
+}
+
+ZEZayBox::ChildType ZEZayBoxCode::GetChildType() const
+{
+    return ChildType::Inner;
 }
 
 void ZEZayBoxCode::AddInput(InputType type, sint32 idx, const Strings& values)
@@ -3351,7 +3528,7 @@ void ZEZayBoxJumpOrGate::Render(ZayPanel& panel)
     {
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R("box_bg"));
+            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
 
         // L로프(후크)
         if(!mIsGate)
@@ -3361,7 +3538,7 @@ void ZEZayBoxJumpOrGate::Render(ZayPanel& panel)
         ZAY_INNER(panel, ScissorGap)
         {
             // 타이틀
-            RenderTitle(panel, mCompType, (mIsGate)? ChildType::Inner : ChildType::None, false, true, true, true, true);
+            RenderTitle(panel, mCompType, GetChildType(), false, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -3382,6 +3559,11 @@ void ZEZayBoxJumpOrGate::Render(ZayPanel& panel)
 void ZEZayBoxJumpOrGate::RecalcSize()
 {
     mBodySize.h = 8 + mNameComment.GetCalcedSize();
+}
+
+ZEZayBox::ChildType ZEZayBoxJumpOrGate::GetChildType() const
+{
+    return (mIsGate)? ChildType::Inner : ChildType::None;
 }
 
 chars ZEZayBoxJumpOrGate::GetComment() const
@@ -3439,7 +3621,7 @@ void ZEZayBoxLoop::Render(ZayPanel& panel)
     {
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R("box_bg"));
+            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
 
         // L로프(후크)
         RenderHook(panel, UIHook);
@@ -3448,7 +3630,7 @@ void ZEZayBoxLoop::Render(ZayPanel& panel)
         ZAY_INNER(panel, ScissorGap)
         {
             // 타이틀
-            RenderTitle(panel, mCompType, ChildType::Inner, false, true, true, true, true);
+            RenderTitle(panel, mCompType, GetChildType(), false, true, true, true, true);
 
             // 바디
             if(mExpanded)
@@ -3474,6 +3656,11 @@ void ZEZayBoxLoop::Render(ZayPanel& panel)
 void ZEZayBoxLoop::RecalcSize()
 {
     mBodySize.h = 8 + mNameComment.GetCalcedSize() + mOperation.GetCalcedSize();
+}
+
+ZEZayBox::ChildType ZEZayBoxLoop::GetChildType() const
+{
+    return ChildType::Inner;
 }
 
 chars ZEZayBoxLoop::GetComment() const
@@ -3529,7 +3716,7 @@ void ZEZayBoxCondition::Render(ZayPanel& panel)
     {
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R("box_bg"));
+            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
 
         // L로프(후크)
         RenderHook(panel, UIHook);
@@ -3539,8 +3726,8 @@ void ZEZayBoxCondition::Render(ZayPanel& panel)
         {
             // 타이틀
             if(mOperation.mWithElse)
-                RenderTitle(panel, "el" + mCompType, ChildType::None, false, true, mHasElseAndOperation, true, true);
-            else RenderTitle(panel, mCompType, ChildType::None, false, true, mHasElseAndOperation, true, true);
+                RenderTitle(panel, "el" + mCompType, GetChildType(), false, true, mHasElseAndOperation, true, true);
+            else RenderTitle(panel, mCompType, GetChildType(), false, true, mHasElseAndOperation, true, true);
 
             // 바디
             if(mExpanded && mHasElseAndOperation)
@@ -3563,6 +3750,11 @@ void ZEZayBoxCondition::RecalcSize()
     mBodySize.h = 0;
     if(mHasElseAndOperation)
         mBodySize.h += 8 + mOperation.GetCalcedSize();
+}
+
+ZEZayBox::ChildType ZEZayBoxCondition::GetChildType() const
+{
+    return ChildType::None;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3646,7 +3838,7 @@ void ZEZayBoxError::Render(ZayPanel& panel)
     {
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R("box_bg"));
+            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
 
         // L로프(후크)
         RenderHook(panel, UIHook);
@@ -3654,13 +3846,18 @@ void ZEZayBoxError::Render(ZayPanel& panel)
         // 타이틀
         ZAY_INNER_SCISSOR(panel, -ScissorGap)
         ZAY_INNER(panel, ScissorGap)
-            RenderTitle(panel, mCompType, ChildType::Inner, false, true, false, true, true);
+            RenderTitle(panel, mCompType, GetChildType(), false, true, false, true, true);
     }
 }
 
 void ZEZayBoxError::RecalcSize()
 {
     mBodySize.h = 0;
+}
+
+ZEZayBox::ChildType ZEZayBoxError::GetChildType() const
+{
+    return ChildType::Inner;
 }
 
 void ZEZayBoxError::AddInput(InputType type, sint32 idx, const Strings& values)

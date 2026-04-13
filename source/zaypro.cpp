@@ -8,6 +8,7 @@ ZAY_DECLARE_VIEW_CLASS("zayproView", zayproData)
 
 String gTitleFont;
 String gBasicFont;
+sint32 gSelectedZayBoxID = -1;
 extern sint32 gBgPercent;
 extern sint32 gZoomPercent;
 extern bool gCtrlPressing;
@@ -114,6 +115,12 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
             const sint32 AddValue = Values[1];
             ZEZayBox::TOP()[CurZayBoxID]->Resize(AddValue);
             m->mWorkViewDrag = Point(); // 드래그하던 것이 있다면 중지
+        }
+        jump(!String::Compare(topic, "ZayBoxSelect"))
+        {
+            const sint32 CurZayBoxID = sint32o(in).ConstValue();
+            gSelectedZayBoxID = (gSelectedZayBoxID == CurZayBoxID)? -1 : CurZayBoxID;
+            m->invalidate();
         }
         jump(!String::Compare(topic, "ZayBoxEditorPressed"))
         {
@@ -1337,6 +1344,7 @@ void zayproData::ResetBoxes()
     mEditorDropIsSwap = false;
     mEditorDropBoxID = -1;
     mEditorDropInputIdx = -1;
+    gSelectedZayBoxID = -1;
 }
 
 void zayproData::NewProject()
@@ -2143,6 +2151,13 @@ void zayproData::RenderMiniMap(ZayPanel& panel)
                 ZAY_RECT(panel, CurRect)
                 ZAY_COLOR(panel, (*CurBox)->color())
                 {
+                    // 선택상태
+                    if((*CurBox)->id() == gSelectedZayBoxID)
+                    {
+                        ZAY_INNER(panel, -2)
+                        ZAY_RGB(panel, 222, 252, 11)
+                            panel.fill();
+                    }
                     // 연결선
                     if((*CurBox)->hooked())
                     {
