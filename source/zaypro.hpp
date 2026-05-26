@@ -280,6 +280,8 @@ public:
 public:
     String mBuildTag;
     ZEFakeZaySon mZaySonAPI;
+    String mOpenAISecretKey;
+    Context mOpenAIModels;
     sint32 mDraggingHook;
     Tween1D mEasySaveEffect;
     ZEWidgetPipe mPipe;

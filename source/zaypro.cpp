@@ -341,7 +341,6 @@ ZAY_VIEW_API OnGesture(GestureType type, sint32 x, sint32 y)
 
 ZAY_VIEW_API OnRender(ZayPanel& panel)
 {
-    const sint32 BgOpacity = 32 + 223 * gBgPercent / 100;
     ZAY_FONT(panel, 1.0, gBasicFont)
     {
         // 타이틀바
@@ -350,6 +349,7 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
         // 뷰
         ZAY_LTRB_SCISSOR(panel, 0, m->mTitleHeight, panel.w(), panel.h())
         {
+            const sint32 BgOpacity = 32 + 223 * gBgPercent / 100;
             ZAY_RGBA(panel, 51, 61, 73, BgOpacity)
                 panel.fill();
 
@@ -496,8 +496,23 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                         m->clearCapture();
                 })
             {
+                // OpenAI 구역
+                const sint32 OpenAIHeight = (0 < m->mOpenAIModels("data").LengthOfIndexable())? 54 : 0;
+                ZAY_XYWH_UI_SCISSOR(panel, 0, 0, panel.w(), OpenAIHeight, "openai",
+                    ZAY_GESTURE_T(t)
+                    {
+                        if(t == GT_Pressed)
+                            m->clearCapture();
+                    })
+                {
+                    ZAY_RGB(panel, 0, 0, 0)
+                        panel.fill();
+                    ZAY_LTRB(panel, 5, 0, panel.w(), panel.h())
+                        panel.icon(R("open_ai"), UIA_LeftMiddle);
+                }
+
                 // 버튼 구역
-                ZAY_LTRB_SCISSOR(panel, 0, 0, panel.w(), 12 + 34 + 6 + 34 + 8)
+                ZAY_XYWH_SCISSOR(panel, 0, OpenAIHeight, panel.w(), 12 + 34 + 6 + 34 + 8)
                 {
                     // 버튼 배경
                     ZAY_RGB(panel, 35, 44, 53)
@@ -617,7 +632,7 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                 }
 
                 // 컴포넌트 구역
-                ZAY_LTRB_SCISSOR(panel, 0, 12 + 34 + 6 + 34 + 8, panel.w(), panel.h())
+                ZAY_LTRB_SCISSOR(panel, 0, OpenAIHeight + 12 + 34 + 6 + 34 + 8, panel.w(), panel.h())
                 {
                     // 컴포넌트 배경
                     ZAY_RGBA(panel, 35, 44, 53, 192)
@@ -1307,6 +1322,16 @@ zayproData::zayproData() : mEasySaveEffect(updater()), mCapturedEffect(updater()
     mZaySonAPI.AddComponent(ZayExtend::ComponentType::ConditionWithEvent, "ifpressed", nullptr);
     mZaySonAPI.AddComponent(ZayExtend::ComponentType::Condition, "else", nullptr);
     mZaySonAPI.AddComponent(ZayExtend::ComponentType::Condition, "endif", nullptr);
+
+    // OpenAI관련
+    mOpenAISecretKey = String::FromAsset("openai/secretkey");
+    Platform::Utility::SendAuthRequest("https://api.openai.com/v1/models", mOpenAISecretKey,
+        [](payload data, chars text)->void
+        {
+            auto Self = (zayproData*) data;
+            Self->mOpenAIModels.LoadJson(SO_NeedCopy, text);
+            Self->invalidate();
+        }, this);
 
     // 초기화
     ResetBoxes();
