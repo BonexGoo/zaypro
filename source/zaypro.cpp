@@ -323,7 +323,10 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
         m->mPipe.ResetJsonPath(ContentName);
         const String JsonText = String::FromAsset(ContentName);
         const Context Json(ST_Json, SO_OnlyReference, (chars) JsonText);
-        m->LoadCore(Json);
+
+        uint64 CreateMsec = 0, ModifyMsec = 0;
+        Asset::Exist(ContentName, nullptr, nullptr,&CreateMsec, nullptr, &ModifyMsec);
+        m->LoadCore(Json, CreateMsec, ModifyMsec);
     }
     else if(type == NT_ZayWidget)
     {
@@ -584,7 +587,9 @@ ZAY_VIEW_API OnRender(ZayPanel& panel)
                                         m->mPipe.ResetJsonPath(JsonPath);
                                         const String JsonText = String::FromFile(JsonPath);
                                         const Context Json(ST_Json, SO_OnlyReference, (chars) JsonText);
-                                        m->LoadCore(Json);
+                                        uint64 CreateMsec = 0, ModifyMsec = 0;
+                                        Platform::File::GetAttributes(WString::FromChars(JsonPath), nullptr, &CreateMsec, nullptr, &ModifyMsec);
+                                        m->LoadCore(Json, CreateMsec, ModifyMsec);
                                     }
                                 }
                             };
@@ -1397,13 +1402,14 @@ void zayproData::FastSave()
     }
 }
 
-void zayproData::LoadCore(const Context& json)
+void zayproData::LoadCore(const Context& json, uint64 createmsec, uint64 modifymsec)
 {
     // 박스리셋 및 ID발급기 초기화
     ResetBoxes();
     ZEZayBox::ResetLastID();
 
     // 위젯 및 위젯과 연결된 박스로드
+    ZEZayBox::TOP()[0]->ReadReady(createmsec, modifymsec);
     ZEZayBox::TOP()[0]->ReadJson(json);
     ZEZayBox::Load(ZEZayBox::TOP()[0]->children(), json("ui"), ZEZayBox::TOP()[0].ConstPtr(), 0);
     // 스타터위치로 스크롤이동

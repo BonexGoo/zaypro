@@ -256,7 +256,7 @@ public:
     void ResetBoxes();
     void NewProject();
     void FastSave();
-    void LoadCore(const Context& json);
+    void LoadCore(const Context& json, uint64 createmsec, uint64 modifymsec);
     void SaveCore(chars filename) const;
 
 public:

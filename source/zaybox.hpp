@@ -35,6 +35,7 @@ public:
     static void Save(const sint32s& children, Context& json, bool makeid);
 
 public:
+    virtual void ReadReady(uint64 createmsec, uint64 modifymsec);
     virtual void ReadJson(const Context& json);
     virtual void WriteJson(Context& json, bool makeid) const;
     virtual void Render(ZayPanel& panel);
@@ -399,8 +400,10 @@ public:
 
 public:
     static ZEZayBoxObject Create();
+    static String MakeTime(uint64 msec = 0);
 
 public:
+    void ReadReady(uint64 createmsec, uint64 modifymsec) override;
     void ReadJson(const Context& json) override;
     void WriteJson(Context& json, bool makeid) const override;
     void Render(ZayPanel& panel) override;
@@ -411,6 +414,9 @@ public:
     chars GetComment() const override;
 
 protected: // 데이터
+    String mCreateTime;
+    mutable String mSaveTime;
+    mutable sint32 mSaveCount;
     BodyComment mComment;
     BodyInputGroup mCreateGroup;
 };

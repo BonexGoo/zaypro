@@ -113,6 +113,11 @@ void ZEZayBox::Save(const sint32s& children, Context& json, bool makeid)
     }
 }
 
+void ZEZayBox::ReadReady(uint64 createmsec, uint64 modifymsec)
+{
+    BOSS_ASSERT("잘못된 시나리오입니다", false);
+}
+
 void ZEZayBox::ReadJson(const Context& json)
 {
     BOSS_ASSERT("잘못된 시나리오입니다", false);
@@ -2843,8 +2848,9 @@ void ZEZayBox::BodyInsideGroup::RenderBalls(ZayPanel& panel)
 ////////////////////////////////////////////////////////////////////////////////
 // ZEZayBoxStarter
 ////////////////////////////////////////////////////////////////////////////////
-ZEZayBoxStarter::ZEZayBoxStarter() : mComment(*this), mCreateGroup(*this)
+ZEZayBoxStarter::ZEZayBoxStarter() : mSaveCount(0), mComment(*this), mCreateGroup(*this)
 {
+    mCreateTime = MakeTime();
 }
 
 ZEZayBoxStarter::~ZEZayBoxStarter()
@@ -2857,12 +2863,36 @@ ZEZayBoxObject ZEZayBoxStarter::Create()
     return ZEZayBoxObject(NewZayBox);
 }
 
+String ZEZayBoxStarter::MakeTime(uint64 msec)
+{
+    auto NewClock = (0 < msec)? Platform::Clock::CreateAsWindowTime(msec / 10000) : Platform::Clock::CreateAsCurrent();
+    if(NewClock)
+    {
+        sint32 Year = 0, Month = 0, Day = 0, Hour = 0, Minute = 0, Second = 0;
+        Platform::Clock::GetDetail(NewClock, nullptr, &Second, &Minute, &Hour, &Day, &Month, &Year);
+        Platform::Clock::Release(NewClock);
+        return String::Format("%04d-%02d-%02d/%02d:%02d:%02d", Year, Month, Day, Hour, Minute, Second);
+    }
+    return String();
+}
+
+void ZEZayBoxStarter::ReadReady(uint64 createmsec, uint64 modifymsec)
+{
+    mCreateTime = MakeTime(createmsec);
+    mSaveTime = MakeTime(modifymsec);
+    mSaveCount = 0;
+}
+
 void ZEZayBoxStarter::ReadJson(const Context& json)
 {
     mExpanded = (json("expanded").GetInt(1) != 0);
     mPosX = json("posx").GetInt(0);
     mPosY = json("posy").GetInt(0);
     mAddW = json("addw").GetInt(0);
+
+    mCreateTime = json("createtime").GetText(mCreateTime);
+    mSaveTime = json("savetime").GetText(mSaveTime);
+    mSaveCount = json("savecount").GetInt();
 
     mComment.ReadJson(json);
     mCreateGroup.ReadJson(json("oncreate"));
@@ -2874,6 +2904,12 @@ void ZEZayBoxStarter::WriteJson(Context& json, bool makeid) const
     json.At("posx").Set(String::FromInteger((sint32) Math::Round(mPosX)));
     json.At("posy").Set(String::FromInteger((sint32) Math::Round(mPosY)));
     json.At("addw").Set(String::FromInteger(mAddW));
+
+    mSaveTime = MakeTime();
+    mSaveCount++;
+    json.At("createtime").Set(mCreateTime);
+    json.At("savetime").Set(mSaveTime);
+    json.At("savecount").Set(String::FromInteger(mSaveCount));
 
     mComment.WriteJson(json, makeid);
     if(0 < mCreateGroup.mInputs.Count())
@@ -2895,9 +2931,9 @@ void ZEZayBoxStarter::Render(ZayPanel& panel)
 
         // 바디
         if(mExpanded)
-        ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h, UIBody)
+        ZAY_XYWH_UI_SCISSOR(panel, 0, TitleBarHeight, panel.w(), mBodySize.h + 40, UIBody)
         {
-            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4)
+            ZAY_LTRB(panel, 4, 0, panel.w() - 4, panel.h() - 4 - 40)
             {
                 // 주석에디터
                 ZAY_LTRB(panel, 0, 0, panel.w(), EditorHeight)
@@ -2907,6 +2943,18 @@ void ZEZayBoxStarter::Render(ZayPanel& panel)
                 // 인풋그룹
                 ZAY_LTRB(panel, 0, EditorHeight, panel.w(), panel.h())
                     mCreateGroup.RenderValueGroup(panel, "OnCreate");
+            }
+
+            // 저장정보
+            ZAY_FONT(panel, 1.0, gBasicFont)
+            {
+                ZAY_XYWH(panel, 0, panel.h() - 40, panel.w(), 20)
+                ZAY_RGB(panel, 255, 255, 0)
+                    panel.text(" <CREATE> " + mCreateTime, UIFA_LeftBottom, UIFE_Right);
+                if(0 < mSaveTime.Length())
+                ZAY_XYWH(panel, 0, panel.h() - 20, panel.w(), 20)
+                ZAY_RGB(panel, 255, 255, 255)
+                    panel.text(String::Format(" <SAVE.%d> ", mSaveCount) + mSaveTime, UIFA_LeftBottom, UIFE_Right);
             }
         }
     }
