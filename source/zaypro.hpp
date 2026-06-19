@@ -289,6 +289,7 @@ public:
     Size mWorkViewSize;
     Point mWorkViewDrag;
     Point mWorkViewScroll;
+    uint64 mEditorRefreshMsec;
     sint32 mEditorDragBoxID;
     ZEZayBox::InputType mEditorDragInputType;
     sint32 mEditorDragInputIdx;

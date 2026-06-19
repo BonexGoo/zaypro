@@ -63,9 +63,11 @@ public:
     inline Color color() const {return mColor;}
     inline bool hooked() const {return mHooked;}
     inline Point hookpos() const {return mHookPos;}
+    inline uint64 flashmsec() const {return mFlashMsec;}
 
 public:
     bool IsSelected() const;
+    void RenderBox(ZayPanel& panel);
     void RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool stable, bool copy, bool expand, bool resize, bool remove);
     void RenderHook(ZayPanel& panel, chars uiname);
     void RenderBall(ZayPanel& panel, chars uiname);
@@ -101,6 +103,7 @@ public:
     sint32 LoadTreeFromClipboard();
     sint32 FindLowestDirectChild();
     void MoveTreeTo(double x, double y);
+    void FlashOnce();
 
 protected: // 데이터
     sint32 mID; // 나의 인스턴스ID
@@ -124,8 +127,9 @@ protected: // UI정보
     Point mHookPos;
     Point mHookDrag;
     String mRemovingUIName;
-    sint32 mRemovingCount;
+    uint64 mRemovingMsec;
     Points mDraggingEditorPos[IT_Max]; // [inputtype][paramid]
+    uint64 mFlashMsec;
 
 public:
     static const sint32 TitleBarHeight = 30;

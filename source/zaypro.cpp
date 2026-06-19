@@ -21,6 +21,10 @@ ZAY_VIEW_API OnCommand(CommandType type, id_share in, id_cloned_share* out)
         if(m->mPipe.TickOnce())
             m->invalidate();
 
+        // 화면갱신 애니메이션
+        if(Platform::Utility::CurrentTimeMsec() < m->mEditorRefreshMsec)
+            m->invalidate(2);
+
         // 코멘트태그 애니메이션
         if(m->mShowCommentTagMsec != 0)
         {
@@ -60,9 +64,14 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
     if(type == NT_Normal)
     {
         branch;
-        jump(!String::Compare(topic, "Update"))
+        jump(!String::Compare(topic, "Refresh"))
         {
-            m->invalidate(sint32o(in).ConstValue());
+            const uint64 RefreshMsec = uint64o(in).ConstValue();
+            if(m->mEditorRefreshMsec < RefreshMsec);
+            {
+                m->mEditorRefreshMsec = RefreshMsec;
+                m->invalidate(2);
+            }
         }
         jump(!String::Compare(topic, "SetWindowName"))
         {
@@ -1005,6 +1014,19 @@ bool ZEWidgetPipe::TickOnce()
                 }
             }
         }
+        else if(!String::Compare(Type, "comp_flashed"))
+        {
+            const sint32 CompID = (*NewJson)("compid").GetInt();
+            for(sint32 i = 0, iend = ZEZayBox::TOP().Count(); i < iend; ++i)
+            {
+                auto CurBox = ZEZayBox::TOP().AccessByOrder(i);
+                if((*CurBox)->compid() == CompID)
+                {
+                    (*CurBox)->FlashOnce();
+                    break;
+                }
+            }
+        }
         else if(!String::Compare(Type, "atlas_updated"))
         {
             for(sint32 i = 0, iend = (*NewJson)("atlas").LengthOfIndexable(); i < iend; ++i)
@@ -1368,6 +1390,7 @@ void zayproData::ResetBoxes()
     mShowCommentTagMsec = 0;
     mWorkViewDrag = Point(); // 드래그하던 것이 있다면 중지
     mWorkViewScroll = Point(); // 스크롤정위치
+    mEditorRefreshMsec = 0;
     mEditorDragBoxID = -1;
     mEditorDragInputType = ZEZayBox::IT_None;
     mEditorDragInputIdx = -1;
@@ -2167,6 +2190,9 @@ void zayproData::RenderMiniMap(ZayPanel& panel)
                 }
             })
         {
+            Points FlashPosCollector;
+            sint32s FlashOpacityCollector;
+            const uint64 CurMsec = Platform::Utility::CurrentTimeMsec();
             ZAY_RGBA(panel, 0, 0, 0, 160)
                 panel.fill();
 
@@ -2199,6 +2225,12 @@ void zayproData::RenderMiniMap(ZayPanel& panel)
                     // 영역
                     ZAY_RGB(panel, 128, 128, 128)
                         panel.fill();
+                    // 플래시수집
+                    if(CurMsec < (*CurBox)->flashmsec())
+                    {
+                        FlashPosCollector.AtAdding() = CurRect.Center();
+                        FlashOpacityCollector.AtAdding() = ((*CurBox)->flashmsec() - CurMsec) * 255 / 1000.0f;
+                    }
                 }
             }
 
@@ -2212,6 +2244,12 @@ void zayproData::RenderMiniMap(ZayPanel& panel)
                 ZAY_RGBA(panel, 255, 0, 200, 200 * (8 - i) / 8)
                     panel.rect(1);
             }
+
+            // 플래시영역
+            for(sint32 i = 0, iend = FlashPosCollector.Count(); i < iend; ++i)
+                ZAY_XYRR(panel, FlashPosCollector[i].x, FlashPosCollector[i].y, 5, 5)
+                ZAY_RGBA(panel, 180, 230, 30, FlashOpacityCollector[i])
+                    panel.circle();
         }
 
         ZAY_RGB(panel, 0, 0, 0)

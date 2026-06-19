@@ -23,7 +23,8 @@ ZEZayBox::ZEZayBox()
     mExpanded = true;
     mHooked = false;
     mHookPos = Point(-BallX, 0);
-    mRemovingCount = 0;
+    mRemovingMsec = 0;
+    mFlashMsec = 0;
 }
 
 ZEZayBox::~ZEZayBox()
@@ -253,6 +254,23 @@ void ZEZayBox::ChangeChild(ZEZayBox& oldchild, ZEZayBox& newchild)
 bool ZEZayBox::IsSelected() const
 {
     return (gSelectedZayBoxID == mID);
+}
+
+void ZEZayBox::RenderBox(ZayPanel& panel)
+{
+    ZAY_INNER_SCISSOR(panel, -ScissorGap)
+    ZAY_INNER(panel, ScissorGap)
+    {
+        const uint64 CurMsec = Platform::Utility::CurrentTimeMsec();
+        if(CurMsec < mFlashMsec)
+        {
+            const float Opacity = (mFlashMsec - CurMsec) / 1000.0f;
+            ZAY_RGBA(panel, 128, 128, 128, 128 * Opacity)
+                panel.ninepatch(R("box_bg_select"));
+            panel.ninepatch(R("box_bg"));
+        }
+        else panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
+    }
 }
 
 void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bool stable, bool copy, bool expand, bool resize, bool remove)
@@ -920,28 +938,28 @@ void ZEZayBox::RenderEditorDragCell(ZayPanel& panel, InputType type, sint32 idx)
 
 void ZEZayBox::RenderRemoveButton(ZayPanel& panel, chars uiname, bool group)
 {
-    const sint32 AniCount = 50;
+    const sint32 AniMsec = 1000;
     const bool Removing = (!mRemovingUIName.Compare(uiname));
-    const bool Enable = (!Removing || 0 < mRemovingCount);
-    const float AniValue = (Removing)? (AniCount - mRemovingCount) / (float) AniCount : 0;
-    if(Removing && 0 < mRemovingCount)
-        mRemovingCount--;
+    const uint64 CurMsec = Platform::Utility::CurrentTimeMsec();
+    const bool Enable = (!Removing || 0 < mRemovingMsec);
+    const float AniValue = (Removing)? 1 - Math::Max(0, mRemovingMsec - CurMsec) / (float) AniMsec : 0;
 
     const bool IsFocused = ((panel.state(uiname) & (PS_Focused | PS_Dropping)) == PS_Focused);
     const bool IsPressed = ((panel.state(uiname) & (PS_Pressed | PS_Dragging)) != 0);
     ZAY_INNER_UI(panel, -2, uiname,
-        ZAY_GESTURE_VNT(v, n, t, this, group, AniCount)
+        ZAY_GESTURE_VNT(v, n, t, this, group, AniMsec)
         {
+            const uint64 CurMsec = Platform::Utility::CurrentTimeMsec();
             if(t == GT_Pressed)
             {
                 mRemovingUIName = n;
-                mRemovingCount = AniCount;
-                Platform::SendNotify(v->view(), "Update", sint32o(mRemovingCount));
+                mRemovingMsec = CurMsec + AniMsec;
+                Platform::SendNotify(v->view(), "Refresh", uint64o(mRemovingMsec));
                 v->clearCapture();
             }
             else if(t == GT_InReleased)
             {
-                if(mRemovingCount == 0)
+                if(0 < mRemovingMsec && mRemovingMsec < CurMsec)
                 {
                     const String UIName(n);
                     const sint32 ParamPos = UIName.Find(0, "-param-");
@@ -996,17 +1014,17 @@ void ZEZayBox::RenderRemoveButton(ZayPanel& panel, chars uiname, bool group)
                 else
                 {
                     mRemovingUIName.Empty();
-                    mRemovingCount = 0;
+                    mRemovingMsec = 0;
                 }
             }
             else if(t == GT_OutReleased)
             {
                 mRemovingUIName.Empty();
-                mRemovingCount = 0;
+                mRemovingMsec = 0;
             }
         })
     ZAY_INNER(panel, 2)
-    ZAY_ZOOM(panel, 1 - AniValue * 0.2)
+    ZAY_ZOOM(panel, 1 - AniValue * 0.5)
     {
         if(!Enable)
         {
@@ -1371,6 +1389,12 @@ void ZEZayBox::MoveTreeTo(double x, double y)
 {
     mTitleDrag = Point(x - mPosX, y - mPosY);
     FlushTitleDragWith(true);
+}
+
+void ZEZayBox::FlashOnce()
+{
+    mFlashMsec = Platform::Utility::CurrentTimeMsec() + 1000;
+    Platform::BroadcastNotify("Refresh", uint64o(mFlashMsec));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3063,10 +3087,7 @@ void ZEZayBoxContent::Render(ZayPanel& panel)
     const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
     {
-        ZAY_INNER_SCISSOR(panel, -ScissorGap)
-        ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
-
+        RenderBox(panel);
         // L로프(후크)
         RenderHook(panel, UIHook);
 
@@ -3280,10 +3301,7 @@ void ZEZayBoxLayout::Render(ZayPanel& panel)
     const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
     {
-        ZAY_INNER_SCISSOR(panel, -ScissorGap)
-        ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
-
+        RenderBox(panel);
         // L로프(후크)
         RenderHook(panel, UIHook);
 
@@ -3459,10 +3477,7 @@ void ZEZayBoxCode::Render(ZayPanel& panel)
     const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
     {
-        ZAY_INNER_SCISSOR(panel, -ScissorGap)
-        ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
-
+        RenderBox(panel);
         // L로프(후크)
         RenderHook(panel, UIHook);
 
@@ -3574,10 +3589,7 @@ void ZEZayBoxJumpOrGate::Render(ZayPanel& panel)
     const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
     {
-        ZAY_INNER_SCISSOR(panel, -ScissorGap)
-        ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
-
+        RenderBox(panel);
         // L로프(후크)
         if(!mIsGate)
             RenderHook(panel, UIHook);
@@ -3667,10 +3679,7 @@ void ZEZayBoxLoop::Render(ZayPanel& panel)
     const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0))
     {
-        ZAY_INNER_SCISSOR(panel, -ScissorGap)
-        ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
-
+        RenderBox(panel);
         // L로프(후크)
         RenderHook(panel, UIHook);
 
@@ -3762,10 +3771,7 @@ void ZEZayBoxCondition::Render(ZayPanel& panel)
     const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight + ((mExpanded && mHasElseAndOperation)? mBodySize.h : 0))
     {
-        ZAY_INNER_SCISSOR(panel, -ScissorGap)
-        ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
-
+        RenderBox(panel);
         // L로프(후크)
         RenderHook(panel, UIHook);
 
@@ -3884,10 +3890,7 @@ void ZEZayBoxError::Render(ZayPanel& panel)
     const String UIHook = String::Format("%d-hook", mID);
     ZAY_XYWH(panel, sint32(mPosX), sint32(mPosY), mBodySize.w + mAddW, TitleBarHeight)
     {
-        ZAY_INNER_SCISSOR(panel, -ScissorGap)
-        ZAY_INNER(panel, ScissorGap)
-            panel.ninepatch(R(IsSelected()? "box_bg_select" : "box_bg"));
-
+        RenderBox(panel);
         // L로프(후크)
         RenderHook(panel, UIHook);
 
