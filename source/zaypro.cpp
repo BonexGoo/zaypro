@@ -193,6 +193,11 @@ ZAY_VIEW_API OnNotify(NotifyType type, chars topic, id_share in, id_cloned_share
             const sint32 CurZayBoxID = sint32o(in).ConstValue();
             ZEZayBox::TOP()[CurZayBoxID]->Sort();
         }
+        jump(!String::Compare(topic, "ZayBoxAlign"))
+        {
+            const sint32 CurZayBoxID = sint32o(in).ConstValue();
+            ZEZayBox::TOP()[CurZayBoxID]->AlignChildren();
+        }
         jump(!String::Compare(topic, "ZayBoxRemove")) // 제이박스 삭제(0-remove)
         {
             const sint32 CurZayBoxID = sint32o(in).ConstValue();

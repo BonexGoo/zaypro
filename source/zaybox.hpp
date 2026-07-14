@@ -92,6 +92,7 @@ public:
     sint32 Copy();
     void Sort();
     Rect GetRect() const;
+    void AlignChildren();
     void RemoveChildren(sint32 group);
     void RemoveChildrenAll();
     void ClearCompID();

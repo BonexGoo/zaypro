@@ -279,6 +279,7 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
     const String UIStatle = String::Format("%d-stable", mID);
     const String UICopy = String::Format("%d-copy", mID);
     const String UIPaste = String::Format("%d-paste", mID);
+    const String UIAlign = String::Format("%d-align", mID);
     const String UIGroupMove = String::Format("%d-groupmove", mID);
     const String UIGroupCopy = String::Format("%d-groupcopy", mID);
     const String UIExpand = String::Format("%d-expand", mID);
@@ -434,7 +435,7 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
             // 클립보드로 복사
             const bool IsCopyFocusing = !!(panel.state(UICopy) & (PS_Focused | PS_Dragging));
             const bool IsCopyPressed = ((panel.state(UICopy) & (PS_Pressed | PS_Dragging)) != 0);
-            ZAY_XYWH_UI(panel, panel.w() - 120, -25, 55, 20, UICopy,
+            ZAY_XYWH_UI(panel, panel.w() - 145, -25, 55, 20, UICopy,
                 ZAY_GESTURE_T(t, this)
                 {
                     if(t == GT_InReleased || t == GT_OutReleased)
@@ -463,7 +464,7 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
         // 클립보드에서 붙여넣기
         const bool IsPasteFocusing = !!(panel.state(UIPaste) & (PS_Focused | PS_Dragging));
         const bool IsPastePressed = ((panel.state(UIPaste) & (PS_Pressed | PS_Dragging)) != 0);
-        ZAY_XYWH_UI(panel, panel.w() - 60, -25, 55, 20, UIPaste,
+        ZAY_XYWH_UI(panel, panel.w() - 85, -25, 55, 20, UIPaste,
             ZAY_GESTURE_T(t, this)
             {
                 if(t == GT_InReleased || t == GT_OutReleased)
@@ -502,6 +503,22 @@ void ZEZayBox::RenderTitle(ZayPanel& panel, chars title, ChildType childtype, bo
             ZAY_FONT(panel, 1.0, gTitleFont)
             ZAY_RGBA(panel, 222, 252, 11, (IsPasteFocusing)? 255 : 120)
                 panel.text("paste");
+        }
+
+        // 자식박스 위치정렬
+        const bool IsAlignFocusing = !!(panel.state(UIAlign) & (PS_Focused | PS_Dragging));
+        const bool IsAlignPressed = ((panel.state(UIAlign) & (PS_Pressed | PS_Dragging)) != 0);
+        ZAY_XYWH_UI(panel, panel.w() - 25, -25, 20, 20, UIAlign,
+            ZAY_GESTURE_VNT(v, n, t, this)
+            {
+                if(t == GT_InReleased || t == GT_OutReleased)
+                    Platform::SendNotify(v->view(), "ZayBoxAlign", sint32o(mID));
+            })
+        ZAY_MOVE_IF(panel, 1, 1, IsAlignPressed)
+        {
+            ZAY_FONT(panel, 2.0, gTitleFont)
+            ZAY_RGBA(panel, 222, 252, 11, (IsAlignFocusing)? 255 : 120)
+                panel.text("∈");
         }
     }
 }
@@ -1252,6 +1269,74 @@ Rect ZEZayBox::GetRect() const
 {
     return Rect(Point(sint32(mPosX), sint32(mPosY)),
         Size(mBodySize.w + mAddW, TitleBarHeight + ((mExpanded)? mBodySize.h : 0)));
+}
+
+void ZEZayBox::AlignChildren()
+{
+    static const sint32 HGap = 100;
+    static const sint32 VGap = 60;
+
+    std::function<sint32(ZEZayBox&, double, double)> LayoutTree;
+    LayoutTree = [&](ZEZayBox& box, double x, double y)->sint32
+    {
+        box.mPosX = x;
+        box.mPosY = y;
+        box.mTitleDrag = Point(0, 0);
+
+        const Rect BoxRect = box.GetRect();
+        const sint32 BoxHeight = BoxRect.b - BoxRect.t;
+        const double ChildX = BoxRect.r + HGap;
+        sint32 ChildrenHeight = 0;
+
+        for(sint32 g = 0, gend = box.GetChildrenGroupCount(); g < gend; ++g)
+        if(auto CurChildren = box.GetChildrenGroup(g))
+        {
+            for(sint32 i = 0, iend = CurChildren->Count(); i < iend; ++i)
+            if(auto ChildObject = TOP().Access((*CurChildren)[i]))
+            {
+                ZEZayBox& Child = ChildObject->Value();
+                const double ChildY = y + ChildrenHeight;
+                const sint32 ChildTreeHeight = LayoutTree(Child, ChildX, ChildY);
+
+                Child.mParent = box.mID;
+                Child.mDebugOrder = i;
+                Child.mHooked = true;
+                Child.mHookPos = box.GetBallPos(g)
+                    - Point(Child.mPosX, Child.mPosY + TitleBarHeight / 2);
+
+                ChildrenHeight += ChildTreeHeight + VGap;
+            }
+        }
+
+        if(0 < ChildrenHeight)
+            ChildrenHeight -= VGap;
+        return Math::Max(BoxHeight, ChildrenHeight);
+    };
+
+    const Rect MyRect = GetRect();
+    const double FirstX = MyRect.r + HGap;
+    sint32 NextY = sint32(mPosY);
+
+    for(sint32 g = 0, gend = GetChildrenGroupCount(); g < gend; ++g)
+    if(auto CurChildren = GetChildrenGroup(g))
+    {
+        for(sint32 i = 0, iend = CurChildren->Count(); i < iend; ++i)
+        if(auto ChildObject = TOP().Access((*CurChildren)[i]))
+        {
+            ZEZayBox& Child = ChildObject->Value();
+            const sint32 ChildTreeHeight = LayoutTree(Child, FirstX, NextY);
+
+            Child.mParent = mID;
+            Child.mDebugOrder = i;
+            Child.mHooked = true;
+            Child.mHookPos = GetBallPos(g)
+                - Point(Child.mPosX, Child.mPosY + TitleBarHeight / 2);
+
+            NextY += ChildTreeHeight + VGap;
+        }
+    }
+
+    Sort();
 }
 
 void ZEZayBox::RemoveChildren(sint32 group)
