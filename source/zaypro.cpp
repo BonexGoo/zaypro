@@ -2277,6 +2277,7 @@ void zayproData::RenderMiniMap(ZayPanel& panel)
                 const sint32 TextPosY = (TextHeight + Gap) * iY;
                 chars Text = ZEZayBox::CommentTagService::GetFocusText();
                 const Color BGColor = ZEZayBox::CommentTagService::GetFocusColor();
+                const bool IsGate = ZEZayBox::CommentTagService::IsFocusGate();
                 const sint32 TextWidth = Platform::Graphics::GetStringWidth(Text);
                 const Point TargetPos = ZEZayBox::CommentTagService::GetFocusPos() + mWorkViewScroll;
 
@@ -2293,15 +2294,30 @@ void zayproData::RenderMiniMap(ZayPanel& panel)
                 ZAY_INNER(panel, Gap / 2 - InnerGap)
                 {
                     const bool IsFocused = !!(panel.state(UIName) & PS_Focused);
-                    ZAY_RGBA(panel, BGColor.r, BGColor.g, BGColor.b, (IsFocused)? 255 : 192)
-                    ZAY_RGBA(panel, 128, 128, 128, Alpha)
-                        panel.fill();
-                    ZAY_RGBA(panel, 0, 0, 0, (IsFocused)? 255 : 192)
-                    ZAY_RGBA(panel, 128, 128, 128, Alpha)
-                        panel.text(Text);
-                    ZAY_RGB(panel, 0, 0, 0)
-                    ZAY_RGBA(panel, 128, 128, 128, Alpha)
-                        panel.rect(1);
+                    if(IsGate)
+                    {
+                        ZAY_RGBA(panel, 255, 255, 255, (IsFocused)? 255 : 224)
+                        ZAY_RGBA(panel, 128, 128, 128, Alpha)
+                            panel.fill();
+                        ZAY_RGBA(panel, 40, 80, 160, (IsFocused)? 255 : 224)
+                        ZAY_RGBA(panel, 128, 128, 128, Alpha)
+                            panel.text(Text);
+                        ZAY_RGBA(panel, 40, 80, 160, (IsFocused)? 255 : 192)
+                        ZAY_RGBA(panel, 128, 128, 128, Alpha)
+                            panel.rect(1);
+                    }
+                    else
+                    {
+                        ZAY_RGBA(panel, BGColor.r, BGColor.g, BGColor.b, (IsFocused)? 255 : 192)
+                        ZAY_RGBA(panel, 128, 128, 128, Alpha)
+                            panel.fill();
+                        ZAY_RGBA(panel, 0, 0, 0, (IsFocused)? 255 : 192)
+                        ZAY_RGBA(panel, 128, 128, 128, Alpha)
+                            panel.text(Text);
+                        ZAY_RGB(panel, 0, 0, 0)
+                        ZAY_RGBA(panel, 128, 128, 128, Alpha)
+                            panel.rect(1);
+                    }
                 }
                 NextMaxXSum = Math::Max(NextMaxXSum, CurXSum + TextWidth + TextPosY);
                 CurXSum += TextWidth + Gap;

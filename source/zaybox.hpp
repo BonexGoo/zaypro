@@ -64,6 +64,7 @@ public:
     inline bool hooked() const {return mHooked;}
     inline Point hookpos() const {return mHookPos;}
     inline uint64 flashmsec() const {return mFlashMsec;}
+    bool IsGateType() const;
 
 public:
     bool IsSelected() const;
@@ -156,6 +157,7 @@ public:
         static chars GetFocusText();
         static Color GetFocusColor();
         static Point GetFocusPos();
+        static bool IsFocusGate();
     };
 
 protected:

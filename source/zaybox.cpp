@@ -1482,13 +1482,18 @@ void ZEZayBox::FlashOnce()
     Platform::BroadcastNotify("Refresh", uint64o(mFlashMsec));
 }
 
+bool ZEZayBox::IsGateType() const
+{
+    return !String::Compare(mCompType, "gate", 4);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // ZEZayBox::CommentTagService
 ////////////////////////////////////////////////////////////////////////////////
 class CommentTag
 {
 public:
-    CommentTag(ZEZayBox* box) : mRefBox(box)
+    CommentTag(ZEZayBox* box) : mRefBox(box), mIsGate(false)
     {
         mNext = nullptr;
     }
@@ -1505,18 +1510,21 @@ public:
     }
 
 public:
-    inline chars text() const {return mRefBox->GetComment();}
+    inline chars text() const {return mText;}
     inline Color color() const {return mRefBox->color();}
     inline Point pos() const {return mRefBox->GetRect().Center();}
+    inline bool isgate() const {return mIsGate;}
     inline CommentTag* next() {return mNext;}
 
 public:
     static void Add(ZEZayBox* box);
     static void Sub(ZEZayBox* box);
-    static void Update(ZEZayBox* box);
+    static void Update(ZEZayBox* box, chars text, bool isgate = false);
 
 private:
     ZEZayBox* const mRefBox;
+    String mText;
+    bool mIsGate;
     CommentTag* mNext;
 };
 static CommentTag gCommentTagRoot(nullptr);
@@ -1556,7 +1564,7 @@ void CommentTag::Sub(ZEZayBox* box)
     }
 }
 
-void CommentTag::Update(ZEZayBox* box)
+void CommentTag::Update(ZEZayBox* box, chars text, bool isgate)
 {
     CommentTag* FindTag = nullptr;
     CommentTag* CurTag = &gCommentTagRoot;
@@ -1573,6 +1581,8 @@ void CommentTag::Update(ZEZayBox* box)
     }
     if(FindTag)
     {
+        FindTag->mText = text;
+        FindTag->mIsGate = isgate;
         CurTag = &gCommentTagRoot;
         while(CurTag->mNext)
         {
@@ -1601,6 +1611,8 @@ bool ZEZayBox::CommentTagService::SetFirstFocus()
 bool ZEZayBox::CommentTagService::SetNextFocus()
 {
     gFocusedCommentTag = gFocusedCommentTag->next();
+    while(gFocusedCommentTag && gFocusedCommentTag->text()[0] == '\0')
+        gFocusedCommentTag = gFocusedCommentTag->next();
     return (gFocusedCommentTag != nullptr);
 }
 
@@ -1618,6 +1630,11 @@ Color ZEZayBox::CommentTagService::GetFocusColor()
 Point ZEZayBox::CommentTagService::GetFocusPos()
 {
     return gFocusedCommentTag->pos();
+}
+
+bool ZEZayBox::CommentTagService::IsFocusGate()
+{
+    return gFocusedCommentTag->isgate();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1649,7 +1666,7 @@ void ZEZayBox::BodyComment::ReadJson(const Context& json)
     mComment.Empty();
     if(json("comment").HasValue())
         mComment = json("comment").GetText();
-    CommentTag::Update(&mBox);
+    CommentTag::Update(&mBox, mComment);
 }
 
 void ZEZayBox::BodyComment::WriteJson(Context& json, bool makeid) const
@@ -1688,7 +1705,7 @@ chars ZEZayBox::BodyComment::GetText(chars uiname) const
 void ZEZayBox::BodyComment::SetText(chars uiname, chars text)
 {
     mComment = String(text).Trim();
-    CommentTag::Update(&mBox);
+    CommentTag::Update(&mBox, mComment);
 }
 
 void ZEZayBox::BodyComment::ShowTip(chars uiname) const
@@ -1733,6 +1750,8 @@ void ZEZayBox::BodyNameComment::ReadJson(const Context& json)
     mName.Empty();
     if(json("uiname").HasValue())
         mName = json("uiname").GetText();
+    const bool IsGate = mBox.IsGateType();
+    CommentTag::Update(&mBox, (IsGate && mComment.Length() == 0)? (chars) mName : (chars) mComment, IsGate);
 }
 
 void ZEZayBox::BodyNameComment::WriteJson(Context& json, bool makeid) const
@@ -1756,7 +1775,9 @@ void ZEZayBox::BodyNameComment::RenderNameCommentEditor(ZayPanel& panel, chars u
     ZAY_LTRB_SCISSOR(panel, 0, -5, panel.w(), panel.h()) // 커서의 KOR표시
     ZAY_LTRB(panel, 3, 5, panel.w() - 3 - 4, panel.h())
     {
-        ZAY_RGB(panel, 255, 192, 0)
+        const bool IsGate = mBox.IsGateType();
+        ZAY_RGB_IF(panel, 160, 224, 255, IsGate)
+        ZAY_RGB_IF(panel, 255, 192, 0, !IsGate)
         if(ZayControl::RenderEditBox(panel, uiname, DomName(uiname), 1, true, false, false, this))
             panel.repaint(2);
     }
@@ -1786,7 +1807,8 @@ void ZEZayBox::BodyNameComment::SetText(chars uiname, chars text)
         mName = Text.Trim();
         mComment.Empty();
     }
-    CommentTag::Update(&mBox);
+    const bool IsGate = mBox.IsGateType();
+    CommentTag::Update(&mBox, (IsGate && mComment.Length() == 0)? (chars) mName : (chars) mComment, IsGate);
 }
 
 void ZEZayBox::BodyNameComment::ShowTip(chars uiname) const
@@ -1809,15 +1831,22 @@ bool ZEZayBox::BodyNameComment::RenderInsider(chars uiname, chars rendername, Za
                 }
                 else
                 {
-                    ZAY_RGB(panel, 255, 192, 0)
+                    const bool IsGate = mBox.IsGateType();
+                    ZAY_RGB_IF(panel, 160, 224, 255, IsGate)
+                    ZAY_RGB_IF(panel, 255, 192, 0, !IsGate)
                         panel.text(mName, UIFA_LeftMiddle, UIFE_Right);
                     ZAY_LTRB(panel, Platform::Graphics::GetStringWidth(mName), 0, panel.w(), panel.h())
                     ZAY_RGB(panel, 0, 255, 0)
                         panel.text(" #" + mComment, UIFA_LeftMiddle, UIFE_Right);
                 }
             }
-            else ZAY_RGB(panel, 255, 192, 0)
-                panel.text(mName, UIFA_LeftMiddle, UIFE_Right);
+            else
+            {
+                const bool IsGate = mBox.IsGateType();
+                ZAY_RGB_IF(panel, 160, 224, 255, IsGate)
+                ZAY_RGB_IF(panel, 255, 192, 0, !IsGate)
+                    panel.text(mName, UIFA_LeftMiddle, UIFE_Right);
+            }
             return true;
         }
         else if(!String::Compare(rendername, "default"))
